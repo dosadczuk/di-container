@@ -33,7 +33,7 @@ final class DependencyResolver {
             }
 
             return $class->newInstance(...$parameters);
-        } catch (\Throwable $e) {
+        } catch (\ReflectionException $e) {
             throw new ContainerException($e->getMessage(), $e->getCode(), $e);
         }
     }
