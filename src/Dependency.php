@@ -21,11 +21,11 @@ final class Dependency {
     private ?object $instance = null;
 
     /**
-     * Is dependency registered shared.
+     * Is dependency registered as shared.
      */
     private bool $is_shared;
 
-    public function __construct(string $abstract, string $definition = null, bool $is_shared = true) {
+    public function __construct(string $abstract, string $definition = null, bool $is_shared = false) {
         $this->abstract = $abstract;
         $this->definition = $definition ?? $abstract;
         $this->is_shared = $is_shared;
