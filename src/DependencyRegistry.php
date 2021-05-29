@@ -13,6 +13,10 @@ final class DependencyRegistry extends \ArrayObject {
      * Get registered dependency. Returns {@see null} when not found.
      */
     public function get(string $abstract): ?Dependency {
+        if (!$this->has($abstract)) {
+            throw new ContainerException(sprintf('Dependency %s is not registered.', $abstract));
+        }
+
         return $this[$abstract] ?? null;
     }
 
