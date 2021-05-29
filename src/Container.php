@@ -38,7 +38,7 @@ final class Container {
         }
 
         $dependency = $this->registry->get($abstract);
-        if ($dependency->isResolved()) {
+        if ($dependency->hasInstance()) {
             return $dependency->getInstance();
         }
 

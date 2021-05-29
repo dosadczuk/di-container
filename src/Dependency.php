@@ -54,12 +54,4 @@ final class Dependency {
     public function isShared(): bool {
         return $this->is_shared;
     }
-
-    public function isResolved(): bool {
-        if (!$this->isShared()) {
-            return false;
-        }
-
-        return $this->hasInstance();
-    }
 }
