@@ -7,13 +7,13 @@ final class Container {
 
     private static ?self $instance = null;
 
-    private DependencyResolver $resolver;
-
     private DependencyRegistry $registry;
 
+    private DependencyResolver $resolver;
+
     private function __construct() {
-        $this->resolver = new DependencyResolver();
         $this->registry = new DependencyRegistry();
+        $this->resolver = new DependencyResolver();
     }
 
     /**
@@ -84,7 +84,7 @@ final class Container {
      *
      * @param string $abstract Base class/interface.
      */
-    public function isRegistered(string $abstract): bool {
+    public function registered(string $abstract): bool {
         return $this->registry->has($abstract);
     }
 }
