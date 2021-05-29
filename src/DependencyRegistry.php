@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Foundation\Container;
 
-final class DependencyCollection extends \ArrayObject {
+final class DependencyRegistry extends \ArrayObject {
 
     public function __construct() {
         parent::__construct();

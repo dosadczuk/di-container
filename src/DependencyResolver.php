@@ -6,33 +6,34 @@ namespace Foundation\Container;
 final class DependencyResolver {
 
     /**
-     * Resolve dependency by given name and arguments.
+     * Resolve dependency by given name.
      *
-     * @param string $class_name
-     * @param array $class_parameters
+     * @param string $name Name of dependency.
+     * @param array $parameters Parameters to create dependency with.
      *
-     * @return object
+     * @return object Resolved dependency.
+     * @throws ContainerException
      */
-    public function resolve(string $class_name, array $class_parameters = []): object {
+    public function resolve(string $name, array $parameters = []): object {
         try {
-            $class = new \ReflectionClass($class_name);
+            $dependency_class = new \ReflectionClass($name);
 
-            $constructor = $class->getConstructor();
-            if ($constructor === null) {
-                return $class->newInstanceWithoutConstructor();
+            if (($constructor = $dependency_class->getConstructor()) === null) {
+                return $dependency_class->newInstanceWithoutConstructor();
             }
 
-            $parameters = [];
-            foreach ($constructor->getParameters() as $parameter) {
-                if (array_key_exists($parameter->getName(), $class_parameters)) {
-                    $parameters[] = $class_parameters[$parameter->getName()];
-                }
-                else {
-                    $parameters[] = $this->resolveParameter($parameter);
-                }
-            }
+            $dependency_parameters = array_map(
+                function (\ReflectionParameter $parameter) use ($parameters) {
+                    if (isset($parameters[$parameter->getName()])) {
+                        return $parameters[$parameter->getName()];
+                    }
 
-            return $class->newInstance(...$parameters);
+                    return $this->resolveParameter($parameter);
+                },
+                $constructor->getParameters()
+            );
+
+            return $dependency_class->newInstance(...$dependency_parameters);
         } catch (\ReflectionException $e) {
             throw new ContainerException($e->getMessage(), $e->getCode(), $e);
         }

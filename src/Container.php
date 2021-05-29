@@ -5,24 +5,15 @@ namespace Foundation\Container;
 
 final class Container {
 
-    /**
-     * Container instance to be used as singleton.
-     */
     private static ?self $instance = null;
 
-    /**
-     * Dependencies resolver.
-     */
     private DependencyResolver $resolver;
 
-    /**
-     * Registered dependencies.
-     */
-    private DependencyCollection $dependencies;
+    private DependencyRegistry $registry;
 
     private function __construct() {
         $this->resolver = new DependencyResolver();
-        $this->dependencies = new DependencyCollection();
+        $this->registry = new DependencyRegistry();
     }
 
     /**
@@ -42,17 +33,17 @@ final class Container {
      * @return object Instance of class.
      */
     public function make(string $abstract, array $arguments = []): object {
-        if (!$this->dependencies->has($abstract)) {
+        if (!$this->registry->has($abstract)) {
             return $this->resolver->resolve($abstract, $arguments);
         }
 
-        $dependency = $this->dependencies->get($abstract);
+        $dependency = $this->registry->get($abstract);
         if ($dependency->isResolved()) {
             return $dependency->getInstance();
         }
 
-        $instance = $this->resolver->resolve($dependency->getConcrete());
-        if (!$dependency->isSingleton()) {
+        $instance = $this->resolver->resolve($dependency->getDefinition());
+        if ($dependency->isShared()) {
             $dependency->setInstance($instance);
         }
 
@@ -63,20 +54,20 @@ final class Container {
      * Register dependency.
      *
      * @param string $abstract Base class/interface.
-     * @param string|null $concrete Optional implementation.
+     * @param string|null $definition Optional implementation.
      */
-    public function register(string $abstract, string $concrete = null): void {
-        $this->dependencies->add(new Dependency($abstract, $concrete, false));
+    public function register(string $abstract, string $definition = null): void {
+        $this->registry->add(new Dependency($abstract, $definition, false));
     }
 
     /**
      * Register dependency as singleton.
      *
      * @param string $abstract Base class/interface.
-     * @param string|null $concrete Optional implementation.
+     * @param string|null $definition Optional implementation.
      */
-    public function registerSingleton(string $abstract, string $concrete = null): void {
-        $this->dependencies->add(new Dependency($abstract, $concrete, true));
+    public function registerSingleton(string $abstract, string $definition = null): void {
+        $this->registry->add(new Dependency($abstract, $definition, true));
     }
 
     /**
@@ -85,7 +76,7 @@ final class Container {
      * @param string $abstract Base class/interface.
      */
     public function unregister(string $abstract): void {
-        $this->dependencies->remove($abstract);
+        $this->registry->remove($abstract);
     }
 
     /**
@@ -94,6 +85,6 @@ final class Container {
      * @param string $abstract Base class/interface.
      */
     public function isRegistered(string $abstract): bool {
-        return $this->dependencies->has($abstract);
+        return $this->registry->has($abstract);
     }
 }

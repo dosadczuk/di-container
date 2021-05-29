@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Foundation\Container;
 
-final class Dependency implements \JsonSerializable {
+final class Dependency {
 
     /**
      * Base class/interface.
@@ -11,9 +11,9 @@ final class Dependency implements \JsonSerializable {
     private string $abstract;
 
     /**
-     * Concrete implementation.
+     * Implementation class.
      */
-    private string $concrete;
+    private string $definition;
 
     /**
      * Resolved instance. NULL - not resolved.
@@ -21,22 +21,22 @@ final class Dependency implements \JsonSerializable {
     private ?object $instance = null;
 
     /**
-     * Is dependency registered as singleton.
+     * Is dependency registered shared.
      */
-    private bool $is_singleton;
+    private bool $is_shared;
 
-    public function __construct(string $abstract, string $concrete = null, bool $is_singleton = false) {
+    public function __construct(string $abstract, string $definition = null, bool $is_shared = false) {
         $this->abstract = $abstract;
-        $this->concrete = $concrete ?? $abstract;
-        $this->is_singleton = $is_singleton;
+        $this->definition = $definition ?? $abstract;
+        $this->is_shared = $is_shared;
     }
 
     public function getAbstract(): string {
         return $this->abstract;
     }
 
-    public function getConcrete(): string {
-        return $this->concrete;
+    public function getDefinition(): string {
+        return $this->definition;
     }
 
     public function getInstance(): object {
@@ -51,23 +51,15 @@ final class Dependency implements \JsonSerializable {
         $this->instance = $instance;
     }
 
-    public function isSingleton(): bool {
-        return $this->is_singleton;
+    public function isShared(): bool {
+        return $this->is_shared;
     }
 
     public function isResolved(): bool {
-        if ($this->isSingleton()) {
+        if (!$this->isShared()) {
             return false;
         }
 
         return $this->hasInstance();
-    }
-
-    public function jsonSerialize(): array {
-        return [
-            'abstract'     => $this->getAbstract(),
-            'concrete'     => $this->getConcrete(),
-            'is_singleton' => $this->isSingleton(),
-        ];
     }
 }
