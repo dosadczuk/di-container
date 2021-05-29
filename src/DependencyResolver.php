@@ -8,10 +8,6 @@ final class DependencyResolver {
     /**
      * Resolve dependency by given name.
      *
-     * @param string $name Name of dependency.
-     * @param array $parameters Parameters to create dependency with.
-     *
-     * @return object Resolved dependency.
      * @throws ContainerException
      */
     public function resolve(string $name, array $parameters = []): object {
