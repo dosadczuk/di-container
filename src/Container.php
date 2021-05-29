@@ -25,19 +25,26 @@ final class Container {
     }
 
     /**
+     * Static version of {@see Container::make()}.
+     */
+    public static function get(string $class, array $parameters = []): object {
+        return self::getInstance()->make($class, $parameters);
+    }
+
+    /**
      * Make instance of given class.
      *
-     * @param string $abstract Name of the class.
-     * @param array $arguments Optional class arguments.
+     * @param string $class Name of the class.
+     * @param array $parameters Optional class parameters.
      *
      * @return object Instance of class.
      */
-    public function make(string $abstract, array $arguments = []): object {
-        if (!$this->registry->has($abstract)) {
-            return $this->resolver->resolve($abstract, $arguments);
+    public function make(string $class, array $parameters = []): object {
+        if (!$this->registry->has($class)) {
+            return $this->resolver->resolve($class, $parameters);
         }
 
-        $dependency = $this->registry->get($abstract);
+        $dependency = $this->registry->get($class);
         if ($dependency->hasInstance()) {
             return $dependency->getInstance();
         }
