@@ -61,12 +61,12 @@ final class Container {
     }
 
     /**
-     * Register dependency as singleton.
+     * Register shared dependency.
      *
      * @param string $abstract Base class/interface.
      * @param string|null $definition Optional implementation.
      */
-    public function registerSingleton(string $abstract, string $definition = null): void {
+    public function registerShared(string $abstract, string $definition = null): void {
         $this->registry->add(new Dependency($abstract, $definition, true));
     }
 
