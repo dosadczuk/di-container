@@ -25,7 +25,7 @@ final class Dependency {
      */
     private bool $is_shared;
 
-    public function __construct(string $abstract, string $definition = null, bool $is_shared = false) {
+    public function __construct(string $abstract, string $definition = null, bool $is_shared = true) {
         $this->abstract = $abstract;
         $this->definition = $definition ?? $abstract;
         $this->is_shared = $is_shared;

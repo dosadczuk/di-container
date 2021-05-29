@@ -57,7 +57,7 @@ final class Container {
      * @param string|null $definition Optional implementation.
      */
     public function register(string $abstract, string $definition = null): void {
-        $this->registry->add(new Dependency($abstract, $definition, false));
+        $this->registry->add(new Dependency($abstract, $definition, true));
     }
 
     /**
@@ -67,7 +67,7 @@ final class Container {
      * @param string|null $definition Optional implementation.
      */
     public function registerSingleton(string $abstract, string $definition = null): void {
-        $this->registry->add(new Dependency($abstract, $definition, true));
+        $this->registry->add(new Dependency($abstract, $definition, false));
     }
 
     /**
