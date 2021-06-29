@@ -19,11 +19,9 @@ final class ClosureDependencyResolver implements DependencyResolver {
         try {
             $closure = new \ReflectionFunction($this->closure);
 
-            $closure_parameters = array_map(
-                function (\ReflectionParameter $parameter) {
-                    return $this->resolveParameter($parameter);
-                },
-                $closure->getParameters()
+            $closure_parameters = $this->resolveParameters(
+                $closure->getParameters(),
+                $parameters
             );
 
             return call_user_func($this->closure, ...$closure_parameters);

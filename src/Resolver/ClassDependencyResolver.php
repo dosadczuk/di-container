@@ -23,15 +23,9 @@ final class ClassDependencyResolver implements DependencyResolver {
                 return $class->newInstanceWithoutConstructor();
             }
 
-            $class_parameters = array_map(
-                function (\ReflectionParameter $parameter) use ($parameters) {
-                    if (isset($parameters[$parameter->getName()])) {
-                        return $parameters[$parameter->getName()];
-                    }
-
-                    return $this->resolveParameter($parameter);
-                },
-                $constructor->getParameters()
+            $class_parameters = $this->resolveParameters(
+                $constructor->getParameters(),
+                $parameters
             );
 
             return $class->newInstanceArgs($class_parameters);

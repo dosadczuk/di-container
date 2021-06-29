@@ -8,6 +8,25 @@ use Foundation\Container\ContainerException;
 
 trait DependencyResolverTrait {
 
+    /**
+     * @param \ReflectionParameter[] $parameters
+     * @param array $default_parameters
+     *
+     * @return array
+     */
+    private function resolveParameters(array $parameters, array $default_parameters = []): array {
+        return array_map(
+            function (\ReflectionParameter $parameter) use ($default_parameters) {
+                if (isset($default_parameters[$parameter->getName()])) {
+                    return $default_parameters[$parameter->getName()];
+                }
+
+                return $this->resolveParameter($parameter);
+            },
+            $parameters
+        );
+    }
+
     private function resolveParameter(\ReflectionParameter $parameter): mixed {
         if (!$parameter->hasType()) {
             throw new ContainerException(sprintf('Cannot resolve not typed parameter %s.', $parameter->getName()));

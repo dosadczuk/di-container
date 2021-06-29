@@ -17,7 +17,9 @@ final class DependencyRegistry extends \ArrayObject {
 
     public function resolve(string|\Closure $abstract, array $parameters): object {
         if (!$this->has($abstract)) {
-            return $this->resolver_factory->createResolver($abstract)->resolve($parameters);
+            return $this->resolver_factory
+                ->createResolver($abstract)
+                ->resolve($parameters);
         }
 
         $dependency = $this->get($abstract);
@@ -25,9 +27,10 @@ final class DependencyRegistry extends \ArrayObject {
             return $dependency->getInstance();
         }
 
-        $dependency_resolver = $this->resolver_factory->createResolver($dependency->getDefinition());
+        $dependency_instance = $this->resolver_factory
+            ->createResolver($dependency->getDefinition())
+            ->resolve($parameters);
 
-        $dependency_instance = $dependency_resolver->resolve($parameters);
         if ($dependency->isShared()) {
             $dependency->setInstance($dependency_instance);
         }
@@ -36,14 +39,14 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     /**
-     * Get registered dependency. Returns {@see null} when not found.
+     * Get registered dependency.
      */
-    public function get(string $abstract): ?Dependency {
+    public function get(string $abstract): Dependency {
         if (!$this->has($abstract)) {
             throw new ContainerException(sprintf('Dependency %s is not registered.', $abstract));
         }
 
-        return $this[$abstract] ?? null;
+        return $this[$abstract];
     }
 
     /**
