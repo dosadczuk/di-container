@@ -7,9 +7,8 @@ require_once __DIR__ . '/ClassTest2.php';
 
 use function Foundation\Container\{make, register};
 
-register(ClassTest1::class, fn(ClassTest2 $test_2) => new ClassTest1($test_2));
+register(ClassTest1::class);
 register(ClassTest2::class, fn() => new ClassTest2('456'));
 
-$dependency = make(ClassTest2::class);
-
-var_dump($dependency);
+var_dump(make(ClassTest1::class));
+var_dump(make(ClassTest2::class));
