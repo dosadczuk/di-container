@@ -74,7 +74,7 @@ final class Container {
      *
      * @param string $abstract Base class/interface.
      */
-    public function registered(string $abstract): bool {
+    public function isRegistered(string $abstract): bool {
         return $this->registry->has($abstract);
     }
 }
