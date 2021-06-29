@@ -6,6 +6,11 @@ namespace Foundation\Container;
 final class Dependency {
 
     /**
+     * Is dependency registered as shared.
+     */
+    private bool $is_shared;
+
+    /**
      * Abstract.
      */
     private string $abstract;
@@ -20,15 +25,22 @@ final class Dependency {
      */
     private ?object $instance = null;
 
-    /**
-     * Is dependency registered as shared.
-     */
-    private bool $is_shared;
-
-    public function __construct(string $abstract, string|\Closure $definition = null, bool $is_shared = false) {
+    private function __construct(bool $is_shared, string $abstract, string|\Closure $definition = null) {
+        $this->is_shared = $is_shared;
         $this->abstract = $abstract;
         $this->definition = $definition ?? $abstract;
-        $this->is_shared = $is_shared;
+    }
+
+    public static function normal(string $abstract, null|string|\Closure $definition = null): self {
+        return new self(false, $abstract, $definition);
+    }
+
+    public static function shared(string $abstract, null|string|\Closure $definition = null): self {
+        return new self(true, $abstract, $definition);
+    }
+
+    public function isShared(): bool {
+        return $this->is_shared;
     }
 
     public function getAbstract(): string {
@@ -43,15 +55,11 @@ final class Dependency {
         return $this->instance;
     }
 
-    public function hasInstance(): bool {
+    public function isInstantiated(): bool {
         return $this->instance !== null;
     }
 
     public function setInstance(object $instance): void {
         $this->instance = $instance;
-    }
-
-    public function isShared(): bool {
-        return $this->is_shared;
     }
 }

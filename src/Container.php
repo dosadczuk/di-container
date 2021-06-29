@@ -37,7 +37,7 @@ final class Container {
      * @return object Instance of abstract.
      */
     public function make(string $abstract, array $parameters = []): object {
-        return $this->registry->resolve($abstract, $parameters);
+        return $this->registry->make($abstract, $parameters);
     }
 
     /**
@@ -47,7 +47,7 @@ final class Container {
      * @param string|\Closure|null $definition Optional implementation.
      */
     public function register(string $abstract, string|\Closure $definition = null): void {
-        $this->registry->add(new Dependency($abstract, $definition, false));
+        $this->registry->add(Dependency::normal($abstract, $definition));
     }
 
     /**
@@ -57,7 +57,7 @@ final class Container {
      * @param string|\Closure|null $definition Optional implementation.
      */
     public function registerShared(string $abstract, string|\Closure $definition = null): void {
-        $this->registry->add(new Dependency($abstract, $definition, true));
+        $this->registry->add(Dependency::shared($abstract, $definition));
     }
 
     /**

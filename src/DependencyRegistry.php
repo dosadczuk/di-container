@@ -15,27 +15,30 @@ final class DependencyRegistry extends \ArrayObject {
         $this->resolver_factory = new DependencyResolverFactory();
     }
 
-    public function resolve(string|\Closure $abstract, array $parameters): object {
+    /**
+     * Resolve dependency from registry.
+     */
+    public function make(string|\Closure $abstract, array $parameters): object {
         if (!$this->has($abstract)) {
-            return $this->resolver_factory
-                ->createResolver($abstract)
-                ->resolve($parameters);
+            return $this->resolve($abstract, $parameters);
         }
 
         $dependency = $this->get($abstract);
-        if ($dependency->hasInstance()) {
+        if ($dependency->isInstantiated()) {
             return $dependency->getInstance();
         }
 
-        $dependency_instance = $this->resolver_factory
-            ->createResolver($dependency->getDefinition())
-            ->resolve($parameters);
+        $instance = $this->resolve($dependency->getDefinition(), $parameters);
 
         if ($dependency->isShared()) {
-            $dependency->setInstance($dependency_instance);
+            $dependency->setInstance($instance);
         }
 
-        return $dependency_instance;
+        return $instance;
+    }
+
+    private function resolve(string|\Closure $definition, array $parameters): object {
+        return $this->resolver_factory->createResolver($definition)->resolve($parameters);
     }
 
     /**

@@ -9,12 +9,9 @@ use Foundation\Container\ContainerException;
 trait DependencyResolverTrait {
 
     /**
-     * @param \ReflectionParameter[] $parameters
-     * @param array $default_parameters
-     *
-     * @return array
+     * @param \ReflectionParameter[] $dependency_parameters
      */
-    private function resolveParameters(array $parameters, array $default_parameters = []): array {
+    private function resolveParameters(array $dependency_parameters, array $default_parameters = []): array {
         return array_map(
             function (\ReflectionParameter $parameter) use ($default_parameters) {
                 if (isset($default_parameters[$parameter->getName()])) {
@@ -23,7 +20,7 @@ trait DependencyResolverTrait {
 
                 return $this->resolveParameter($parameter);
             },
-            $parameters
+            $dependency_parameters
         );
     }
 
