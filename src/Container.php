@@ -44,9 +44,9 @@ final class Container {
      * Register dependency.
      *
      * @param string $abstract Base class/interface.
-     * @param string|\Closure|null $definition Optional implementation.
+     * @param string|\Closure $definition Optional implementation.
      */
-    public function register(string $abstract, string|\Closure $definition = null): void {
+    public function register(string $abstract, string|\Closure $definition): void {
         $this->registry->add(Dependency::normal($abstract, $definition));
     }
 

@@ -19,9 +19,9 @@ function make(string $abstract, array $parameters = []): object {
  * Register dependency.
  *
  * @param string $abstract Base class/interface.
- * @param string|\Closure|null $definition Optional implementation.
+ * @param string|\Closure $definition Optional implementation.
  */
-function register(string $abstract, string|\Closure $definition = null): void {
+function register(string $abstract, string|\Closure $definition): void {
     Container::getInstance()->register($abstract, $definition);
 }
 
