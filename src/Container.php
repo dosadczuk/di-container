@@ -9,11 +9,8 @@ final class Container {
 
     private DependencyRegistry $registry;
 
-    private DependencyResolver $resolver;
-
     private function __construct() {
         $this->registry = new DependencyRegistry();
-        $this->resolver = new DependencyResolver();
     }
 
     /**
@@ -27,43 +24,29 @@ final class Container {
     /**
      * Static version of {@see Container::make()}.
      */
-    public static function get(string $class, array $parameters = []): object {
-        return self::getInstance()->make($class, $parameters);
+    public static function get(string $abstract, array $parameters = []): object {
+        return self::getInstance()->make($abstract, $parameters);
     }
 
     /**
-     * Make instance of given class.
+     * Make instance of given abstract.
      *
-     * @param string $class Name of the class.
-     * @param array $parameters Optional class parameters.
+     * @param string $abstract Name of the abstract.
+     * @param array $parameters Optional parameters.
      *
-     * @return object Instance of class.
+     * @return object Instance of abstract.
      */
-    public function make(string $class, array $parameters = []): object {
-        if (!$this->registry->has($class)) {
-            return $this->resolver->resolve($class, $parameters);
-        }
-
-        $dependency = $this->registry->get($class);
-        if ($dependency->hasInstance()) {
-            return $dependency->getInstance();
-        }
-
-        $instance = $this->resolver->resolve($dependency->getDefinition());
-        if ($dependency->isShared()) {
-            $dependency->setInstance($instance);
-        }
-
-        return $instance;
+    public function make(string $abstract, array $parameters = []): object {
+        return $this->registry->resolve($abstract, $parameters);
     }
 
     /**
      * Register dependency.
      *
      * @param string $abstract Base class/interface.
-     * @param string|null $definition Optional implementation.
+     * @param string|\Closure|null $definition Optional implementation.
      */
-    public function register(string $abstract, string $definition = null): void {
+    public function register(string $abstract, string|\Closure $definition = null): void {
         $this->registry->add(new Dependency($abstract, $definition, false));
     }
 
@@ -71,9 +54,9 @@ final class Container {
      * Register shared dependency.
      *
      * @param string $abstract Base class/interface.
-     * @param string|null $definition Optional implementation.
+     * @param string|\Closure|null $definition Optional implementation.
      */
-    public function registerShared(string $abstract, string $definition = null): void {
+    public function registerShared(string $abstract, string|\Closure $definition = null): void {
         $this->registry->add(new Dependency($abstract, $definition, true));
     }
 

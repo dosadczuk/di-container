@@ -3,10 +3,36 @@ declare(strict_types=1);
 
 namespace Foundation\Container;
 
+use Foundation\Container\Resolver\DependencyResolverFactory;
+
 final class DependencyRegistry extends \ArrayObject {
+
+    private DependencyResolverFactory $resolver_factory;
 
     public function __construct() {
         parent::__construct();
+
+        $this->resolver_factory = new DependencyResolverFactory();
+    }
+
+    public function resolve(string|\Closure $abstract, array $parameters): object {
+        if (!$this->has($abstract)) {
+            return $this->resolver_factory->createResolver($abstract)->resolve($parameters);
+        }
+
+        $dependency = $this->get($abstract);
+        if ($dependency->hasInstance()) {
+            return $dependency->getInstance();
+        }
+
+        $dependency_resolver = $this->resolver_factory->createResolver($dependency->getDefinition());
+
+        $dependency_instance = $dependency_resolver->resolve($parameters);
+        if ($dependency->isShared()) {
+            $dependency->setInstance($dependency_instance);
+        }
+
+        return $dependency_instance;
     }
 
     /**

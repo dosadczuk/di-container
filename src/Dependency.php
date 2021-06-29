@@ -6,17 +6,17 @@ namespace Foundation\Container;
 final class Dependency {
 
     /**
-     * Base class/interface.
+     * Abstract.
      */
     private string $abstract;
 
     /**
-     * Implementation class.
+     * Implementation of abstract.
      */
-    private string $definition;
+    private string|\Closure $definition;
 
     /**
-     * Resolved instance. NULL - not resolved.
+     * Resolved instance. {@see null} means not resolved or dependency not shared.
      */
     private ?object $instance = null;
 
@@ -25,7 +25,7 @@ final class Dependency {
      */
     private bool $is_shared;
 
-    public function __construct(string $abstract, string $definition = null, bool $is_shared = false) {
+    public function __construct(string $abstract, string|\Closure $definition = null, bool $is_shared = false) {
         $this->abstract = $abstract;
         $this->definition = $definition ?? $abstract;
         $this->is_shared = $is_shared;
@@ -35,7 +35,7 @@ final class Dependency {
         return $this->abstract;
     }
 
-    public function getDefinition(): string {
+    public function getDefinition(): string|\Closure {
         return $this->definition;
     }
 
