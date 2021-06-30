@@ -31,7 +31,7 @@ final class Dependency {
         $this->definition = $definition ?? $abstract;
     }
 
-    public static function normal(string $abstract, null|string|\Closure $definition = null): self {
+    public static function transient(string $abstract, null|string|\Closure $definition = null): self {
         return new self(false, $abstract, $definition);
     }
 

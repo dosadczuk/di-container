@@ -47,7 +47,7 @@ final class Container {
      * @param string|\Closure $definition Optional implementation.
      */
     public function register(string $abstract, string|\Closure $definition): void {
-        $this->registry->add(Dependency::normal($abstract, $definition));
+        $this->registry->add(Dependency::transient($abstract, $definition));
     }
 
     /**

@@ -17,7 +17,7 @@ class DependencyRegistryTest extends TestCase {
 
     public function test_that_can_get_registered_dependency(): void {
         $registry = new DependencyRegistry();
-        $registry->add($dependency = Dependency::normal('test'));
+        $registry->add($dependency = Dependency::transient('test'));
 
         $returned = $registry->get('test');
         self::assertEquals($dependency, $returned);
@@ -32,12 +32,12 @@ class DependencyRegistryTest extends TestCase {
 
     public function test_that_can_add_new_dependency(): void {
         $registry = new DependencyRegistry();
-        $registry->add(Dependency::normal('test'));
+        $registry->add(Dependency::transient('test'));
         self::assertTrue($registry->has('test'));
     }
 
     public function test_that_adding_same_dependency_throws_exception(): void {
-        $dependency = Dependency::normal('test');
+        $dependency = Dependency::transient('test');
         $registry = new DependencyRegistry();
         $registry->add($dependency);
         self::expectException(ContainerException::class);
@@ -46,7 +46,7 @@ class DependencyRegistryTest extends TestCase {
 
     public function test_that_can_remove_registered_dependency(): void {
         $registry = new DependencyRegistry();
-        $registry->add(Dependency::normal('test'));
+        $registry->add(Dependency::transient('test'));
         self::assertTrue($registry->has('test'));
         $registry->remove('test');
         self::assertFalse($registry->has('test'));
