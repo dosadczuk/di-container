@@ -11,6 +11,18 @@ namespace Foundation\Container;
  *
  * @return object Instance of abstract.
  */
+function get(string $abstract, array $parameters = []): object {
+    return Container::get($abstract, $parameters);
+}
+
+/**
+ * Make instance of given abstract.
+ *
+ * @param string $abstract Name of the abstract.
+ * @param array $parameters Optional parameters.
+ *
+ * @return object Instance of abstract.
+ */
 function make(string $abstract, array $parameters = []): object {
     return Container::getInstance()->make($abstract, $parameters);
 }
