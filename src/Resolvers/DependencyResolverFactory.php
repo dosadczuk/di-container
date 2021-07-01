@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Foundation\Container\Resolvers;
 
-use Foundation\Container\ContainerException;
+use Foundation\Container\Resolvers\Exceptions\DependencyResolverNotFoundException;
 
 final class DependencyResolverFactory {
 
@@ -19,6 +19,6 @@ final class DependencyResolverFactory {
             return new ClosureResolver($definition);
         }
 
-        throw new ContainerException(sprintf('Cannot create dependency resolver for "%s"', $definition));
+        throw new DependencyResolverNotFoundException($definition);
     }
 }

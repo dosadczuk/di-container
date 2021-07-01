@@ -7,7 +7,7 @@ use ReflectionParameter as Parameter;
 
 class ParameterException extends DependencyResolverException {
 
-    public function __construct(Parameter $parameter, $message = "", $code = 0, \Throwable $previous = null) {
+    public function __construct(Parameter $parameter, string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {
             $message = sprintf('Cannot resolve parameter "%s"', $this->getParameterName($parameter));
         }

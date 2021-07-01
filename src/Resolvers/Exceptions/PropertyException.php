@@ -7,7 +7,7 @@ use ReflectionProperty as Property;
 
 class PropertyException extends DependencyResolverException {
 
-    public function __construct(Property $property, $message = "", $code = 0, \Throwable $previous = null) {
+    public function __construct(Property $property, string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {
             $message = sprintf('Cannot resolve property "%s"', $this->getPropertyName($property));
         }
