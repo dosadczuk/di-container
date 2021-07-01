@@ -49,7 +49,33 @@ class UserService {
 }
 ```
 
-### UserService instantiation
+### Class setter injection
+
+```php
+use Foundation\Container\Attributes\Inject;
+
+class UserRepository {
+    public function getUsers(): array {
+        return [ 'Bob', 'Alice' ];
+    }
+}
+
+class UserService {
+
+    private UserRepository $repository;
+ 
+    #[Inject]
+    public function setRepository(UserRepository $repository): void {
+        $this->repository = $repository; 
+    }
+    
+    public function getUsers(): array {
+        return $this->repository->getUsers();
+    }
+}
+```
+
+### Class instantiation
 
 #### Using Container static method
 
