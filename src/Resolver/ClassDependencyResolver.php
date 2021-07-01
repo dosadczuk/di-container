@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Foundation\Container\Resolver;
 
-use Foundation\Container\Attribute\Injected;
+use Foundation\Container\Attribute\Inject;
 use Foundation\Container\Container;
 use Foundation\Container\ContainerException;
 
@@ -23,6 +23,7 @@ final class ClassDependencyResolver implements DependencyResolver {
 
             $class_instance = $this->instantiateClass($class, $parameters);
             $this->instantiateClassProperties($class, $class_instance);
+            $this->instantiateClassSetters($class, $class_instance);
 
             return $class_instance;
         } catch (\ReflectionException $e) {
@@ -33,7 +34,7 @@ final class ClassDependencyResolver implements DependencyResolver {
     /**
      * @throws \ReflectionException
      */
-    public function instantiateClass(\ReflectionClass $class, array $parameters): object {
+    private function instantiateClass(\ReflectionClass $class, array $parameters): object {
         if (($constructor = $class->getConstructor()) === null) {
             return $class->newInstanceWithoutConstructor();
         }
@@ -56,12 +57,14 @@ final class ClassDependencyResolver implements DependencyResolver {
                 continue; // injection not required
             }
 
-            $attribute = $property->getAttributes(Injected::class)[0] ?? null;
+            $attribute = $property->getAttributes(Inject::class)[0] ?? null;
             if ($attribute === null) {
                 continue; // not injectable
             }
 
-            $property->setValue($class_instance, $this->resolveProperty($property));
+            $property_value = $this->resolveProperty($property);
+
+            $property->setValue($class_instance, $property_value);
         }
     }
 
@@ -97,5 +100,25 @@ final class ClassDependencyResolver implements DependencyResolver {
 
     private function resolveUnionProperty(\ReflectionProperty $property): mixed {
         throw new ContainerException(sprintf('Cannot resolve union typed property %s', $property->getName()));
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    private function instantiateClassSetters(\ReflectionClass $class, object $class_instance) {
+        foreach ($class->getMethods() as $method) {
+            if (!$method->isPublic()) {
+                $method->setAccessible(true);
+            }
+
+            $attribute = $method->getAttributes(Inject::class)[0] ?? null;
+            if ($attribute === null) {
+                continue; // not injectable
+            }
+
+            $method_parameters = $this->resolveParameters($method->getParameters());
+
+            $method->invokeArgs($class_instance, $method_parameters);
+        }
     }
 }

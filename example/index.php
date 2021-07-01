@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/ClassTest1.php';
 require_once __DIR__ . '/ClassTest2.php';
+require_once __DIR__ . '/ClassTest3.php';
 
 use function Foundation\Container\{make, register, register_shared};
 
