@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolver;
+namespace Foundation\Container\Resolvers;
 
-use Foundation\Container\ContainerException;
+use Foundation\Container\Resolvers\Concerns\ResolvesParameters;
+use Foundation\Container\Resolvers\Exceptions\DependencyResolverException;
 
-final class ClosureDependencyResolver implements DependencyResolver {
+final class ClosureResolver implements DependencyResolver {
 
-    use DependencyResolverTrait;
+    use ResolvesParameters;
 
     private \Closure $closure;
 
@@ -26,7 +27,7 @@ final class ClosureDependencyResolver implements DependencyResolver {
 
             return call_user_func($this->closure, ...$closure_parameters);
         } catch (\ReflectionException $e) {
-            throw ContainerException::fromException($e);
+            throw DependencyResolverException::fromReflectionException($e);
         }
     }
 }

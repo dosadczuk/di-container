@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolver;
+namespace Foundation\Container\Resolvers;
 
 use Foundation\Container\ContainerException;
 
@@ -12,11 +12,11 @@ final class DependencyResolverFactory {
      */
     public function createResolver(mixed $definition): DependencyResolver {
         if (is_string($definition) && class_exists($definition)) {
-            return new ClassDependencyResolver($definition);
+            return new ClassResolver($definition);
         }
 
         if (is_callable($definition)) {
-            return new ClosureDependencyResolver($definition);
+            return new ClosureResolver($definition);
         }
 
         throw new ContainerException(sprintf('Cannot create dependency resolver for "%s"', $definition));

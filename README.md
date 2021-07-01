@@ -30,7 +30,7 @@ class UserService {
 ### Class property injection
 
 ```php
-use Foundation\Container\Attribute\Inject;
+use Foundation\Container\Attributes\Inject;
 
 class UserRepository {
     public function getUsers(): array {

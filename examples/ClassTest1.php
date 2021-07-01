@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Foundation\Container\Attribute\Inject;
+use Foundation\Container\Attributes\Inject;
 
 class ClassTest1 {
 
