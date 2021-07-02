@@ -6,16 +6,18 @@ namespace Foundation\Container\Resolvers\Concerns;
 use Foundation\Container\Container;
 use Foundation\Container\Resolvers\Exceptions\ParameterException;
 use Foundation\Container\Resolvers\Exceptions\ParameterNotTypedException;
+use Foundation\Container\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
 use Foundation\Container\Resolvers\Exceptions\ParameterWithUnionTypeException;
 
 trait ResolvesParameters {
 
     /**
-     * @param \ReflectionParameter[] $dependency_parameters
+     * @param \ReflectionParameter[] $parameters
+     * @param array<string, object> $defaults
      *
      * @throws \ReflectionException
      */
-    private function resolveParameters(array $dependency_parameters, array $defaults = []): array {
+    private function resolveParameters(array $parameters, array $defaults = []): array {
         return array_map(
             function (\ReflectionParameter $parameter) use ($defaults) {
                 if (isset($defaults[$parameter->getName()])) {
@@ -24,7 +26,7 @@ trait ResolvesParameters {
 
                 return $this->resolveParameter($parameter);
             },
-            $dependency_parameters
+            $parameters
         );
     }
 
@@ -42,11 +44,15 @@ trait ResolvesParameters {
         }
 
         if ($parameter_type instanceof \ReflectionNamedType) {
-            if ($parameter_type->isBuiltin()) {
-                return $parameter->getDefaultValue();
+            if (!$parameter_type->isBuiltin()) {
+                return Container::get($parameter_type->getName());
             }
 
-            return Container::get($parameter_type->getName());
+            if (!$parameter->isDefaultValueAvailable()) {
+                throw new ParameterWithBuiltinTypeException($parameter);
+            }
+
+            return $parameter->getDefaultValue();
         }
 
         throw new ParameterException($parameter);

@@ -51,7 +51,7 @@ final class Dependency {
         return $this->definition;
     }
 
-    public function getInstance(): object {
+    public function getInstance(): ?object {
         return $this->instance;
     }
 

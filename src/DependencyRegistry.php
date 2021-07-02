@@ -19,8 +19,8 @@ final class DependencyRegistry extends \ArrayObject {
     /**
      * Resolve dependency from registry.
      */
-    public function make(string|\Closure $abstract, array $parameters): object {
-        if (!$this->has($abstract)) {
+    public function make(string|\Closure $abstract, array $parameters = []): object {
+        if ($abstract instanceof \Closure || !$this->has($abstract)) {
             return $this->resolve($abstract, $parameters);
         }
 
@@ -42,7 +42,7 @@ final class DependencyRegistry extends \ArrayObject {
         try {
             return $this->resolver_factory->createResolver($definition)->resolve($parameters);
         } catch (DependencyResolverException $e) {
-            throw ContainerException::fromThrowable($e);
+            throw new ContainerException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

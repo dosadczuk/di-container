@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Foundation\Container\Resolvers;
 
 use Foundation\Container\Attributes\Inject;
-use Foundation\Container\Resolvers\Concerns\{ResolvesParameters, ResolvesProperties};
+use Foundation\Container\Resolvers\Concerns\ResolvesParameters;
+use Foundation\Container\Resolvers\Concerns\ResolvesProperties;
 use Foundation\Container\Resolvers\Exceptions\DependencyResolverException;
 
 final class ClassResolver implements DependencyResolver {
@@ -67,7 +68,7 @@ final class ClassResolver implements DependencyResolver {
     /**
      * @throws \ReflectionException
      */
-    private function instantiateClassSetters(\ReflectionClass $class, object $class_instance) {
+    private function instantiateClassSetters(\ReflectionClass $class, object $class_instance): void {
         foreach ($class->getMethods() as $method) {
             if (!$method->isPublic()) {
                 $method->setAccessible(true);

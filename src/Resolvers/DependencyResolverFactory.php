@@ -15,7 +15,7 @@ final class DependencyResolverFactory {
             return new ClassResolver($definition);
         }
 
-        if (is_callable($definition)) {
+        if ($definition instanceof \Closure) {
             return new ClosureResolver($definition);
         }
 

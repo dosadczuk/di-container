@@ -22,11 +22,11 @@ trait ResolvesProperties {
         }
 
         if ($property_type instanceof \ReflectionNamedType) {
-            if ($property_type->isBuiltin()) {
-                throw new PropertyWithBuiltinTypeException($property);
+            if (!$property_type->isBuiltin()) {
+                return Container::get($property_type->getName());
             }
 
-            return Container::get($property_type->getName());
+            throw new PropertyWithBuiltinTypeException($property);
         }
 
         throw new PropertyException($property);
