@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Stubs;
+namespace Container\Tests\Unit\Stubs;
 
-use Foundation\Container\Attributes\Inject;
+use Container\Core\Attributes\Inject;
 
 class ClassWithPropertyDependency implements ClassDependencyInterface {
 

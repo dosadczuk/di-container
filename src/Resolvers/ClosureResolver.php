@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolvers;
+namespace Container\Core\Resolvers;
 
-use Foundation\Container\Resolvers\Concerns\ResolvesParameters;
-use Foundation\Container\Resolvers\Exceptions\DependencyResolverException;
+use Container\Core\Resolvers\Concerns\ResolvesParameters;
+use Container\Core\Resolvers\Exceptions\DependencyResolverException;
 
 final class ClosureResolver implements DependencyResolver {
 

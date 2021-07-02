@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Suites\Resolvers;
+namespace Container\Tests\Unit\Suites\Resolvers;
 
-use Foundation\Container\Resolvers\ClosureResolver;
-use Foundation\Container\Resolvers\Exceptions\ParameterNotTypedException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithUnionTypeException;
-use Foundation\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
-use Foundation\Tests\Unit\Stubs\ClassWithConstructorDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithNestedDependencies;
-use Foundation\Tests\Unit\Stubs\ClassWithoutDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithPropertyDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithSetterDependency;
+use Container\Core\Resolvers\ClosureResolver;
+use Container\Core\Resolvers\Exceptions\ParameterNotTypedException;
+use Container\Core\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
+use Container\Core\Resolvers\Exceptions\ParameterWithUnionTypeException;
+use Container\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Tests\Unit\Stubs\ClassWithConstructorDependency;
+use Container\Tests\Unit\Stubs\ClassWithNestedDependencies;
+use Container\Tests\Unit\Stubs\ClassWithoutDependency;
+use Container\Tests\Unit\Stubs\ClassWithPropertyDependency;
+use Container\Tests\Unit\Stubs\ClassWithSetterDependency;
 use PHPUnit\Framework\TestCase;
 
 class ClosureResolverTest extends TestCase {

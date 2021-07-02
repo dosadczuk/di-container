@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpMissingFieldTypeInspection */
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Stubs;
+namespace Container\Tests\Unit\Stubs;
 
 class ClassWithNonTypedConstructorDependency implements ClassDependencyInterface {
 

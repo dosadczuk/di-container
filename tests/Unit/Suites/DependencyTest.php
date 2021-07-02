@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Suites;
+namespace Container\Tests\Unit\Suites;
 
-use Foundation\Container\Dependency;
-use Foundation\Tests\Unit\Stubs\ClassDependencyInterface;
-use Foundation\Tests\Unit\Stubs\ClassWithoutDependency;
+use Container\Core\Dependency;
+use Container\Tests\Unit\Stubs\ClassDependencyInterface;
+use Container\Tests\Unit\Stubs\ClassWithoutDependency;
 use PHPUnit\Framework\TestCase;
 
 class DependencyTest extends TestCase {

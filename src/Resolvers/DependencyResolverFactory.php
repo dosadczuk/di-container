@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolvers;
+namespace Container\Core\Resolvers;
 
-use Foundation\Container\Resolvers\Exceptions\DependencyResolverNotFoundException;
+use Container\Core\Resolvers\Exceptions\DependencyResolverNotFoundException;
 
 final class DependencyResolverFactory {
 

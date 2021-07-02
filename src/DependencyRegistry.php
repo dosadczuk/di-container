@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container;
+namespace Container\Core;
 
-use Foundation\Container\Resolvers\DependencyResolverFactory;
-use Foundation\Container\Resolvers\Exceptions\DependencyResolverException;
+use Container\Core\Resolvers\DependencyResolverFactory;
+use Container\Core\Resolvers\Exceptions\DependencyResolverException;
 
 final class DependencyRegistry extends \ArrayObject {
 

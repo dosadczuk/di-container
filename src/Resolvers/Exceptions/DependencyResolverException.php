@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolvers\Exceptions;
+namespace Container\Core\Resolvers\Exceptions;
 
 class DependencyResolverException extends \RuntimeException {
 

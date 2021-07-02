@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Container\Resolvers\Concerns;
+namespace Container\Core\Resolvers\Concerns;
 
-use Foundation\Container\Container;
-use Foundation\Container\Resolvers\Exceptions\ParameterException;
-use Foundation\Container\Resolvers\Exceptions\ParameterNotTypedException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithUnionTypeException;
+use Container\Core\Container;
+use Container\Core\Resolvers\Exceptions\ParameterException;
+use Container\Core\Resolvers\Exceptions\ParameterNotTypedException;
+use Container\Core\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
+use Container\Core\Resolvers\Exceptions\ParameterWithUnionTypeException;
 
 trait ResolvesParameters {
 

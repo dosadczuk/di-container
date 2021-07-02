@@ -1,27 +1,27 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Suites\Resolvers;
+namespace Container\Tests\Unit\Suites\Resolvers;
 
-use Foundation\Container\Resolvers\ClassResolver;
-use Foundation\Container\Resolvers\Exceptions\ParameterNotTypedException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
-use Foundation\Container\Resolvers\Exceptions\ParameterWithUnionTypeException;
-use Foundation\Container\Resolvers\Exceptions\PropertyNotTypedException;
-use Foundation\Container\Resolvers\Exceptions\PropertyWithBuiltinTypeException;
-use Foundation\Container\Resolvers\Exceptions\PropertyWithUnionTypeException;
-use Foundation\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
-use Foundation\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
-use Foundation\Tests\Unit\Stubs\ClassWithBuiltinTypedPropertyDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithConstructorDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithNestedDependencies;
-use Foundation\Tests\Unit\Stubs\ClassWithNonTypedConstructorDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithNonTypedPropertyDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithoutDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithPropertyDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithSetterDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithUnionTypedConstructorDependency;
-use Foundation\Tests\Unit\Stubs\ClassWithUnionTypedPropertyDependency;
+use Container\Core\Resolvers\ClassResolver;
+use Container\Core\Resolvers\Exceptions\ParameterNotTypedException;
+use Container\Core\Resolvers\Exceptions\ParameterWithBuiltinTypeException;
+use Container\Core\Resolvers\Exceptions\ParameterWithUnionTypeException;
+use Container\Core\Resolvers\Exceptions\PropertyNotTypedException;
+use Container\Core\Resolvers\Exceptions\PropertyWithBuiltinTypeException;
+use Container\Core\Resolvers\Exceptions\PropertyWithUnionTypeException;
+use Container\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
+use Container\Tests\Unit\Stubs\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Tests\Unit\Stubs\ClassWithBuiltinTypedPropertyDependency;
+use Container\Tests\Unit\Stubs\ClassWithConstructorDependency;
+use Container\Tests\Unit\Stubs\ClassWithNestedDependencies;
+use Container\Tests\Unit\Stubs\ClassWithNonTypedConstructorDependency;
+use Container\Tests\Unit\Stubs\ClassWithNonTypedPropertyDependency;
+use Container\Tests\Unit\Stubs\ClassWithoutDependency;
+use Container\Tests\Unit\Stubs\ClassWithPropertyDependency;
+use Container\Tests\Unit\Stubs\ClassWithSetterDependency;
+use Container\Tests\Unit\Stubs\ClassWithUnionTypedConstructorDependency;
+use Container\Tests\Unit\Stubs\ClassWithUnionTypedPropertyDependency;
 use PHPUnit\Framework\TestCase;
 
 class ClassResolverTest extends TestCase {

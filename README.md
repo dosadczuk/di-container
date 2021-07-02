@@ -30,7 +30,7 @@ class UserService {
 ### Class property injection
 
 ```php
-use Foundation\Container\Attributes\Inject;
+use Container\Core\Attributes\Inject;
 
 class UserRepository {
     public function getUsers(): array {
@@ -52,7 +52,7 @@ class UserService {
 ### Class setter injection
 
 ```php
-use Foundation\Container\Attributes\Inject;
+use Container\Core\Attributes\Inject;
 
 class UserRepository {
     public function getUsers(): array {
@@ -80,7 +80,7 @@ class UserService {
 #### Using Container static method
 
 ```php
-use Foundation\Container\Container;
+use Container\Core\Container;
 
 $user_service = Container::get(UserService::class);
 ```
@@ -88,7 +88,7 @@ $user_service = Container::get(UserService::class);
 #### Using Container non-static method
 
 ```php
-use Foundation\Container\Container;
+use Container\Core\Container;
 
 $user_service = Container::getInstance()->make(UserService::class);
 ```
@@ -96,7 +96,7 @@ $user_service = Container::getInstance()->make(UserService::class);
 #### Using function
 
 ```php
-use function Foundation\Container\{get,make};
+use function Container\Core\{get,make};
 
 $user_service = get(UserService::class);
 // or
@@ -129,8 +129,8 @@ class UserService {
 ### Shared dependency
 
 ```php
-use Foundation\Container\Container;
-use function Foundation\Container\register_shared;
+use Container\Core\Container;
+use function Container\Core\register_shared;
 
 // using Container instance and non-static method
 $container = Container::getInstance();
@@ -149,8 +149,8 @@ register_shared(
 ### Transient dependency
 
 ```php
-use Foundation\Container\Container;
-use function Foundation\Container\register;
+use Container\Core\Container;
+use function Container\Core\register;
 
 // using Container instance and non-static method
 $container = Container::getInstance();
@@ -167,7 +167,7 @@ register(
 ```
 
 ```php
-use function Foundation\Container\get;
+use function Container\Core\get;
 
 $user_service = get(UserService::class);
 ```
@@ -203,7 +203,7 @@ class UserService {
 ```
 
 ```php
-use function Foundation\Container\{register_shared};
+use function Container\Core\{register_shared};
 
 register_shared(UserService::class, function() {
     $repository = new UserRepository(new InMemoryDatabase());
@@ -259,7 +259,7 @@ class ExternalUserService {
 ```
 
 ```php
-use function Foundation\Container\register_shared;
+use function Container\Core\register_shared;
 
 register_shared(InternalUserService::class, function(InternalMailer $mailer) {
     return new InternalUserService($mailer);

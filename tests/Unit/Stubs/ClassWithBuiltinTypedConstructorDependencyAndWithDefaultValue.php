@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Foundation\Tests\Unit\Stubs;
+namespace Container\Tests\Unit\Stubs;
 
 class ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue implements ClassDependencyInterface {
 
