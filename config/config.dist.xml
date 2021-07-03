@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+    <dependencies>
+        <!-- transient -->
+        <dependency>
+            <abstract>qualified classname</abstract>
+            <definition>qualified classname</definition>
+        </dependency>
+
+        <!-- shared -->
+        <dependency shared="true">
+            <abstract>qualified classname</abstract>
+            <definition>qualified classname</definition>
+        </dependency>
+    </dependencies>
+</container>

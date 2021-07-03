@@ -20,7 +20,8 @@
   },
   "suggest": {
     "ext-fileinfo": "Required to load config.",
-    "ext-json": "Required to load JSON config."
+    "ext-json": "Required to load JSON config.",
+    "ext-xml": "Required to load XML config."
   },
   "config": {
     "platform": {

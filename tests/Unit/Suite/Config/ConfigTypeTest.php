@@ -16,6 +16,11 @@ class ConfigTypeTest extends TestCase {
         $this->assertNotNull(ConfigType::JSON());
     }
 
+    public function test_that_constructs_xml(): void {
+        // given/when/then
+        $this->assertNotNull(ConfigType::XML());
+    }
+
     public function test_that_throws_exception_constructing_with_not_supported_value(): void {
         // given
         $not_supported_file_type = 'txt';
@@ -27,7 +32,7 @@ class ConfigTypeTest extends TestCase {
 
     public function test_that_returns_supported_values(): void {
         // given
-        $supported_values = [ 'json' ];
+        $supported_values = [ 'json', 'xml' ];
 
         // when
         $file_type_values = ConfigType::getValues();
@@ -68,9 +73,11 @@ class ConfigTypeTest extends TestCase {
 
         // when
         $is_equal = $json->equalsTo(ConfigType::JSON());
+        $is_not_equal = $json->equalsTo(ConfigType::XML());
 
         // then
         $this->assertTrue($is_equal);
+        $this->assertFalse($is_not_equal);
     }
 
     public function test_that_differs_two_values(): void {
@@ -78,9 +85,11 @@ class ConfigTypeTest extends TestCase {
         $json = ConfigType::JSON();
 
         // when
+        $is_different = $json->differsFrom(ConfigType::XML());
         $is_not_different = $json->differsFrom(ConfigType::JSON());
 
         // then
+        $this->assertTrue($is_different);
         $this->assertFalse($is_not_different);
     }
 
