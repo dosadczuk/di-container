@@ -9,7 +9,7 @@ final class PropertyWithBuiltinTypeException extends PropertyException {
 
     public function __construct(Property $property, string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {
-            $message = sprintf('Cannot resolve builtin typed property "%s"', $this->getPropertyName($property));
+            $message = "Cannot resolve builtin typed property '\${$property->getName()}'";
         }
 
         parent::__construct($property, $message, $code, $previous);

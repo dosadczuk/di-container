@@ -15,7 +15,7 @@ final class ConfigType implements \Stringable {
 
     public function __construct(string $value) {
         if (!in_array($value, self::getValues(), true)) {
-            throw new \InvalidArgumentException(sprintf('Config type "%s" is not supported', $value));
+            throw new \InvalidArgumentException("Config type '$value' is not supported");
         }
 
         $this->value = $value;

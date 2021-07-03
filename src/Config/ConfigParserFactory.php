@@ -8,9 +8,7 @@ final class ConfigParserFactory {
 
     public function createParser(string $file_name, ?ConfigType $config_type = null): ConfigParser {
         if (($config_type ??= ConfigType::fromFile($file_name)) === null) {
-            throw new ConfigParserException(
-                sprintf('Cannot determine config type for file "%s"', $file_name)
-            );
+            throw new ConfigParserException("Cannot determine config type for file '$file_name'");
         }
 
         return $config_type->getParser($file_name);

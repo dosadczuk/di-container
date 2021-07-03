@@ -27,11 +27,11 @@ final class Dependency {
 
     public function __construct(bool $is_shared, string $abstract, null|string|\Closure $definition = null) {
         if (!interface_exists($abstract) && !class_exists($abstract)) {
-            throw new \InvalidArgumentException(sprintf('Invalid argument "abstract": %s not found', $abstract));
+            throw new \InvalidArgumentException("Invalid argument 'abstract': $abstract not found");
         }
 
         if (is_string($definition) && !class_exists($definition)) {
-            throw new \InvalidArgumentException(sprintf('Invalid argument "definition": %s not found', $definition));
+            throw new \InvalidArgumentException("Invalid argument 'definition': $definition not found");
         }
 
         $this->is_shared = $is_shared;

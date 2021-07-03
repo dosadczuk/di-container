@@ -55,7 +55,7 @@ final class DependencyRegistry extends \ArrayObject {
      */
     public function get(string $abstract): Dependency {
         if (!$this->has($abstract)) {
-            throw new ContainerException(sprintf('Dependency %s is not registered.', $abstract));
+            throw new ContainerException("Dependency '$abstract' is not registered");
         }
 
         return $this[$abstract];
@@ -66,7 +66,7 @@ final class DependencyRegistry extends \ArrayObject {
      */
     public function add(Dependency $dependency): void {
         if ($this->has($dependency->getAbstract())) {
-            throw new ContainerException(sprintf('Dependency %s is already registered.', $dependency->getAbstract()));
+            throw new ContainerException("Dependency '{$dependency->getAbstract()}' is already registered");
         }
 
         $this[$dependency->getAbstract()] = $dependency;
@@ -77,7 +77,7 @@ final class DependencyRegistry extends \ArrayObject {
      */
     public function remove(string $abstract): void {
         if (!$this->has($abstract)) {
-            throw new ContainerException(sprintf('Dependency %s is not registered.', $abstract));
+            throw new ContainerException("Dependency '{$abstract}' is not registered");
         }
 
         unset($this[$abstract]);

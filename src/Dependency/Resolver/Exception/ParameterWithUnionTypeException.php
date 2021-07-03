@@ -9,7 +9,7 @@ final class ParameterWithUnionTypeException extends ParameterException {
 
     public function __construct(Parameter $parameter, string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {
-            $message = sprintf('Cannot resolve union typed parameter "%s"', $this->getParameterName($parameter));
+            $message = "Cannot resolve union typed parameter '\${$parameter->getName()}'";
         }
 
         parent::__construct($parameter, $message, $code, $previous);
