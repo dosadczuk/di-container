@@ -1,0 +1,9 @@
+---
+dependencies:
+  - shared: true/false
+    abstract: qualified classname
+    definition: qualified classname
+
+  - shared: true/false
+    abstract: qualified classname
+    definition: qualified classname

@@ -20,6 +20,7 @@
   },
   "suggest": {
     "ext-fileinfo": "Required to load config.",
+    "ext-yaml": "Required to load YAML config.",
     "ext-json": "Required to load JSON config.",
     "ext-xml": "Required to load XML config."
   },

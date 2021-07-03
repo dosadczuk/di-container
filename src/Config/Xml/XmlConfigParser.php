@@ -57,11 +57,15 @@ final class XmlConfigParser implements ConfigParser {
                 continue; // if somehow happens
             }
 
-            $dependencies[] = new Dependency(
-                $this->getDependencyIsShared($dependency),
-                $this->getDependencyAbstract($dependency),
-                $this->getDependencyDefinition($dependency)
-            );
+            try {
+                $dependencies[] = new Dependency(
+                    $this->getDependencyIsShared($dependency),
+                    $this->getDependencyAbstract($dependency),
+                    $this->getDependencyDefinition($dependency)
+                );
+            } catch (\InvalidArgumentException $e) {
+                throw XmlConfigParserException::fromException($e);
+            }
         }
 
         return $dependencies;
@@ -73,12 +77,12 @@ final class XmlConfigParser implements ConfigParser {
             return false; // default value => transient
         }
 
-        $shared = filter_var($shared, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
-        if ($shared === null) {
+        $is_shared = filter_var($shared, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+        if ($is_shared === null) {
             return false; // default => transient
         }
 
-        return $shared;
+        return $is_shared;
     }
 
     private function getDependencyAbstract(\SimpleXMLElement $dependency): string {

@@ -5,9 +5,11 @@ namespace Container\Core\Config;
 
 use Container\Core\Config\Json\JsonConfigParser;
 use Container\Core\Config\Xml\XmlConfigParser;
+use Container\Core\Config\Yaml\YamlConfigParser;
 
 final class ConfigType implements \Stringable {
 
+    private const YAML = 'yaml';
     private const JSON = 'json';
     private const XML = 'xml';
 
@@ -21,6 +23,10 @@ final class ConfigType implements \Stringable {
         $this->value = $value;
     }
 
+    public static function YAML(): self {
+        return new self(self::YAML);
+    }
+
     public static function JSON(): self {
         return new self(self::JSON);
     }
@@ -31,6 +37,7 @@ final class ConfigType implements \Stringable {
 
     public static function fromFile(string $file_name): ?self {
         return match (pathinfo($file_name, PATHINFO_EXTENSION)) {
+            'yaml, yml' => self::YAML(),
             'json' => self::JSON(),
             'xml' => self::XML(),
             default => null
@@ -50,6 +57,7 @@ final class ConfigType implements \Stringable {
 
     public function getParser(string $file_name): ConfigParser {
         return match ($this->getValue()) {
+            self::YAML => new YamlConfigParser($file_name),
             self::JSON => new JsonConfigParser($file_name),
             self::XML => new XmlConfigParser($file_name),
         };

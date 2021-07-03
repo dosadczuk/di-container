@@ -11,6 +11,11 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigTypeTest extends TestCase {
 
+    public function test_that_constructs_yaml(): void {
+        // given/when/then
+        $this->assertNotNull(ConfigType::YAML());
+    }
+
     public function test_that_constructs_json(): void {
         // given/when/then
         $this->assertNotNull(ConfigType::JSON());
@@ -32,7 +37,7 @@ class ConfigTypeTest extends TestCase {
 
     public function test_that_returns_supported_values(): void {
         // given
-        $supported_values = [ 'json', 'xml' ];
+        $supported_values = [ 'yaml', 'json', 'xml' ];
 
         // when
         $file_type_values = ConfigType::getValues();

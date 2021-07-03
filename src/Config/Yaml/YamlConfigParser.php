@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Config\Json;
+namespace Container\Core\Config\Yaml;
 
 use Container\Core\Config\ConfigParser;
 use Container\Core\ContainerConfig;
 use Container\Core\Dependency\Dependency;
 
-final class JsonConfigParser implements ConfigParser {
+final class YamlConfigParser implements ConfigParser {
 
     public function __construct(
         private string $file_name
     ) {
-        if (!extension_loaded('json')) {
-            throw new JsonConfigParserException('PHP ext-json is not loaded');
+        if (!extension_loaded('yaml')) {
+            throw new YamlConfigParserException('PHP ext-yaml is not loaded');
         }
 
         if (!is_file($file_name)) {
-            throw new JsonConfigParserException("Config file '$file_name' not found");
+            throw new YamlConfigParserException("Config file '$file_name' not found");
         }
     }
 
@@ -34,13 +34,17 @@ final class JsonConfigParser implements ConfigParser {
 
     private function loadConfigFile(): array {
         $file_content = file_get_contents($this->file_name);
-        if ($file_content === false) {
-            throw new JsonConfigParserException("Cannot load file '$this->file_name'");
+        if ($file_content === null) {
+            throw new YamlConfigParserException("Cannot load file '$this->file_name'");
         }
 
-        $config = json_decode($file_content, true);
-        if ($config === null) {
-            throw new JsonConfigParserException("Cannot decode file '$this->file_name'");
+        $config = yaml_parse($file_content);
+        if ($config === false) {
+            throw new YamlConfigParserException("Cannot load file '$this->file_name'");
+        }
+
+        if (!is_array($config)) {
+            throw new YamlConfigParserException("Invalid config file format '$this->file_name'");
         }
 
         return $config;
@@ -49,13 +53,13 @@ final class JsonConfigParser implements ConfigParser {
     /**
      * @return Dependency[]
      */
-    private function parseDependencies(array $container): array {
-        if (!array_key_exists('dependencies', $container)) {
+    private function parseDependencies(array $config): array {
+        if (!array_key_exists('dependencies', $config)) {
             return []; // not defined => nothing to parse
         }
 
         $dependencies = [];
-        foreach ($container['dependencies'] as $dependency) {
+        foreach ($config['dependencies'] as $dependency) {
             try {
                 $dependencies[] = new Dependency(
                     $this->getDependencyIsShared($dependency),
@@ -63,7 +67,7 @@ final class JsonConfigParser implements ConfigParser {
                     $this->getDependencyDefinition($dependency)
                 );
             } catch (\InvalidArgumentException $e) {
-                throw JsonConfigParserException::fromException($e);
+                throw YamlConfigParserException::fromException($e);
             }
         }
 
@@ -85,13 +89,17 @@ final class JsonConfigParser implements ConfigParser {
 
     private function getDependencyAbstract(array $dependency): string {
         if (!array_key_exists('abstract', $dependency)) {
-            throw new JsonConfigParserException("Dependency property 'abstract' is not defined");
+            throw new YamlConfigParserException("Dependency property 'abstract' is not defined");
         }
 
         return $dependency['abstract'];
     }
 
-    private function getDependencyDefinition(array $dependency) {
-        return $dependency['definition'] ?? null;
+    private function getDependencyDefinition(array $dependency): ?string {
+        if (!array_key_exists('definition', $dependency)) {
+            return null;
+        }
+
+        return $dependency['definition'];
     }
 }
