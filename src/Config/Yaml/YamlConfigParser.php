@@ -25,9 +25,7 @@ final class YamlConfigParser implements ConfigParser {
         $config = $this->loadConfigFile();
 
         $container = new ContainerConfig();
-        $container->setDependencies(
-            $this->parseDependencies($config)
-        );
+        $container->dependencies = $this->parseDependencies($config);
 
         return $container->seal();
     }

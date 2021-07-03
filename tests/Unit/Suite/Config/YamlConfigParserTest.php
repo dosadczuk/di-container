@@ -35,12 +35,12 @@ class YamlConfigParserTest extends ConfigParserTest {
         $config_parser = new YamlConfigParser($file_path);
 
         // when
-        $dependencies = $config_parser->parse()->getDependencies();
+        $config = $config_parser->parse();
 
         // then
-        $this->assertCount(2, $dependencies);
-        $this->assertEquals($this->dependency_1, $dependencies[0]);
-        $this->assertEquals($this->dependency_2, $dependencies[1]);
+        $this->assertCount(2, $config->dependencies);
+        $this->assertEquals($this->dependency_1, $config->dependencies[0]);
+        $this->assertEquals($this->dependency_2, $config->dependencies[1]);
     }
 
     public function test_that_throws_exception_parsing_not_existing_file(): void {

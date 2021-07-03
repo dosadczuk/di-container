@@ -19,7 +19,7 @@ final class Container {
             $config = new ContainerConfig();
         }
 
-        $this->registry = new DependencyRegistry($config->getDependencies());
+        $this->registry = new DependencyRegistry($config->dependencies);
     }
 
     /**
