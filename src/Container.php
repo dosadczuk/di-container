@@ -3,29 +3,46 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
+use Container\Core\Config\ConfigParserFactory;
+use Container\Core\Config\ConfigType;
+use Container\Core\Dependency\Dependency;
+use Container\Core\Dependency\DependencyRegistry;
+
 final class Container {
 
     private static ?self $instance = null;
 
     private DependencyRegistry $registry;
 
-    private function __construct() {
-        $this->registry = new DependencyRegistry();
+    private function __construct(ContainerConfig $config = null) {
+        if ($config === null) {
+            $config = new ContainerConfig();
+        }
+
+        $this->registry = new DependencyRegistry($config->getDependencies());
     }
 
     /**
      * Get instance of Container.
      */
-    public static function getInstance(): self {
+    public static function get(): self {
         return self::$instance
-            ?? self::$instance = new self;
+            ?? self::$instance = new self();
     }
 
     /**
-     * Static version of {@see Container::make()}.
+     * Constructs Container with configuration file.
+     *
+     * @param string $file_name Name of file with dependencies.
+     * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
+     *
+     * @return static Instance of Container with loaded dependencies.
      */
-    public static function get(string $abstract, array $parameters = []): object {
-        return self::getInstance()->make($abstract, $parameters);
+    public static function fromConfig(string $file_name, ConfigType $type = null): self {
+        $config_loader = (new ConfigParserFactory())
+            ->createParser($file_name, $type);
+
+        return new self($config_loader->parse());
     }
 
     /**

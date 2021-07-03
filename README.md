@@ -30,7 +30,7 @@ class UserService {
 ### Class property injection
 
 ```php
-use Container\Core\Attributes\Inject;
+use Container\Core\Attribute\Inject;
 
 class UserRepository {
     public function getUsers(): array {
@@ -52,7 +52,7 @@ class UserService {
 ### Class setter injection
 
 ```php
-use Container\Core\Attributes\Inject;
+use Container\Core\Attribute\Inject;
 
 class UserRepository {
     public function getUsers(): array {
@@ -75,31 +75,21 @@ class UserService {
 }
 ```
 
-### Class instantiation
+## Class instantiation
 
-#### Using Container static method
-
-```php
-use Container\Core\Container;
-
-$user_service = Container::get(UserService::class);
-```
-
-#### Using Container non-static method
+### Using Container method
 
 ```php
 use Container\Core\Container;
 
-$user_service = Container::getInstance()->make(UserService::class);
+$user_service = Container::get()->make(UserService::class);
 ```
 
-#### Using function
+### Using function
 
 ```php
-use function Container\Core\{get,make};
+use function Container\Core\{make};
 
-$user_service = get(UserService::class);
-// or
 $user_service = make(UserService::class);
 ```
 
@@ -133,8 +123,7 @@ use Container\Core\Container;
 use function Container\Core\register_shared;
 
 // using Container instance and non-static method
-$container = Container::getInstance();
-$container->registerShared(
+Container::get()->registerShared(
     UserRepositoryInterface::class, 
     UserRepository::class
 );
@@ -153,8 +142,7 @@ use Container\Core\Container;
 use function Container\Core\register;
 
 // using Container instance and non-static method
-$container = Container::getInstance();
-$container->register(
+Container::get()->register(
     UserRepositoryInterface::class, 
     UserRepository::class
 );
@@ -167,9 +155,9 @@ register(
 ```
 
 ```php
-use function Container\Core\get;
+use function Container\Core\make;
 
-$user_service = get(UserService::class);
+$user_service = make(UserService::class);
 ```
 
 ## Class registration (with closure)

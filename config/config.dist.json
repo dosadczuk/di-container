@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+    {
+      "abstract": "qualified classname",
+      "definition": "qualified classname"
+    },
+    {
+      "shared": true,
+      "abstract": "qualified classname",
+      "definition": "qualified classname"
+    }
+  ]
+}
