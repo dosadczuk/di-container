@@ -4,6 +4,13 @@ declare(strict_types=1);
 namespace Container\Core;
 
 /**
+ * Get Container instance.
+ */
+function container(): Container {
+    return Container::getInstance();
+}
+
+/**
  * Make instance of given abstract.
  *
  * @param string $abstract Name of the abstract.
@@ -12,7 +19,7 @@ namespace Container\Core;
  * @return object Instance of abstract.
  */
 function make(string $abstract, array $parameters = []): object {
-    return Container::get()->make($abstract, $parameters);
+    return Container::getInstance()->make($abstract, $parameters);
 }
 
 /**
@@ -22,7 +29,7 @@ function make(string $abstract, array $parameters = []): object {
  * @param string|\Closure $definition Optional implementation.
  */
 function register(string $abstract, string|\Closure $definition): void {
-    Container::get()->register($abstract, $definition);
+    Container::getInstance()->register($abstract, $definition);
 }
 
 /**
@@ -32,7 +39,7 @@ function register(string $abstract, string|\Closure $definition): void {
  * @param string|\Closure|null $definition Optional implementation.
  */
 function register_shared(string $abstract, string|\Closure $definition = null): void {
-    Container::get()->registerShared($abstract, $definition);
+    Container::getInstance()->registerShared($abstract, $definition);
 }
 
 /**
@@ -41,7 +48,7 @@ function register_shared(string $abstract, string|\Closure $definition = null): 
  * @param string $abstract Base class/interface.
  */
 function unregister(string $abstract): void {
-    Container::get()->unregister($abstract);
+    Container::getInstance()->unregister($abstract);
 }
 
 /**
@@ -50,5 +57,5 @@ function unregister(string $abstract): void {
  * @param string $abstract Base class/interface.
  */
 function is_registered(string $abstract): bool {
-    return Container::get()->isRegistered($abstract);
+    return Container::getInstance()->isRegistered($abstract);
 }

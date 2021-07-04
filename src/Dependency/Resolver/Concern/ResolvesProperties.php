@@ -23,7 +23,7 @@ trait ResolvesProperties {
 
         if ($property_type instanceof \ReflectionNamedType) {
             if (!$property_type->isBuiltin()) {
-                return Container::get()->make($property_type->getName());
+                return Container::getInstance()->make($property_type->getName());
             }
 
             throw new PropertyWithBuiltinTypeException($property);

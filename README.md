@@ -82,7 +82,7 @@ class UserService {
 ```php
 use Container\Core\Container;
 
-$user_service = Container::get()->make(UserService::class);
+$user_service = Container::getInstance()->make(UserService::class);
 ```
 
 ### Using function
@@ -123,7 +123,7 @@ use Container\Core\Container;
 use function Container\Core\register_shared;
 
 // using Container instance and non-static method
-Container::get()->registerShared(
+Container::getInstance()->registerShared(
     UserRepositoryInterface::class, 
     UserRepository::class
 );
@@ -142,7 +142,7 @@ use Container\Core\Container;
 use function Container\Core\register;
 
 // using Container instance and non-static method
-Container::get()->register(
+Container::getInstance()->register(
     UserRepositoryInterface::class, 
     UserRepository::class
 );

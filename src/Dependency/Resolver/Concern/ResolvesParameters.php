@@ -45,7 +45,7 @@ trait ResolvesParameters {
 
         if ($parameter_type instanceof \ReflectionNamedType) {
             if (!$parameter_type->isBuiltin()) {
-                return Container::get()->make($parameter_type->getName());
+                return Container::getInstance()->make($parameter_type->getName());
             }
 
             if (!$parameter->isDefaultValueAvailable()) {

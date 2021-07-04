@@ -21,7 +21,7 @@ final class Container {
     /**
      * Get instance of Container.
      */
-    public static function get(): self {
+    public static function getInstance(): self {
         return self::$instance
             ?? self::$instance = new self();
     }
@@ -35,7 +35,7 @@ final class Container {
      * @return static Instance of Container with loaded config.
      */
     public static function fromConfig(string $file_name, ConfigType $type = null): self {
-        return self::get()->loadConfig($file_name, $type);
+        return self::getInstance()->loadConfig($file_name, $type);
     }
 
     /**
