@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Config;
+namespace Container\Core\Config\Parser;
 
 class ConfigParserException extends \RuntimeException {
 

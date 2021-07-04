@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config\Yaml;
+namespace Container\Tests\Unit\Suite\Config\Parser;
 
-use Container\Core\Config\Yaml\YamlConfigParser;
-use Container\Core\Config\Yaml\YamlConfigParserException;
+use Container\Core\Config\Parser\Xml\XmlConfigParser;
+use Container\Core\Config\Parser\Xml\XmlConfigParserException;
 use Container\Core\Dependency\Dependency;
 use Container\Tests\Unit\Stub\ClassDependencyInterface;
 use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
 use Container\Tests\Unit\Stub\ClassWithoutDependency;
-use Container\Tests\Unit\Suite\Config\ConfigParserTest;
 
-class YamlConfigParserTest extends ConfigParserTest {
+class XmlConfigParserTest extends ConfigParserTest {
 
     private Dependency $dependency_1;
 
@@ -33,7 +32,7 @@ class YamlConfigParserTest extends ConfigParserTest {
     public function test_that_parses_dependencies_from_file(): void {
         // given
         $file_path = $this->getConfigPath($this->getConfigName());
-        $config_parser = new YamlConfigParser($file_path);
+        $config_parser = new XmlConfigParser($file_path);
 
         // when
         $config = $config_parser->parse();
@@ -46,38 +45,45 @@ class YamlConfigParserTest extends ConfigParserTest {
 
     public function test_that_throws_exception_parsing_not_existing_file(): void {
         // given
-        $not_existing_file = 'sample_file.yaml';
+        $not_existing_file = 'sample_file.xml';
 
         // when/then
-        $this->expectException(YamlConfigParserException::class);
-        new YamlConfigParser($not_existing_file);
+        $this->expectException(XmlConfigParserException::class);
+        new XmlConfigParser($not_existing_file);
     }
 
-    public function test_that_throws_exception_parsing_invalid_yaml_file(): void {
+    public function test_that_throws_exception_parsing_invalid_xml_file(): void {
         // given
         $this->addTempFile('sample_file.txt', 'sample text');
-        $config_parser = new YamlConfigParser($this->getConfigPath('sample_file.txt'));
+        $config_parser = new XmlConfigParser($this->getConfigPath('sample_file.txt'));
 
         // when/then
-        $this->expectException(YamlConfigParserException::class);
+        $this->expectException(XmlConfigParserException::class);
         $config_parser->parse();
     }
 
     protected function getConfigName(): string {
-        return 'dependencies.yaml';
+        return 'dependencies.xml';
     }
 
     protected function getConfigContent(): string {
-        return <<<YAML
----
-dependencies:
-  - shared: false
-    abstract: Container\Tests\Unit\Stub\ClassDependencyInterface
-    definition: Container\Tests\Unit\Stub\ClassWithoutDependency
+        return <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+    <dependencies>
+        <!-- transient -->
+        <dependency>
+            <abstract>Container\Tests\Unit\Stub\ClassDependencyInterface</abstract>
+            <definition>Container\Tests\Unit\Stub\ClassWithoutDependency</definition>
+        </dependency>
 
-  - shared: true
-    abstract: Container\Tests\Unit\Stub\ClassDependencyInterface
-    definition: Container\Tests\Unit\Stub\ClassWithNestedDependencies
-YAML;
+        <!-- shared -->
+        <dependency shared="true">
+            <abstract>Container\Tests\Unit\Stub\ClassDependencyInterface</abstract>
+            <definition>Container\Tests\Unit\Stub\ClassWithNestedDependencies</definition>
+        </dependency>
+    </dependencies>
+</container>
+XML;
     }
 }

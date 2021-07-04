@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
+use Container\Core\Config\ConfigCreator;
 use Container\Core\Config\ConfigType;
 use Container\Core\Dependency\Dependency;
 use Container\Core\Dependency\DependencyRegistry;
@@ -31,19 +32,27 @@ final class Container {
     /**
      * Constructs Container with configuration file.
      *
-     * @param string $file_name Name of file with dependencies.
+     * @param string $file_name Name of config file.
      * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
      *
-     * @return static Instance of Container with loaded dependencies.
+     * @return static Instance of Container with loaded config.
      */
     public static function fromConfig(string $file_name, ConfigType $type = null): self {
-        if (($type ??= ConfigType::fromFileName($file_name)) === null) {
-            throw new ContainerException("Cannot determine config type for file '$file_name'");
-        }
-
-        $config = $type->getParser($file_name)->parse();
+        $config = ConfigCreator::createFromFileName($file_name, $type);
 
         return new self($config->dependencies);
+    }
+
+    /**
+     * Loads configuration file (may override existing set up).
+     *
+     * @param string $file_name Name of config file.
+     * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
+     */
+    public function loadConfig(string $file_name, ConfigType $type = null): void {
+        $config = ConfigCreator::createFromFileName($file_name, $type);
+
+        $this->registry->exchangeArray($config->dependencies);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config;
+namespace Container\Tests\Unit\Suite\Config\Parser;
 
 use org\bovigo\vfs\vfsStream as TemporaryFileSystem;
 use org\bovigo\vfs\vfsStreamDirectory as TemporaryDirectory;

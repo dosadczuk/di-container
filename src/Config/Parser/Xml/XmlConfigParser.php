@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Config\Xml;
+namespace Container\Core\Config\Parser\Xml;
 
-use Container\Core\Config\ConfigParser;
+use Container\Core\Config\Parser\ConfigParser;
 use Container\Core\ContainerConfig;
 use Container\Core\Dependency\Dependency;
 

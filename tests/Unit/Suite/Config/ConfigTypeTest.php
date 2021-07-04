@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Container\Tests\Unit\Suite\Config;
 
 use Container\Core\Config\ConfigType;
-use Container\Core\Config\Json\JsonConfigParser;
+use Container\Core\Config\Parser\Json\JsonConfigParser;
 use org\bovigo\vfs\vfsStream as TemporaryFileSystem;
 use org\bovigo\vfs\vfsStreamFile as TemporaryFile;
 use PHPUnit\Framework\TestCase;
