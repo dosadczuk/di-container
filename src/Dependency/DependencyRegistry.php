@@ -11,11 +11,8 @@ final class DependencyRegistry extends \ArrayObject {
 
     private DependencyResolverFactory $resolver_factory;
 
-    /**
-     * @param Dependency[] $dependencies
-     */
-    public function __construct(array $dependencies = []) {
-        parent::__construct($dependencies);
+    public function __construct() {
+        parent::__construct();
 
         $this->resolver_factory = new DependencyResolverFactory();
     }

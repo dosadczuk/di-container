@@ -14,11 +14,8 @@ final class Container {
 
     private DependencyRegistry $registry;
 
-    /**
-     * @param Dependency[] $dependencies
-     */
-    private function __construct(array $dependencies = []) {
-        $this->registry = new DependencyRegistry($dependencies);
+    private function __construct() {
+        $this->registry = new DependencyRegistry();
     }
 
     /**
@@ -38,9 +35,7 @@ final class Container {
      * @return static Instance of Container with loaded config.
      */
     public static function fromConfig(string $file_name, ConfigType $type = null): self {
-        $config = ConfigCreator::createFromFileName($file_name, $type);
-
-        return new self($config->dependencies);
+        return self::get()->loadConfig($file_name, $type);
     }
 
     /**
@@ -49,10 +44,14 @@ final class Container {
      * @param string $file_name Name of config file.
      * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
      */
-    public function loadConfig(string $file_name, ConfigType $type = null): void {
+    public function loadConfig(string $file_name, ConfigType $type = null): self {
         $config = ConfigCreator::createFromFileName($file_name, $type);
 
-        $this->registry->exchangeArray($config->dependencies);
+        foreach ($config->dependencies as $dependency) {
+            $this->registry->add($dependency);
+        }
+
+        return $this;
     }
 
     /**
