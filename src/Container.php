@@ -27,25 +27,13 @@ final class Container {
     }
 
     /**
-     * Constructs Container with configuration file.
-     *
-     * @param string $file_name Name of config file.
-     * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
-     *
-     * @return static Instance of Container with loaded config.
-     */
-    public static function fromConfig(string $file_name, ConfigType $type = null): self {
-        return self::getInstance()->loadConfig($file_name, $type);
-    }
-
-    /**
      * Loads configuration file (may override existing set up).
      *
-     * @param string $file_name Name of config file.
-     * @param ConfigType|null $type Optional config type (e.g. for file 'container.config' and XML in it).
+     * @param string $config_file Name of config file.
+     * @param ConfigType|null $config_type Optional config type (e.g. for file 'container.config' and XML in it).
      */
-    public function loadConfig(string $file_name, ConfigType $type = null): self {
-        $config = ConfigCreator::createFromFileName($file_name, $type);
+    public function load(string $config_file, ConfigType $config_type = null): self {
+        $config = ConfigCreator::createFromFileName($config_file, $config_type);
 
         $this->registry->set($config->dependencies);
 
