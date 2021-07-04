@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config;
+namespace Container\Tests\Unit\Suite\Config\Yaml;
 
 use Container\Core\Config\Yaml\YamlConfigParser;
 use Container\Core\Config\Yaml\YamlConfigParserException;
@@ -9,6 +9,7 @@ use Container\Core\Dependency\Dependency;
 use Container\Tests\Unit\Stub\ClassDependencyInterface;
 use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
 use Container\Tests\Unit\Stub\ClassWithoutDependency;
+use Container\Tests\Unit\Suite\Config\ConfigParserTest;
 
 class YamlConfigParserTest extends ConfigParserTest {
 

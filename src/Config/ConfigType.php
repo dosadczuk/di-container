@@ -13,14 +13,12 @@ final class ConfigType implements \Stringable {
     private const JSON = 'json';
     private const XML = 'xml';
 
-    private string $value;
-
-    public function __construct(string $value) {
+    public function __construct(
+        private string $value
+    ) {
         if (!in_array($value, self::getValues(), true)) {
             throw new \InvalidArgumentException("Config type '$value' is not supported");
         }
-
-        $this->value = $value;
     }
 
     public static function YAML(): self {
@@ -35,7 +33,7 @@ final class ConfigType implements \Stringable {
         return new self(self::XML);
     }
 
-    public static function fromFile(string $file_name): ?self {
+    public static function fromFileName(string $file_name): ?self {
         return match (pathinfo($file_name, PATHINFO_EXTENSION)) {
             'yaml, yml' => self::YAML(),
             'json' => self::JSON(),

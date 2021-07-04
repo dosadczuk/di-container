@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
-use Container\Core\Config\ConfigParserFactory;
 use Container\Core\Config\ConfigType;
 use Container\Core\Dependency\Dependency;
 use Container\Core\Dependency\DependencyRegistry;
@@ -14,12 +13,11 @@ final class Container {
 
     private DependencyRegistry $registry;
 
-    private function __construct(ContainerConfig $config = null) {
-        if ($config === null) {
-            $config = new ContainerConfig();
-        }
-
-        $this->registry = new DependencyRegistry($config->dependencies);
+    /**
+     * @param Dependency[] $dependencies
+     */
+    private function __construct(array $dependencies = []) {
+        $this->registry = new DependencyRegistry($dependencies);
     }
 
     /**
@@ -39,10 +37,13 @@ final class Container {
      * @return static Instance of Container with loaded dependencies.
      */
     public static function fromConfig(string $file_name, ConfigType $type = null): self {
-        $config_loader = (new ConfigParserFactory())
-            ->createParser($file_name, $type);
+        if (($type ??= ConfigType::fromFileName($file_name)) === null) {
+            throw new ContainerException("Cannot determine config type for file '$file_name'");
+        }
 
-        return new self($config_loader->parse());
+        $config = $type->getParser($file_name)->parse();
+
+        return new self($config->dependencies);
     }
 
     /**

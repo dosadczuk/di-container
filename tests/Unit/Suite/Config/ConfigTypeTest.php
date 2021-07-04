@@ -51,7 +51,7 @@ class ConfigTypeTest extends TestCase {
         $file_json = 'sample_file.json';
 
         // when
-        $json = ConfigType::fromFile($file_json);
+        $json = ConfigType::fromFileName($file_json);
 
         // when
         $this->assertEquals(ConfigType::JSON(), $json);
