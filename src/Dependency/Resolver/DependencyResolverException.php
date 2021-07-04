@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Dependency\Resolver\Exception;
+namespace Container\Core\Dependency\Resolver;
 
-class DependencyResolverException extends \RuntimeException {
+final class DependencyResolverException extends \RuntimeException {
 
     public function __construct(string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {

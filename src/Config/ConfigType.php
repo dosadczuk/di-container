@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Container\Core\Config;
 
 use Container\Core\Config\Parser\ConfigParser;
-use Container\Core\Config\Parser\Json\JsonConfigParser;
-use Container\Core\Config\Parser\Xml\XmlConfigParser;
-use Container\Core\Config\Parser\Yaml\YamlConfigParser;
+use Container\Core\Config\Parser\JsonConfigParser;
+use Container\Core\Config\Parser\XmlConfigParser;
+use Container\Core\Config\Parser\YamlConfigParser;
 
 final class ConfigType implements \Stringable {
 

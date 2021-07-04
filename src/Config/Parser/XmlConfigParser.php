@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Config\Parser\Xml;
+namespace Container\Core\Config\Parser;
 
-use Container\Core\Config\Parser\ConfigParser;
 use Container\Core\ContainerConfig;
 use Container\Core\Dependency\Dependency;
 
@@ -13,11 +12,11 @@ final class XmlConfigParser implements ConfigParser {
         private string $file_name
     ) {
         if (!extension_loaded('xml')) {
-            throw new XmlConfigParserException('PHP ext-xml is not loaded');
+            throw new ConfigParserException('PHP ext-xml is not loaded');
         }
 
         if (!is_file($file_name)) {
-            throw new XmlConfigParserException("Config file '$file_name' not found");
+            throw new ConfigParserException("Config file '$file_name' not found");
         }
     }
 
@@ -35,7 +34,7 @@ final class XmlConfigParser implements ConfigParser {
 
         $config = simplexml_load_file($this->file_name);
         if ($config === false) {
-            throw new XmlConfigParserException("Cannot load file '$this->file_name'");
+            throw new ConfigParserException("Cannot load file '$this->file_name'");
         }
 
         return $config;
@@ -62,7 +61,7 @@ final class XmlConfigParser implements ConfigParser {
                     $this->getDependencyDefinition($dependency)
                 );
             } catch (\InvalidArgumentException $e) {
-                throw XmlConfigParserException::fromException($e);
+                throw ConfigParserException::fromException($e);
             }
         }
 
@@ -86,7 +85,7 @@ final class XmlConfigParser implements ConfigParser {
     private function getDependencyAbstract(\SimpleXMLElement $dependency): string {
         $abstract = $dependency->abstract ?? null;
         if ($abstract === null) {
-            throw new XmlConfigParserException("Dependency property 'abstract' is not defined");
+            throw new ConfigParserException("Dependency property 'abstract' is not defined");
         }
 
         return (string)$abstract;

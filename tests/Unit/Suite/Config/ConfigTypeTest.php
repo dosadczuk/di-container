@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Container\Tests\Unit\Suite\Config;
 
 use Container\Core\Config\ConfigType;
-use Container\Core\Config\Parser\Json\JsonConfigParser;
-use Container\Core\Config\Parser\Xml\XmlConfigParser;
-use Container\Core\Config\Parser\Yaml\YamlConfigParser;
+use Container\Core\Config\Parser\JsonConfigParser;
+use Container\Core\Config\Parser\XmlConfigParser;
+use Container\Core\Config\Parser\YamlConfigParser;
 use org\bovigo\vfs\vfsStream as TemporaryFileSystem;
 use org\bovigo\vfs\vfsStreamFile as TemporaryFile;
 use PHPUnit\Framework\TestCase;

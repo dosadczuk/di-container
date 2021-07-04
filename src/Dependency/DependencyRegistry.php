@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Container\Core\Dependency;
 
 use Container\Core\ContainerException;
+use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Core\Dependency\Resolver\DependencyResolverFactory;
-use Container\Core\Dependency\Resolver\Exception\DependencyResolverException;
 
 final class DependencyRegistry extends \ArrayObject {
 

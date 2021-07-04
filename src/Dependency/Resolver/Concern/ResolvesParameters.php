@@ -4,10 +4,7 @@ declare(strict_types=1);
 namespace Container\Core\Dependency\Resolver\Concern;
 
 use Container\Core\Container;
-use Container\Core\Dependency\Resolver\Exception\ParameterException;
-use Container\Core\Dependency\Resolver\Exception\ParameterNotTypedException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithBuiltinTypeException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithUnionTypeException;
+use Container\Core\Dependency\Resolver\DependencyResolverException;
 
 trait ResolvesParameters {
 
@@ -36,11 +33,15 @@ trait ResolvesParameters {
     private function resolveParameter(\ReflectionParameter $parameter): mixed {
         $parameter_type = $parameter->getType();
         if ($parameter_type === null) {
-            throw new ParameterNotTypedException($parameter);
+            throw new DependencyResolverException(
+                "Cannot resolve not type parameter '\${$parameter->getName()}'"
+            );
         }
 
         if ($parameter_type instanceof \ReflectionUnionType) {
-            throw new ParameterWithUnionTypeException($parameter);
+            throw new DependencyResolverException(
+                "Cannot resolve union parameter '\${$parameter->getName()}'"
+            );
         }
 
         if ($parameter_type instanceof \ReflectionNamedType) {
@@ -49,12 +50,16 @@ trait ResolvesParameters {
             }
 
             if (!$parameter->isDefaultValueAvailable()) {
-                throw new ParameterWithBuiltinTypeException($parameter);
+                throw new DependencyResolverException(
+                    "Cannot resolve builtin parameter '\${$parameter->getName()}' without default value"
+                );
             }
 
             return $parameter->getDefaultValue();
         }
 
-        throw new ParameterException($parameter);
+        throw new DependencyResolverException(
+            "Cannot resolve parameter '\${$parameter->getName()}'"
+        );
     }
 }

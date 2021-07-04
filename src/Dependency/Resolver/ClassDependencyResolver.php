@@ -6,7 +6,6 @@ namespace Container\Core\Dependency\Resolver;
 use Container\Core\Attribute\Inject;
 use Container\Core\Dependency\Resolver\Concern\ResolvesParameters;
 use Container\Core\Dependency\Resolver\Concern\ResolvesProperties;
-use Container\Core\Dependency\Resolver\Exception\DependencyResolverException;
 
 final class ClassDependencyResolver implements DependencyResolver {
 

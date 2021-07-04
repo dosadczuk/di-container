@@ -4,12 +4,7 @@ declare(strict_types=1);
 namespace Container\Tests\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
-use Container\Core\Dependency\Resolver\Exception\ParameterNotTypedException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithBuiltinTypeException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithUnionTypeException;
-use Container\Core\Dependency\Resolver\Exception\PropertyNotTypedException;
-use Container\Core\Dependency\Resolver\Exception\PropertyWithBuiltinTypeException;
-use Container\Core\Dependency\Resolver\Exception\PropertyWithUnionTypeException;
+use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
 use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
 use Container\Tests\Unit\Stub\ClassWithBuiltinTypedPropertyDependency;
@@ -99,7 +94,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithNonTypedPropertyDependency::class);
 
         // when/then
-        $this->expectException(PropertyNotTypedException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -108,7 +103,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithBuiltinTypedPropertyDependency::class);
 
         // when/then
-        $this->expectException(PropertyWithBuiltinTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -117,7 +112,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithUnionTypedPropertyDependency::class);
 
         // when/then
-        $this->expectException(PropertyWithUnionTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -126,7 +121,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithNonTypedConstructorDependency::class);
 
         // when/then
-        $this->expectException(ParameterNotTypedException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -135,7 +130,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue::class);
 
         // when/then
-        $this->expectException(ParameterWithBuiltinTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -155,7 +150,7 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver = new ClassDependencyResolver(ClassWithUnionTypedConstructorDependency::class);
 
         // when/then
-        $this->expectException(ParameterWithUnionTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 

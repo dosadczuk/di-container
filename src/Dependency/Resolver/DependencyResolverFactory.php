@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Container\Core\Dependency\Resolver;
 
-use Container\Core\Dependency\Resolver\Exception\DependencyResolverNotFoundException;
-
 final class DependencyResolverFactory {
 
     /**
@@ -19,6 +17,6 @@ final class DependencyResolverFactory {
             return new ClosureDependencyResolver($definition);
         }
 
-        throw new DependencyResolverNotFoundException($definition);
+        throw new DependencyResolverException("Cannot create dependency resolver for '$definition'");
     }
 }

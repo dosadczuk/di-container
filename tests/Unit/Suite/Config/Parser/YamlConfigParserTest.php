@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Container\Tests\Unit\Suite\Config\Parser;
 
-use Container\Core\Config\Parser\Yaml\YamlConfigParser;
-use Container\Core\Config\Parser\Yaml\YamlConfigParserException;
+use Container\Core\Config\Parser\ConfigParserException;
+use Container\Core\Config\Parser\YamlConfigParser;
 use Container\Core\Dependency\Dependency;
 use Container\Tests\Unit\Stub\ClassDependencyInterface;
 use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
@@ -48,7 +48,7 @@ class YamlConfigParserTest extends ConfigParserTest {
         $not_existing_file = 'sample_file.yaml';
 
         // when/then
-        $this->expectException(YamlConfigParserException::class);
+        $this->expectException(ConfigParserException::class);
         new YamlConfigParser($not_existing_file);
     }
 
@@ -58,7 +58,7 @@ class YamlConfigParserTest extends ConfigParserTest {
         $config_parser = new YamlConfigParser($this->getConfigPath('sample_file.txt'));
 
         // when/then
-        $this->expectException(YamlConfigParserException::class);
+        $this->expectException(ConfigParserException::class);
         $config_parser->parse();
     }
 

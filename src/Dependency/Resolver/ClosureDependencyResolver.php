@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Container\Core\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\Concern\ResolvesParameters;
-use Container\Core\Dependency\Resolver\Exception\DependencyResolverException;
 
 final class ClosureDependencyResolver implements DependencyResolver {
 

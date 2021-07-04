@@ -5,8 +5,8 @@ namespace Container\Tests\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
 use Container\Core\Dependency\Resolver\ClosureDependencyResolver;
+use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Core\Dependency\Resolver\DependencyResolverFactory;
-use Container\Core\Dependency\Resolver\Exception\DependencyResolverNotFoundException;
 use Container\Tests\Unit\Stub\ClassWithoutDependency;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +36,7 @@ class DependencyResolverFactoryTest extends TestCase {
 
     public function test_that_throws_exception_for_not_supported_definition(): void {
         // when/then
-        $this->expectException(DependencyResolverNotFoundException::class);
+        $this->expectException(DependencyResolverException::class);
         $this->factory->createResolver(false);
     }
 }

@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace Container\Tests\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClosureDependencyResolver;
-use Container\Core\Dependency\Resolver\Exception\ParameterNotTypedException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithBuiltinTypeException;
-use Container\Core\Dependency\Resolver\Exception\ParameterWithUnionTypeException;
+use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
 use Container\Tests\Unit\Stub\ClassWithConstructorDependency;
 use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
@@ -101,7 +99,7 @@ class ClosureDependencyResolverTest extends TestCase {
         $resolver = new ClosureDependencyResolver(fn($dependency) => $dependency);
 
         // when/then
-        $this->expectException(ParameterNotTypedException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -112,7 +110,7 @@ class ClosureDependencyResolverTest extends TestCase {
         });
 
         // when/then
-        $this->expectException(ParameterWithBuiltinTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 
@@ -134,7 +132,7 @@ class ClosureDependencyResolverTest extends TestCase {
         $resolver = new ClosureDependencyResolver(fn(string|int $dependency) => $dependency);
 
         // when/then
-        $this->expectException(ParameterWithUnionTypeException::class);
+        $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
     }
 }

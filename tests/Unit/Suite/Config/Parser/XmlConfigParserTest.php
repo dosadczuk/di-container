@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Container\Tests\Unit\Suite\Config\Parser;
 
-use Container\Core\Config\Parser\Xml\XmlConfigParser;
-use Container\Core\Config\Parser\Xml\XmlConfigParserException;
+use Container\Core\Config\Parser\ConfigParserException;
+use Container\Core\Config\Parser\XmlConfigParser;
 use Container\Core\Dependency\Dependency;
 use Container\Tests\Unit\Stub\ClassDependencyInterface;
 use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
@@ -48,7 +48,7 @@ class XmlConfigParserTest extends ConfigParserTest {
         $not_existing_file = 'sample_file.xml';
 
         // when/then
-        $this->expectException(XmlConfigParserException::class);
+        $this->expectException(ConfigParserException::class);
         new XmlConfigParser($not_existing_file);
     }
 
@@ -58,7 +58,7 @@ class XmlConfigParserTest extends ConfigParserTest {
         $config_parser = new XmlConfigParser($this->getConfigPath('sample_file.txt'));
 
         // when/then
-        $this->expectException(XmlConfigParserException::class);
+        $this->expectException(ConfigParserException::class);
         $config_parser->parse();
     }
 
