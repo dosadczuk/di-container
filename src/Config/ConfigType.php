@@ -36,7 +36,7 @@ final class ConfigType implements \Stringable {
 
     public static function fromFileName(string $file_name): ?self {
         return match (pathinfo($file_name, PATHINFO_EXTENSION)) {
-            'yaml, yml' => self::YAML(),
+            'yaml', 'yml' => self::YAML(),
             'json' => self::JSON(),
             'xml' => self::XML(),
             default => null
