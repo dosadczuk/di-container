@@ -47,9 +47,7 @@ final class Container {
     public function loadConfig(string $file_name, ConfigType $type = null): self {
         $config = ConfigCreator::createFromFileName($file_name, $type);
 
-        foreach ($config->dependencies as $dependency) {
-            $this->registry->add($dependency);
-        }
+        $this->registry->set($config->dependencies);
 
         return $this;
     }

@@ -59,6 +59,26 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     /**
+     * Check if dependency is registered.
+     */
+    public function has(string $abstract): bool {
+        return isset($this[$abstract]);
+    }
+
+    /**
+     * Fill registry with dependencies (replaces all existing entries).
+     *
+     * @param Dependency[] $dependencies
+     */
+    public function set(array $dependencies): void {
+        $this->clear();
+
+        foreach ($dependencies as $dependency) {
+            $this->add($dependency);
+        }
+    }
+
+    /**
      * Add dependency to registry.
      */
     public function add(Dependency $dependency): void {
@@ -81,9 +101,9 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     /**
-     * Check if dependency is registered.
+     * Remove all entries.
      */
-    public function has(string $abstract): bool {
-        return isset($this[$abstract]);
+    public function clear(): void {
+        $this->exchangeArray([]);
     }
 }
