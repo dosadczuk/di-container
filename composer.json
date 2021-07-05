@@ -1,13 +1,14 @@
 {
   "name": "dosadczuk/container",
-  "description": "DI Container PoC for learning purpose only.",
+  "version": "0.1.0",
   "type": "library",
-  "homepage": "https://github.com/dosadczuk/di-container",
   "authors": [
     {
-      "name": "dosadczuk"
+      "name": "Damian Osadczuk",
+      "homepage": "https://github.com/dosadczuk"
     }
   ],
+  "homepage": "https://github.com/dosadczuk/di-container",
   "scripts": {
     "test": "phpunit --config=phpunit.xml"
   },
