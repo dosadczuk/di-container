@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config\Parser;
+namespace Container\Test\Unit\Suite\Config\Parser;
 
 use Container\Core\Config\Parser\ConfigParserException;
 use Container\Core\Config\Parser\YamlConfigParser;
 use Container\Core\Dependency\Dependency;
-use Container\Tests\Unit\Stub\ClassDependencyInterface;
-use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
-use Container\Tests\Unit\Stub\ClassWithoutDependency;
+use Container\Test\Unit\Stub\ClassDependencyInterface;
+use Container\Test\Unit\Stub\ClassWithNestedDependencies;
+use Container\Test\Unit\Stub\ClassWithoutDependency;
 
 class YamlConfigParserTest extends ConfigParserTest {
 
@@ -71,12 +71,12 @@ class YamlConfigParserTest extends ConfigParserTest {
 ---
 dependencies:
   - shared: false
-    abstract: Container\Tests\Unit\Stub\ClassDependencyInterface
-    definition: Container\Tests\Unit\Stub\ClassWithoutDependency
+    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
+    definition: Container\Test\Unit\Stub\ClassWithoutDependency
 
   - shared: true
-    abstract: Container\Tests\Unit\Stub\ClassDependencyInterface
-    definition: Container\Tests\Unit\Stub\ClassWithNestedDependencies
+    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
+    definition: Container\Test\Unit\Stub\ClassWithNestedDependencies
 YAML;
     }
 }

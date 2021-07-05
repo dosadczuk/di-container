@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Dependency\Resolver;
+namespace Container\Test\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
-use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
-use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
-use Container\Tests\Unit\Stub\ClassWithBuiltinTypedPropertyDependency;
-use Container\Tests\Unit\Stub\ClassWithConstructorDependency;
-use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
-use Container\Tests\Unit\Stub\ClassWithNonTypedConstructorDependency;
-use Container\Tests\Unit\Stub\ClassWithNonTypedPropertyDependency;
-use Container\Tests\Unit\Stub\ClassWithoutDependency;
-use Container\Tests\Unit\Stub\ClassWithPropertyDependency;
-use Container\Tests\Unit\Stub\ClassWithSetterDependency;
-use Container\Tests\Unit\Stub\ClassWithUnionTypedConstructorDependency;
-use Container\Tests\Unit\Stub\ClassWithUnionTypedPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithConstructorDependency;
+use Container\Test\Unit\Stub\ClassWithNestedDependencies;
+use Container\Test\Unit\Stub\ClassWithNonTypedConstructorDependency;
+use Container\Test\Unit\Stub\ClassWithNonTypedPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithoutDependency;
+use Container\Test\Unit\Stub\ClassWithPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithSetterDependency;
+use Container\Test\Unit\Stub\ClassWithUnionTypedConstructorDependency;
+use Container\Test\Unit\Stub\ClassWithUnionTypedPropertyDependency;
 use PHPUnit\Framework\TestCase;
 
 class ClassDependencyResolverTest extends TestCase {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config;
+namespace Container\Test\Unit\Suite\Config;
 
 use Container\Core\Config\ConfigType;
 use Container\Core\Config\Parser\JsonConfigParser;

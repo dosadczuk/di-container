@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Config\Parser;
+namespace Container\Test\Unit\Suite\Config\Parser;
 
 use Container\Core\Config\Parser\ConfigParserException;
 use Container\Core\Config\Parser\XmlConfigParser;
 use Container\Core\Dependency\Dependency;
-use Container\Tests\Unit\Stub\ClassDependencyInterface;
-use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
-use Container\Tests\Unit\Stub\ClassWithoutDependency;
+use Container\Test\Unit\Stub\ClassDependencyInterface;
+use Container\Test\Unit\Stub\ClassWithNestedDependencies;
+use Container\Test\Unit\Stub\ClassWithoutDependency;
 
 class XmlConfigParserTest extends ConfigParserTest {
 
@@ -73,14 +73,14 @@ class XmlConfigParserTest extends ConfigParserTest {
     <dependencies>
         <!-- transient -->
         <dependency>
-            <abstract>Container\Tests\Unit\Stub\ClassDependencyInterface</abstract>
-            <definition>Container\Tests\Unit\Stub\ClassWithoutDependency</definition>
+            <abstract>Container\Test\Unit\Stub\ClassDependencyInterface</abstract>
+            <definition>Container\Test\Unit\Stub\ClassWithoutDependency</definition>
         </dependency>
 
         <!-- shared -->
         <dependency shared="true">
-            <abstract>Container\Tests\Unit\Stub\ClassDependencyInterface</abstract>
-            <definition>Container\Tests\Unit\Stub\ClassWithNestedDependencies</definition>
+            <abstract>Container\Test\Unit\Stub\ClassDependencyInterface</abstract>
+            <definition>Container\Test\Unit\Stub\ClassWithNestedDependencies</definition>
         </dependency>
     </dependencies>
 </container>

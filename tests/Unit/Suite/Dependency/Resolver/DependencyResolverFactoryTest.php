@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Dependency\Resolver;
+namespace Container\Test\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
 use Container\Core\Dependency\Resolver\ClosureDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Core\Dependency\Resolver\DependencyResolverFactory;
-use Container\Tests\Unit\Stub\ClassWithoutDependency;
+use Container\Test\Unit\Stub\ClassWithoutDependency;
 use PHPUnit\Framework\TestCase;
 
 class DependencyResolverFactoryTest extends TestCase {

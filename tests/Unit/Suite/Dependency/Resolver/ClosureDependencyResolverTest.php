@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Suite\Dependency\Resolver;
+namespace Container\Test\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClosureDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
-use Container\Tests\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
-use Container\Tests\Unit\Stub\ClassWithConstructorDependency;
-use Container\Tests\Unit\Stub\ClassWithNestedDependencies;
-use Container\Tests\Unit\Stub\ClassWithoutDependency;
-use Container\Tests\Unit\Stub\ClassWithPropertyDependency;
-use Container\Tests\Unit\Stub\ClassWithSetterDependency;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Test\Unit\Stub\ClassWithConstructorDependency;
+use Container\Test\Unit\Stub\ClassWithNestedDependencies;
+use Container\Test\Unit\Stub\ClassWithoutDependency;
+use Container\Test\Unit\Stub\ClassWithPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithSetterDependency;
 use PHPUnit\Framework\TestCase;
 
 class ClosureDependencyResolverTest extends TestCase {

@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpMissingFieldTypeInspection */
 declare(strict_types=1);
 
-namespace Container\Tests\Unit\Stub;
+namespace Container\Test\Unit\Stub;
 
 use Container\Core\Attribute\Inject;
 
