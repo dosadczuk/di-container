@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
-use Container\Core\Config\ConfigCreator;
+use Container\Core\Config\Config;
 use Container\Core\Config\ConfigType;
 use Container\Core\Dependency\Dependency;
 use Container\Core\Dependency\DependencyRegistry;
@@ -33,7 +33,7 @@ final class Container {
      * @param ConfigType|null $config_type Optional config type (e.g. for file 'container.config' and XML in it).
      */
     public function load(string $config_file, ConfigType $config_type = null): self {
-        $config = ConfigCreator::createFromFileName($config_file, $config_type);
+        $config = Config::fromFileName($config_file, $config_type);
 
         $this->registry->set($config->dependencies);
 

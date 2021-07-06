@@ -17,6 +17,14 @@ final class Config {
         'dependencies' => [],
     ];
 
+    public static function fromFileName(string $file_name, ?ConfigType $type = null): self {
+        if (($type ??= ConfigType::fromFileName($file_name)) === null) {
+            throw new ContainerException("Cannot determine config type for file '$file_name'");
+        }
+
+        return $type->getParser($file_name)->parse();
+    }
+
     public function seal(): self {
         $this->is_sealed = true;
 
