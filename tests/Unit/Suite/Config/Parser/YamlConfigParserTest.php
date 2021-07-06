@@ -9,15 +9,34 @@ use Container\Core\Dependency\Dependency;
 use Container\Test\Unit\Stub\ClassDependencyInterface;
 use Container\Test\Unit\Stub\ClassWithNestedDependencies;
 use Container\Test\Unit\Stub\ClassWithoutDependency;
+use org\bovigo\vfs\vfsStream as TemporaryFileSystem;
+use org\bovigo\vfs\vfsStreamDirectory as TemporaryDirectory;
+use org\bovigo\vfs\vfsStreamFile as TemporaryFile;
+use PHPUnit\Framework\TestCase;
 
-class YamlConfigParserTest extends ConfigParserTest {
+class YamlConfigParserTest extends TestCase {
+
+    private TemporaryDirectory $directory;
 
     private Dependency $dependency_1;
 
     private Dependency $dependency_2;
 
     protected function setUp(): void {
-        parent::setUp();
+        $this->directory = TemporaryFileSystem::setup('config', null, [
+            'dependencies.yaml' => <<<YAML
+---
+dependencies:
+  - shared: false
+    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
+    definition: Container\Test\Unit\Stub\ClassWithoutDependency
+
+  - shared: true
+    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
+    definition: Container\Test\Unit\Stub\ClassWithNestedDependencies
+YAML
+    ,
+        ]);
 
         $this->dependency_1 = Dependency::transient(
             ClassDependencyInterface::class,
@@ -31,8 +50,7 @@ class YamlConfigParserTest extends ConfigParserTest {
 
     public function test_that_parses_dependencies_from_file(): void {
         // given
-        $file_path = $this->getConfigPath($this->getConfigName());
-        $config_parser = new YamlConfigParser($file_path);
+        $config_parser = new YamlConfigParser($this->getFilePath('dependencies.yaml'));
 
         // when
         $config = $config_parser->parse();
@@ -54,29 +72,23 @@ class YamlConfigParserTest extends ConfigParserTest {
 
     public function test_that_throws_exception_parsing_invalid_yaml_file(): void {
         // given
-        $this->addTempFile('sample_file.txt', 'sample text');
-        $config_parser = new YamlConfigParser($this->getConfigPath('sample_file.txt'));
+        $file_path = $this->addFileToDirectory('sample_file.txt', 'sample text');
+        $config_parser = new YamlConfigParser($file_path);
 
         // when/then
         $this->expectException(ConfigParserException::class);
         $config_parser->parse();
     }
 
-    protected function getConfigName(): string {
-        return 'dependencies.yaml';
+    private function addFileToDirectory(string $file_name, string $file_content = null): string {
+        $this->directory->addChild(
+            (new TemporaryFile($file_name))->withContent($file_content)
+        );
+
+        return $this->directory->getChild($file_name)->url();
     }
 
-    protected function getConfigContent(): string {
-        return <<<YAML
----
-dependencies:
-  - shared: false
-    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
-    definition: Container\Test\Unit\Stub\ClassWithoutDependency
-
-  - shared: true
-    abstract: Container\Test\Unit\Stub\ClassDependencyInterface
-    definition: Container\Test\Unit\Stub\ClassWithNestedDependencies
-YAML;
+    private function getFilePath(string $file_name): string {
+        return $this->directory->getChild($file_name)->url();
     }
 }

@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core;
+namespace Container\Core\Config;
 
+use Container\Core\ContainerException;
 use Container\Core\Dependency\Dependency;
 
 /**
  * @property Dependency[] $dependencies Predefined container dependencies.
  */
-final class ContainerConfig {
+final class Config {
 
     private bool $is_sealed = false;
 

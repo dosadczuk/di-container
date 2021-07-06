@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Core\Config\Parser;
 
-use Container\Core\ContainerConfig;
+use Container\Core\Config\Config;
 use Container\Core\Dependency\Dependency;
 
 final class JsonConfigParser implements ConfigParser {
@@ -20,13 +20,13 @@ final class JsonConfigParser implements ConfigParser {
         }
     }
 
-    public function parse(): ContainerConfig {
-        $config = $this->loadConfigFile();
+    public function parse(): Config {
+        $structure = $this->loadConfigFile();
 
-        $container = new ContainerConfig();
-        $container->dependencies = $this->parseDependencies($config);
+        $config = new Config();
+        $config->dependencies = $this->parseDependencies($structure);
 
-        return $container->seal();
+        return $config->seal();
     }
 
     private function loadConfigFile(): array {

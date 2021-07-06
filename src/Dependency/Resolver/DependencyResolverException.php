@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Container\Core\Dependency\Resolver;
 
-final class DependencyResolverException extends \RuntimeException {
+use Container\Core\ContainerException;
+
+final class DependencyResolverException extends ContainerException {
 
     public function __construct(string $message = '', int $code = 0, \Throwable $previous = null) {
         if (empty($message)) {
