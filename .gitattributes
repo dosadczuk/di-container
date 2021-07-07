@@ -1,2 +1,7 @@
+# Config
+.gitattributes      export-ignore
+.gitignore          export-ignore
+
+# PHPUnit
 /tests              export-ignore
 /phpunit.xml        export-ignore
