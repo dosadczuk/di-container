@@ -49,15 +49,15 @@ final class ClassDependencyResolver implements DependencyResolver {
 
     private function instantiateClassProperties(\ReflectionClass $class, object $class_instance): void {
         foreach ($class->getProperties() as $property) {
-            if (!$property->isPublic()) {
-                $property->setAccessible(true);
-            }
-
             if (count($property->getAttributes(Inject::class)) === 0) {
                 continue; // no attribute => not injectable
             }
 
             $property_value = $this->resolveProperty($property);
+
+            if (!$property->isPublic()) {
+                $property->setAccessible(true);
+            }
 
             $property->setValue($class_instance, $property_value);
         }
@@ -68,15 +68,15 @@ final class ClassDependencyResolver implements DependencyResolver {
      */
     private function instantiateClassSetters(\ReflectionClass $class, object $class_instance): void {
         foreach ($class->getMethods() as $method) {
-            if (!$method->isPublic()) {
-                $method->setAccessible(true);
-            }
-
             if (count($method->getAttributes(Inject::class)) === 0) {
                 continue; // no attribute => not injectable
             }
 
             $method_parameters = $this->resolveParameters($method->getParameters());
+
+            if (!$method->isPublic()) {
+                $method->setAccessible(true);
+            }
 
             $method->invokeArgs($class_instance, $method_parameters);
         }
