@@ -35,7 +35,7 @@ final class Container {
     public function load(string $config_file, ConfigType $config_type = null): self {
         $config = Config::fromFileName($config_file, $config_type);
 
-        $this->registry->set($config->dependencies);
+        $this->registry->merge($config->dependencies);
 
         return $this;
     }

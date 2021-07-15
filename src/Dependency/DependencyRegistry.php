@@ -66,19 +66,6 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     /**
-     * Fill registry with dependencies (replaces all existing entries).
-     *
-     * @param Dependency[] $dependencies
-     */
-    public function set(array $dependencies): void {
-        $this->clear();
-
-        foreach ($dependencies as $dependency) {
-            $this->add($dependency);
-        }
-    }
-
-    /**
      * Add dependency to registry.
      */
     public function add(Dependency $dependency): void {
@@ -101,9 +88,13 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     /**
-     * Remove all entries.
+     * Merge registry with dependencies.
+     *
+     * @param Dependency[] $dependencies
      */
-    public function clear(): void {
-        $this->exchangeArray([]);
+    public function merge(array $dependencies): void {
+        foreach ($dependencies as $dependency) {
+            $this[$dependency->getAbstract()] = $dependency;
+        }
     }
 }
