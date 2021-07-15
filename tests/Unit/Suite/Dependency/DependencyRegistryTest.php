@@ -26,14 +26,6 @@ class DependencyRegistryTest extends TestCase {
         $this->assertEmpty($registry);
     }
 
-    public function test_that_makes_dependency_from_closure(): void {
-        // given/when
-        $instance = $this->registry->make(fn() => new ClassWithoutDependency());
-
-        // then
-        $this->assertInstanceOf(ClassWithoutDependency::class, $instance);
-    }
-
     public function test_that_makes_dependency_from_class(): void {
         // given/when
         $instance = $this->registry->make(ClassWithoutDependency::class);

@@ -20,8 +20,8 @@ final class DependencyRegistry extends \ArrayObject {
     /**
      * Resolve dependency from registry.
      */
-    public function make(string|\Closure $abstract, array $parameters = []): object {
-        if ($abstract instanceof \Closure || !$this->has($abstract)) {
+    public function make(string $abstract, array $parameters = []): object {
+        if (!$this->has($abstract)) {
             return $this->resolve($abstract, $parameters);
         }
 
