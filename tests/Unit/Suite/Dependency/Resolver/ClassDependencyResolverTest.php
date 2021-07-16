@@ -5,6 +5,7 @@ namespace Container\Test\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
+use Container\Test\Unit\Stub\ClassOneWithClassTwoConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
 use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
 use Container\Test\Unit\Stub\ClassWithBuiltinTypedPropertyDependency;
@@ -14,6 +15,7 @@ use Container\Test\Unit\Stub\ClassWithNonTypedConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithNonTypedPropertyDependency;
 use Container\Test\Unit\Stub\ClassWithoutDependency;
 use Container\Test\Unit\Stub\ClassWithPropertyDependency;
+use Container\Test\Unit\Stub\ClassWithSelfConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithSetterDependency;
 use Container\Test\Unit\Stub\ClassWithUnionTypedConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithUnionTypedPropertyDependency;
@@ -154,7 +156,21 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver->resolve();
     }
 
-    public function test_that_throws_exception_resolving_class_with_cycling_dependencies(): void {
-        $this->markTestSkipped('Feature still to add');
+    public function test_that_throws_exception_resolving_class_with_self_as_constructor_dependency(): void {
+        // given
+        $resolver = new ClassDependencyResolver(ClassWithSelfConstructorDependency::class);
+
+        // when/then
+        $this->expectException(DependencyResolverException::class);
+        $resolver->resolve();
+    }
+
+    public function test_that_throws_exception_resolving_class_with_cycling_dependency(): void {
+        // given
+        $resolver = new ClassDependencyResolver(ClassOneWithClassTwoConstructorDependency::class);
+
+        // when/then
+        $this->expectException(DependencyResolverException::class);
+        $resolver->resolve();
     }
 }

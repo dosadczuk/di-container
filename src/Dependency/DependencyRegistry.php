@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Container\Core\Dependency;
 
 use Container\Core\ContainerException;
-use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Core\Dependency\Resolver\DependencyResolverFactory;
 
 final class DependencyRegistry extends \ArrayObject {
@@ -40,11 +39,7 @@ final class DependencyRegistry extends \ArrayObject {
     }
 
     private function resolve(string|\Closure $definition, array $parameters): object {
-        try {
-            return $this->resolver_factory->createResolver($definition)->resolve($parameters);
-        } catch (DependencyResolverException $e) {
-            throw new ContainerException($e->getMessage(), $e->getCode(), $e);
-        }
+        return $this->resolver_factory->createResolver($definition)->resolve($parameters);
     }
 
     /**

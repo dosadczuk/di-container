@@ -12,18 +12,27 @@ final class ClassDependencyResolver implements DependencyResolver {
     use ResolvesProperties,
         ResolvesParameters;
 
+    private ClassDependencyGraph $dependency_graph;
+
     public function __construct(
         private string $class_name
     ) {
+        $this->dependency_graph = new ClassDependencyGraph($class_name);
     }
 
     public function resolve(array $parameters = []): object {
+        if ($this->dependency_graph->isCyclic()) {
+            throw new DependencyResolverException(
+                "{$this->class_name} contains cyclic dependencies"
+            );
+        }
+
         try {
             $class = new \ReflectionClass($this->class_name);
 
             $class_instance = $this->instantiateClass($class, $parameters);
             $this->instantiateClassProperties($class, $class_instance);
-            $this->instantiateClassSetters($class, $class_instance);
+            $this->instantiateClassMethods($class, $class_instance);
 
             return $class_instance;
         } catch (\ReflectionException $e) {
@@ -49,8 +58,9 @@ final class ClassDependencyResolver implements DependencyResolver {
 
     private function instantiateClassProperties(\ReflectionClass $class, object $class_instance): void {
         foreach ($class->getProperties() as $property) {
-            if (count($property->getAttributes(Inject::class)) === 0) {
-                continue; // no attribute => not injectable
+            $is_injectable = count($property->getAttributes(Inject::class)) > 0;
+            if (!$is_injectable) {
+                continue;
             }
 
             $property_value = $this->resolveProperty($property);
@@ -66,10 +76,11 @@ final class ClassDependencyResolver implements DependencyResolver {
     /**
      * @throws \ReflectionException
      */
-    private function instantiateClassSetters(\ReflectionClass $class, object $class_instance): void {
+    private function instantiateClassMethods(\ReflectionClass $class, object $class_instance): void {
         foreach ($class->getMethods() as $method) {
-            if (count($method->getAttributes(Inject::class)) === 0) {
-                continue; // no attribute => not injectable
+            $is_injectable = count($method->getAttributes(Inject::class)) > 0;
+            if (!$is_injectable) {
+                continue;
             }
 
             $method_parameters = $this->resolveParameters($method->getParameters());
