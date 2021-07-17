@@ -45,17 +45,17 @@ trait ResolvesParameters {
         }
 
         if ($parameter_type instanceof \ReflectionNamedType) {
+            if ($parameter->isDefaultValueAvailable()) {
+                return $parameter->getDefaultValue();
+            }
+
             if (!$parameter_type->isBuiltin()) {
                 return Container::getInstance()->make($parameter_type->getName());
             }
 
-            if (!$parameter->isDefaultValueAvailable()) {
-                throw new DependencyResolverException(
-                    "Cannot resolve builtin parameter '\${$parameter->getName()}' without default value"
-                );
-            }
-
-            return $parameter->getDefaultValue();
+            throw new DependencyResolverException(
+                "Cannot resolve builtin parameter '\${$parameter->getName()}' without default value"
+            );
         }
 
         throw new DependencyResolverException(

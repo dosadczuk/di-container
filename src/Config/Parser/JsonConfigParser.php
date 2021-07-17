@@ -46,13 +46,13 @@ final class JsonConfigParser implements ConfigParser {
     /**
      * @return Dependency[]
      */
-    private function parseDependencies(array $container): array {
-        if (!array_key_exists('dependencies', $container)) {
-            return []; // not defined => nothing to parse
+    private function parseDependencies(array $config): array {
+        if (!array_key_exists('dependencies', $config)) {
+            return []; // nothing to parse
         }
 
         $dependencies = [];
-        foreach ($container['dependencies'] as $dependency) {
+        foreach ($config['dependencies'] as $dependency) {
             try {
                 $dependencies[] = new Dependency(
                     $this->getDependencyIsShared($dependency),
@@ -69,12 +69,12 @@ final class JsonConfigParser implements ConfigParser {
 
     private function getDependencyIsShared(array $dependency): bool {
         if (!array_key_exists('shared', $dependency)) {
-            return false; // default value => transient
+            return false; // transient
         }
 
         $is_shared = filter_var($dependency['shared'], FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
         if ($is_shared === null) {
-            return false; // default => transient
+            return false; // transient
         }
 
         return $is_shared;
@@ -88,7 +88,7 @@ final class JsonConfigParser implements ConfigParser {
         return $dependency['abstract'];
     }
 
-    private function getDependencyDefinition(array $dependency) {
+    private function getDependencyDefinition(array $dependency): ?string {
         return $dependency['definition'] ?? null;
     }
 }

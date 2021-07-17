@@ -52,7 +52,7 @@ final class YamlConfigParser implements ConfigParser {
      */
     private function parseDependencies(array $config): array {
         if (!array_key_exists('dependencies', $config)) {
-            return []; // not defined => nothing to parse
+            return []; // nothing to parse
         }
 
         $dependencies = [];
@@ -73,12 +73,12 @@ final class YamlConfigParser implements ConfigParser {
 
     private function getDependencyIsShared(array $dependency): bool {
         if (!array_key_exists('shared', $dependency)) {
-            return false; // default value => transient
+            return false; // transient
         }
 
         $is_shared = filter_var($dependency['shared'], FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
         if ($is_shared === null) {
-            return false; // default => transient
+            return false; // transient
         }
 
         return $is_shared;
@@ -93,10 +93,6 @@ final class YamlConfigParser implements ConfigParser {
     }
 
     private function getDependencyDefinition(array $dependency): ?string {
-        if (!array_key_exists('definition', $dependency)) {
-            return null;
-        }
-
-        return $dependency['definition'];
+        return $dependency['definition'] ?? null;
     }
 }

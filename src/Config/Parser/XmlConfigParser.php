@@ -45,7 +45,7 @@ final class XmlConfigParser implements ConfigParser {
      */
     private function parseDependencies(\SimpleXMLElement $config): array {
         if (!isset($config->dependencies)) {
-            return []; // not defined => nothing to parse
+            return []; // nothing to parse
         }
 
         $dependencies = [];
@@ -71,12 +71,12 @@ final class XmlConfigParser implements ConfigParser {
     private function getDependencyIsShared(\SimpleXMLElement $dependency): bool {
         $shared = $dependency->attributes()->shared ?? null;
         if ($shared === null) {
-            return false; // default value => transient
+            return false; // transient
         }
 
         $is_shared = filter_var($shared, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
         if ($is_shared === null) {
-            return false; // default => transient
+            return false; // transient
         }
 
         return $is_shared;
@@ -94,7 +94,7 @@ final class XmlConfigParser implements ConfigParser {
     private function getDependencyDefinition(\SimpleXMLElement $dependency): ?string {
         $definition = $dependency->definition ?? null;
         if ($definition === null) {
-            return null; // no definition => definition = abstract
+            return null;
         }
 
         return (string)$definition;

@@ -7,7 +7,7 @@ use Container\Core\Attribute\Inject;
 
 final class ClassDependencyGraph {
 
-    private static array $classes_adjacency_list = [];
+    private static array $class_adjacency_lists = [];
 
     public function __construct(
         private string $class_name
@@ -28,18 +28,18 @@ final class ClassDependencyGraph {
 
     private function isClassCyclic(string $class_name, array &$stacked, array &$visited): bool {
         if ($stacked[$class_name] ?? false) {
-            return true; // is on stack => cycle found
+            return true; // cycle found
         }
 
         if ($visited[$class_name] ?? false) {
-            return false; // visited and no cycle
+            return false; // no cycle
         }
 
         $stacked[$class_name] = true;
         $visited[$class_name] = true;
 
-        // check children recursivly
-        foreach (self::$classes_adjacency_list[$class_name] as $adjacent_class_name) {
+        // check children recursively
+        foreach (self::$class_adjacency_lists[$class_name] as $adjacent_class_name) {
             if ($this->isClassCyclic($adjacent_class_name, $stacked, $visited)) {
                 return true;
             }
@@ -51,11 +51,11 @@ final class ClassDependencyGraph {
     }
 
     private function createClassAdjacencyList(string $class_name): void {
-        if (isset(self::$classes_adjacency_list[$class_name])) {
+        if (isset(self::$class_adjacency_lists[$class_name])) {
             return; // already created, no need to recreate
         }
 
-        self::$classes_adjacency_list[$class_name] = [];
+        self::$class_adjacency_lists[$class_name] = [];
 
         try {
             $class = new \ReflectionClass($class_name);
@@ -63,8 +63,8 @@ final class ClassDependencyGraph {
             $this->scanClassProperties($class);
             $this->scanClassMethods($class);
 
-            // create lists for adjacent nodes to create full graph for $class_name
-            foreach (self::$classes_adjacency_list[$class_name] as $adjacent_class_name) {
+            // create adjacent list for nodes to create graph for $class_name
+            foreach (self::$class_adjacency_lists[$class_name] as $adjacent_class_name) {
                 $this->createClassAdjacencyList($adjacent_class_name);
             }
         } catch (\ReflectionException $e) {
@@ -84,7 +84,7 @@ final class ClassDependencyGraph {
                 return; // not resolvable
             }
 
-            self::$classes_adjacency_list[$class->getName()][] = $property_type->getName();
+            self::$class_adjacency_lists[$class->getName()][] = $property_type->getName();
         }
     }
 
@@ -101,7 +101,7 @@ final class ClassDependencyGraph {
                     continue; // not resolvale
                 }
 
-                self::$classes_adjacency_list[$class->getName()][] = $parameter_type->getName();
+                self::$class_adjacency_lists[$class->getName()][] = $parameter_type->getName();
             }
         }
     }

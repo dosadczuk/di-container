@@ -12,16 +12,16 @@ final class ClassDependencyResolver implements DependencyResolver {
     use ResolvesProperties,
         ResolvesParameters;
 
-    private ClassDependencyGraph $dependency_graph;
+    private ClassDependencyGraph $graph;
 
     public function __construct(
         private string $class_name
     ) {
-        $this->dependency_graph = new ClassDependencyGraph($class_name);
+        $this->graph = new ClassDependencyGraph($class_name);
     }
 
     public function resolve(array $parameters = []): object {
-        if ($this->dependency_graph->isCyclic()) {
+        if ($this->graph->isCyclic()) {
             throw new DependencyResolverException(
                 "{$this->class_name} contains cyclic dependencies"
             );
