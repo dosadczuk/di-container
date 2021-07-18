@@ -47,7 +47,7 @@ final class JsonConfigParser implements ConfigParser {
      * @return Dependency[]
      */
     private function parseDependencies(array $config): array {
-        if (!array_key_exists('dependencies', $config)) {
+        if (!isset($config['dependencies'])) {
             return []; // nothing to parse
         }
 
@@ -68,7 +68,7 @@ final class JsonConfigParser implements ConfigParser {
     }
 
     private function getDependencyIsShared(array $dependency): bool {
-        if (!array_key_exists('shared', $dependency)) {
+        if (!isset($dependency['shared'])) {
             return false; // transient
         }
 
@@ -81,7 +81,7 @@ final class JsonConfigParser implements ConfigParser {
     }
 
     private function getDependencyAbstract(array $dependency): string {
-        if (!array_key_exists('abstract', $dependency)) {
+        if (!isset($dependency['abstract'])) {
             throw new ConfigParserException("Dependency property 'abstract' is not defined");
         }
 

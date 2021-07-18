@@ -16,18 +16,18 @@ final class ClassDependencyGraph {
     }
 
     public function isCyclic(): bool {
-        $nodes_stacked = [];
-        $nodes_visited = [];
+        $classes_in_path = [];
+        $classes_visited = [];
 
-        return $this->isClassCyclic(
+        return $this->isCyclicClass(
             $this->class_name,
-            $nodes_stacked,
-            $nodes_visited
+            $classes_in_path,
+            $classes_visited
         );
     }
 
-    private function isClassCyclic(string $class_name, array &$stacked, array &$visited): bool {
-        if ($stacked[$class_name] ?? false) {
+    private function isCyclicClass(string $class_name, array &$in_path, array &$visited): bool {
+        if ($in_path[$class_name] ?? false) {
             return true; // cycle found
         }
 
@@ -35,17 +35,16 @@ final class ClassDependencyGraph {
             return false; // no cycle
         }
 
-        $stacked[$class_name] = true;
+        $in_path[$class_name] = true;
         $visited[$class_name] = true;
 
-        // check children recursively
         foreach (self::$class_adjacency_lists[$class_name] as $adjacent_class_name) {
-            if ($this->isClassCyclic($adjacent_class_name, $stacked, $visited)) {
+            if ($this->isCyclicClass($adjacent_class_name, $in_path, $visited)) {
                 return true;
             }
         }
 
-        unset($stacked[$class_name]);
+        unset($in_path[$class_name]);
 
         return false;
     }
@@ -80,8 +79,10 @@ final class ClassDependencyGraph {
             }
 
             $property_type = $property->getType();
-            if (!$property_type instanceof \ReflectionNamedType || $property_type->isBuiltin()) {
-                return; // not resolvable
+
+            $is_resolvable = $property_type instanceof \ReflectionNamedType && !$property_type->isBuiltin();
+            if (!$is_resolvable) {
+                continue;
             }
 
             self::$class_adjacency_lists[$class->getName()][] = $property_type->getName();
@@ -97,8 +98,10 @@ final class ClassDependencyGraph {
 
             foreach ($method->getParameters() as $parameter) {
                 $parameter_type = $parameter->getType();
-                if (!$parameter_type instanceof \ReflectionNamedType || $parameter_type->isBuiltin()) {
-                    continue; // not resolvale
+
+                $is_resolvable = $parameter_type instanceof \ReflectionNamedType && !$parameter_type->isBuiltin();
+                if (!$is_resolvable) {
+                    continue;
                 }
 
                 self::$class_adjacency_lists[$class->getName()][] = $parameter_type->getName();
