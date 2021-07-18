@@ -6,8 +6,7 @@ namespace Container\Test\Unit\Suite\Dependency\Resolver;
 use Container\Core\Dependency\Resolver\ClassDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
 use Container\Test\Unit\Stub\ClassOneWithClassTwoConstructorDependency;
-use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue;
-use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithBuiltinTypedPropertyDependency;
 use Container\Test\Unit\Stub\ClassWithConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithNestedDependencies;
@@ -127,24 +126,13 @@ class ClassDependencyResolverTest extends TestCase {
         $resolver->resolve();
     }
 
-    public function test_that_throws_exception_trying_to_resolve_parameter_with_builtin_type_and_without_default_value(): void {
+    public function test_that_throws_exception_trying_to_resolve_parameter_with_builtin_type(): void {
         // given
-        $resolver = new ClassDependencyResolver(ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue::class);
+        $resolver = new ClassDependencyResolver(ClassWithBuiltinTypedConstructorDependency::class);
 
         // when/then
         $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
-    }
-
-    public function test_that_resolves_class_with_constructor_builtin_dependency_with_default_value(): void {
-        // given
-        $resolver = new ClassDependencyResolver(ClassWithBuiltinTypedConstructorDependencyAndWithDefaultValue::class);
-
-        // when
-        $dependency = $resolver->resolve();
-
-        // then
-        $this->assertNotEmpty($dependency);
     }
 
     public function test_that_throws_exception_trying_to_resolve_parameter_with_union_type(): void {

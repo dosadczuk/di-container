@@ -5,7 +5,7 @@ namespace Container\Test\Unit\Suite\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\ClosureDependencyResolver;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
-use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue;
+use Container\Test\Unit\Stub\ClassWithBuiltinTypedConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithConstructorDependency;
 use Container\Test\Unit\Stub\ClassWithNestedDependencies;
 use Container\Test\Unit\Stub\ClassWithoutDependency;
@@ -103,28 +103,15 @@ class ClosureDependencyResolverTest extends TestCase {
         $resolver->resolve();
     }
 
-    public function test_that_throws_exception_trying_to_resolve_parameter_with_builtin_type_and_without_default_value(): void {
+    public function test_that_throws_exception_trying_to_resolve_parameter_with_builtin_type(): void {
         // given
         $resolver = new ClosureDependencyResolver(function (string $dependency) {
-            return new ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue($dependency);
+            return new ClassWithBuiltinTypedConstructorDependency($dependency);
         });
 
         // when/then
         $this->expectException(DependencyResolverException::class);
         $resolver->resolve();
-    }
-
-    public function test_that_resolves_closure_with_constructor_builtin_dependency_with_default_value(): void {
-        // given
-        $resolver = new ClosureDependencyResolver(function (string $dependency = 'dependency') {
-            return new ClassWithBuiltinTypedConstructorDependencyAndWithoutDefaultValue($dependency);
-        });
-
-        // when
-        $dependency = $resolver->resolve();
-
-        // then
-        $this->assertNotEmpty($dependency);
     }
 
     public function test_that_throws_exception_trying_to_resolve_parameter_with_union_type(): void {

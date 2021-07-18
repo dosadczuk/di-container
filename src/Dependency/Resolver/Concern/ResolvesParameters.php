@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Container\Core\Dependency\Resolver\Concern;
 
-use Container\Core\Container;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
+use function Container\Core\make;
 
 trait ResolvesParameters {
 
@@ -12,7 +12,7 @@ trait ResolvesParameters {
      * @param \ReflectionParameter[] $parameters
      * @param array<string, object> $defaults
      *
-     * @throws \ReflectionException
+     * @return object[]
      */
     private function resolveParameters(array $parameters, array $defaults = []): array {
         return array_map(
@@ -27,35 +27,28 @@ trait ResolvesParameters {
         );
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    private function resolveParameter(\ReflectionParameter $parameter): mixed {
-        $parameter_type = $parameter->getType();
-        if ($parameter_type === null) {
+    private function resolveParameter(\ReflectionParameter $parameter): object {
+        if (!$parameter->hasType()) {
             throw new DependencyResolverException(
-                "Cannot resolve not type parameter '\${$parameter->getName()}'"
+                "Cannot resolve not typed parameter '\${$parameter->getName()}'"
             );
         }
 
+        $parameter_type = $parameter->getType();
         if ($parameter_type instanceof \ReflectionUnionType) {
             throw new DependencyResolverException(
-                "Cannot resolve union parameter '\${$parameter->getName()}'"
+                "Cannot resolve union typed parameter '\${$parameter->getName()}'"
             );
         }
 
         if ($parameter_type instanceof \ReflectionNamedType) {
-            if ($parameter->isDefaultValueAvailable()) {
-                return $parameter->getDefaultValue();
+            if ($parameter_type->isBuiltin()) {
+                throw new DependencyResolverException(
+                    "Cannot resolve builtin typed parameter '\${$parameter->getName()}'"
+                );
             }
 
-            if (!$parameter_type->isBuiltin()) {
-                return Container::getInstance()->make($parameter_type->getName());
-            }
-
-            throw new DependencyResolverException(
-                "Cannot resolve builtin parameter '\${$parameter->getName()}' without default value"
-            );
+            return make($parameter_type->getName());
         }
 
         throw new DependencyResolverException(
