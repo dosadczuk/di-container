@@ -76,7 +76,7 @@ final class XmlConfigParser implements ConfigParser {
 
         $is_shared = filter_var($shared, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
         if ($is_shared === null) {
-            return false; // transient
+            throw new ConfigParserException("Dependency attribute 'shared' is not valid bool value");
         }
 
         return $is_shared;

@@ -74,7 +74,7 @@ final class JsonConfigParser implements ConfigParser {
 
         $is_shared = filter_var($dependency['shared'], FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
         if ($is_shared === null) {
-            return false; // transient
+            throw new ConfigParserException("Dependency property 'shared' is not valid bool value");
         }
 
         return $is_shared;
