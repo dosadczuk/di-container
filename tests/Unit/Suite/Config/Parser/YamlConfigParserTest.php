@@ -35,7 +35,7 @@ dependencies:
     abstract: Container\Test\Unit\Stub\ClassDependencyInterface
     definition: Container\Test\Unit\Stub\ClassWithNestedDependencies
 YAML
-    ,
+            ,
         ]);
 
         $this->dependency_1 = Dependency::transient(
