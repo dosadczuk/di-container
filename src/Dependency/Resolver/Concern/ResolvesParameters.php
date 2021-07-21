@@ -6,6 +6,9 @@ namespace Container\Core\Dependency\Resolver\Concern;
 use Container\Core\Dependency\Resolver\DependencyResolverException;
 use function Container\Core\make;
 
+/**
+ * @internal
+ */
 trait ResolvesParameters {
 
     /**

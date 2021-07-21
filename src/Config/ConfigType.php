@@ -8,6 +8,9 @@ use Container\Core\Config\Parser\JsonConfigParser;
 use Container\Core\Config\Parser\XmlConfigParser;
 use Container\Core\Config\Parser\YamlConfigParser;
 
+/**
+ * @internal
+ */
 final class ConfigType implements \Stringable {
 
     private const YAML = 'yaml';

@@ -3,26 +3,17 @@ declare(strict_types=1);
 
 namespace Container\Core\Dependency;
 
+/**
+ * @internal
+ */
 final class Dependency {
 
-    /**
-     * Is dependency registered as shared.
-     */
     private bool $is_shared;
 
-    /**
-     * Abstract.
-     */
     private string $abstract;
 
-    /**
-     * Implementation of abstract.
-     */
     private string|\Closure $definition;
 
-    /**
-     * Resolved instance. {@see null} means not resolved or dependency not shared.
-     */
     private ?object $instance = null;
 
     public function __construct(bool $is_shared, string $abstract, null|string|\Closure $definition = null) {

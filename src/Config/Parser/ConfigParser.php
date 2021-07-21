@@ -5,6 +5,9 @@ namespace Container\Core\Config\Parser;
 
 use Container\Core\Config\Config;
 
+/**
+ * @internal
+ */
 interface ConfigParser {
 
     /**

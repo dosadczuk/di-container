@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Container\Test\Unit\Suite\Dependency;
 
-use Container\Core\ContainerException;
 use Container\Core\Dependency\Dependency;
 use Container\Core\Dependency\DependencyRegistry;
 use Container\Test\Unit\Stub\ClassDependencyInterface;
@@ -80,9 +79,12 @@ class DependencyRegistryTest extends TestCase {
     }
 
     public function test_that_throws_exception_trying_to_get_not_registered_dependency(): void {
+        // given
+        $not_registered_class = ClassWithoutDependency::class;
+
         // when/then
-        $this->expectException(ContainerException::class);
-        $this->registry->get(ClassWithoutDependency::class);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->registry->get($not_registered_class);
     }
 
     public function test_that_adds_dependency(): void {
@@ -103,7 +105,7 @@ class DependencyRegistryTest extends TestCase {
         );
 
         // when/then
-        $this->expectException(ContainerException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->registry->add($dependency);
     }
 
@@ -122,8 +124,11 @@ class DependencyRegistryTest extends TestCase {
     }
 
     public function test_that_throws_exception_trying_to_remove_not_existing_dependency(): void {
+        // given
+        $not_registered_class = ClassWithoutDependency::class;
+
         // when/then
-        $this->expectException(ContainerException::class);
-        $this->registry->remove(ClassWithoutDependency::class);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->registry->remove($not_registered_class);
     }
 }

@@ -5,6 +5,9 @@ namespace Container\Core\Dependency\Resolver;
 
 use Container\Core\Attribute\Inject;
 
+/**
+ * @internal
+ */
 final class ClassDependencyGraph {
 
     private static array $class_adjacency_lists = [];

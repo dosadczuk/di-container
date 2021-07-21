@@ -7,6 +7,9 @@ use Container\Core\Attribute\Inject;
 use Container\Core\Dependency\Resolver\Concern\ResolvesParameters;
 use Container\Core\Dependency\Resolver\Concern\ResolvesProperties;
 
+/**
+ * @internal
+ */
 final class ClassDependencyResolver implements DependencyResolver {
 
     use ResolvesProperties,

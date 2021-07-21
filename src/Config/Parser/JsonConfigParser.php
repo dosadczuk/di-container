@@ -6,6 +6,9 @@ namespace Container\Core\Config\Parser;
 use Container\Core\Config\Config;
 use Container\Core\Dependency\Dependency;
 
+/**
+ * @internal
+ */
 final class JsonConfigParser implements ConfigParser {
 
     public function __construct(

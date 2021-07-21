@@ -5,6 +5,9 @@ namespace Container\Core\Dependency\Resolver;
 
 use Container\Core\Dependency\Resolver\Concern\ResolvesParameters;
 
+/**
+ * @internal
+ */
 final class ClosureDependencyResolver implements DependencyResolver {
 
     use ResolvesParameters;

@@ -5,6 +5,8 @@ namespace Container\Core;
 
 /**
  * Get Container instance.
+ *
+ * @api
  */
 function container(): Container {
     return Container::getInstance();
@@ -17,6 +19,8 @@ function container(): Container {
  * @param array $parameters Optional parameters.
  *
  * @return object Instance of abstract.
+ *
+ * @api
  */
 function make(string $abstract, array $parameters = []): object {
     return Container::getInstance()->make($abstract, $parameters);
@@ -27,6 +31,8 @@ function make(string $abstract, array $parameters = []): object {
  *
  * @param string $abstract Base class/interface.
  * @param string|\Closure $definition Optional implementation.
+ *
+ * @api
  */
 function register(string $abstract, string|\Closure $definition): void {
     Container::getInstance()->register($abstract, $definition);
@@ -37,6 +43,8 @@ function register(string $abstract, string|\Closure $definition): void {
  *
  * @param string $abstract Base class/interface.
  * @param string|\Closure|null $definition Optional implementation.
+ *
+ * @api
  */
 function register_shared(string $abstract, string|\Closure $definition = null): void {
     Container::getInstance()->registerShared($abstract, $definition);
@@ -46,6 +54,8 @@ function register_shared(string $abstract, string|\Closure $definition = null): 
  * Unregister dependency.
  *
  * @param string $abstract Base class/interface.
+ *
+ * @api
  */
 function unregister(string $abstract): void {
     Container::getInstance()->unregister($abstract);
@@ -55,6 +65,8 @@ function unregister(string $abstract): void {
  * Check if dependency is registered.
  *
  * @param string $abstract Base class/interface.
+ *
+ * @api
  */
 function is_registered(string $abstract): bool {
     return Container::getInstance()->isRegistered($abstract);
