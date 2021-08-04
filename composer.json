@@ -41,11 +41,6 @@
       "Container\\Test\\": "tests/"
     }
   },
-  "config": {
-    "platform": {
-      "php": "8.0.0"
-    }
-  },
   "extra": {
     "hooks": {
       "config": {
