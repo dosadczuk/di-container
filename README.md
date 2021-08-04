@@ -4,7 +4,9 @@ Simple implementation of Dependency Injection container for learning purpose onl
 
 ## Dependency injection methods
 
-### Constructor injection
+<details>
+<summary>Definition of used classes</summary>
+<p>
 
 ```php
 class UserRepository {
@@ -12,17 +14,20 @@ class UserRepository {
         return [ 'Bob', 'Alice' ];
     }
 }
+```
 
+</p>
+</details>
+
+### Class constructor injection
+
+```php
 class UserService {
 
     private UserRepository $repository;
     
     public function __construct(UserRepository $repository) {
         $this->repository = $repository;
-    }
-
-    public function getUsers(): array {
-        return $this->repository->getUsers();
     }
 }
 ```
@@ -32,20 +37,10 @@ class UserService {
 ```php
 use Container\Core\Attribute\Inject;
 
-class UserRepository {
-    public function getUsers(): array {
-        return [ 'Bob', 'Alice' ];
-    }
-}
-
 class UserService {
 
     #[Inject]
     private UserRepository $repository;
-    
-    public function getUsers(): array {
-        return $this->repository->getUsers();
-    }
 }
 ```
 
@@ -54,12 +49,6 @@ class UserService {
 ```php
 use Container\Core\Attribute\Inject;
 
-class UserRepository {
-    public function getUsers(): array {
-        return [ 'Bob', 'Alice' ];
-    }
-}
-
 class UserService {
 
     private UserRepository $repository;
@@ -67,10 +56,6 @@ class UserService {
     #[Inject]
     public function setRepository(UserRepository $repository): void {
         $this->repository = $repository; 
-    }
-    
-    public function getUsers(): array {
-        return $this->repository->getUsers();
     }
 }
 ```
@@ -88,12 +73,16 @@ $user_service = Container::getInstance()->make(UserService::class);
 ### Using function
 
 ```php
-use function Container\Core\{make};
+use function Container\Core\make;
 
 $user_service = make(UserService::class);
 ```
 
 ## Class registration
+
+<details>
+<summary>Definition of used classes</summary>
+<p>
 
 ```php
 interface UserRepositoryInterface {
@@ -116,24 +105,8 @@ class UserService {
 } 
 ```
 
-### Shared dependency
-
-```php
-use Container\Core\Container;
-use function Container\Core\register_shared;
-
-// using Container instance and non-static method
-Container::getInstance()->registerShared(
-    UserRepositoryInterface::class, 
-    UserRepository::class
-);
-
-// or using function
-register_shared(
-    UserRepositoryInterface::class,
-    UserRepository::class
-);
-```
+</p>
+</details>
 
 ### Transient dependency
 
@@ -141,7 +114,7 @@ register_shared(
 use Container\Core\Container;
 use function Container\Core\register;
 
-// using Container instance and non-static method
+// using Container method
 Container::getInstance()->register(
     UserRepositoryInterface::class, 
     UserRepository::class
@@ -154,15 +127,42 @@ register(
 );
 ```
 
-```php
-use function Container\Core\make;
+### Shared dependency
 
-$user_service = make(UserService::class);
+```php
+use Container\Core\Container;
+use function Container\Core\register_shared;
+
+// using Container method
+Container::getInstance()->registerShared(
+    UserRepositoryInterface::class, 
+    UserRepository::class
+);
+
+// or using function
+register_shared(
+    UserRepositoryInterface::class,
+    UserRepository::class
+);
 ```
 
 ## Class registration (with closure)
 
+<details>
+<summary>Definition of used classes</summary>
+<p>
+
 ```php
+interface DatabaseInterface {
+    public function query(string $query): array;
+}
+
+class InMemoryDatabase implements DatabaseInterface {
+    public function query(string $query): array {
+        // some db query logic
+    }
+}
+
 class UserRepository {
 
     private DatabaseInterface $database;
@@ -190,70 +190,29 @@ class UserService {
 }
 ```
 
-```php
-use function Container\Core\{register_shared};
+</p>
+</details>
 
-register_shared(UserService::class, function() {
-    $repository = new UserRepository(new InMemoryDatabase());
+### Transient dependency
+
+```php
+use function Container\Core\register;
+
+register(UserService::class, function(InMemoryDatabase $database) {
+    $repository = new UserRepository($database);
 
     return new UserService($repository);
 });
 ```
 
-### More complex example
-
-```php
-interface MailerInterface {
-    public function send(string $recipient, string $title, string $message): int;
-}
-
-class InternalMailer implements MailerInterface {
-    // ... some logic
-
-    public function send(string $recipient, string $title, string $message): int {}
-}
-
-class ExternalMailer implements MailerInterface {
-    // ... some logic
-
-    public function send(string $recipient, string $title, string $message): int {}
-}
-
-class InternalUserService {
-
-    private MailerInterface $mailer;
-    
-    public function __construct(MailerInterface $mailer) {
-        $this->mailer = $mailer;
-    }
-    
-    public function sendMeetingReminder(): void {
-        // some logic to send email with $this->mailer
-    }
-}
-
-class ExternalUserService {
-
-    private MailerInterface $mailer;
-    
-    public function __construct(MailerInterface $mailer) {
-        $this->mailer = $mailer;
-    }
-    
-    public function sendNewsletter(): void {
-        // some logic to sent email with $this->mailer
-    }
-}
-```
+### Shared dependency
 
 ```php
 use function Container\Core\register_shared;
 
-register_shared(InternalUserService::class, function(InternalMailer $mailer) {
-    return new InternalUserService($mailer);
-});
+register_shared(UserService::class, function(InMemoryDatabase $database) {
+    $repository = new UserRepository($database);
 
-register_shared(ExternalUserService::class, function(ExternalMailer $mailer) {
-    return new ExternalUserService($mailer);
+    return new UserService($repository);
 });
 ```
