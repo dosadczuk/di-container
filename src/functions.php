@@ -15,10 +15,12 @@ function container(): Container {
 /**
  * Make instance of given abstract.
  *
- * @param string $abstract Name of the abstract.
+ * @template T
+ *
+ * @param class-string<T> $abstract Name of the abstract.
  * @param array $parameters Optional parameters.
  *
- * @return object Instance of abstract.
+ * @return T Instance of abstract.
  *
  * @api
  */
@@ -29,7 +31,7 @@ function make(string $abstract, array $parameters = []): object {
 /**
  * Register dependency.
  *
- * @param string $abstract Base class/interface.
+ * @param class-string $abstract Base class/interface.
  * @param string|\Closure $definition Optional implementation.
  *
  * @api
@@ -41,7 +43,7 @@ function register(string $abstract, string|\Closure $definition): void {
 /**
  * Register shared dependency.
  *
- * @param string $abstract Base class/interface.
+ * @param class-string $abstract Base class/interface.
  * @param string|\Closure|null $definition Optional implementation.
  *
  * @api
@@ -53,7 +55,7 @@ function register_shared(string $abstract, string|\Closure $definition = null): 
 /**
  * Unregister dependency.
  *
- * @param string $abstract Base class/interface.
+ * @param class-string $abstract Base class/interface.
  *
  * @api
  */
@@ -64,7 +66,7 @@ function unregister(string $abstract): void {
 /**
  * Check if dependency is registered.
  *
- * @param string $abstract Base class/interface.
+ * @param class-string $abstract Base class/interface.
  *
  * @api
  */

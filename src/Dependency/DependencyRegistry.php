@@ -18,6 +18,14 @@ final class DependencyRegistry extends \ArrayObject {
         $this->resolver_factory = new DependencyResolverFactory();
     }
 
+    /**
+     * @template T
+     *
+     * @param class-string<T> $abstract
+     * @param array $parameters
+     *
+     * @return T
+     */
     public function make(string $abstract, array $parameters = []): object {
         if (!$this->has($abstract)) {
             return $this->resolve($abstract, $parameters);

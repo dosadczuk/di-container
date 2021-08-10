@@ -47,10 +47,12 @@ final class Container {
     /**
      * Make instance of given abstract.
      *
-     * @param string $abstract Class/interface name.
+     * @template T
+     *
+     * @param class-string<T> $abstract Class/interface name.
      * @param array $parameters Optional parameters.
      *
-     * @return object Instance of abstract.
+     * @return T Instance of abstract.
      *
      * @api
      */
@@ -65,8 +67,8 @@ final class Container {
     /**
      * Register transient dependency.
      *
-     * @param string $abstract Class/interface name.
-     * @param string|\Closure $definition Optional implementation or factory function.
+     * @param class-string $abstract Class/interface name.
+     * @param string|\Closure $definition Implementation or factory function.
      *
      * @api
      */
@@ -81,7 +83,7 @@ final class Container {
     /**
      * Register shared dependency.
      *
-     * @param string $abstract Class/interface name.
+     * @param class-string $abstract Class/interface name.
      * @param string|\Closure|null $definition Optional implementation or factory function.
      *
      * @api
@@ -97,7 +99,7 @@ final class Container {
     /**
      * Unregister dependency.
      *
-     * @param string $abstract Class/interface name.
+     * @param class-string $abstract Class/interface name.
      *
      * @api
      */
@@ -112,7 +114,7 @@ final class Container {
     /**
      * Check if dependency is registered.
      *
-     * @param string $abstract Class/interface name.
+     * @param class-string $abstract Class/interface name.
      *
      * @api
      */
