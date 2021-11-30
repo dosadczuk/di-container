@@ -11,7 +11,7 @@ class ClassOneWithClassTwoConstructorDependency implements ClassDependencyInterf
 
     public function __construct(
         ClassTwoWithClassOneConstructorDependency $dependency_with_cycle,
-        ClassWithPropertyDependency $dependency_with_property
+        ClassWithPropertyDependency               $dependency_with_property
     ) {
         $this->dependency_with_cycle = $dependency_with_cycle;
         $this->dependency_with_property = $dependency_with_property;

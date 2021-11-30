@@ -13,8 +13,8 @@ class ClassWithNestedDependencies implements ClassDependencyInterface {
 
     public function __construct(
         ClassWithConstructorDependency $dependency_with_constructor,
-        ClassWithPropertyDependency $dependency_with_property,
-        ClassWithSetterDependency $dependency_with_setter
+        ClassWithPropertyDependency    $dependency_with_property,
+        ClassWithSetterDependency      $dependency_with_setter
     ) {
         $this->dependency_with_constructor = $dependency_with_constructor;
         $this->dependency_with_property = $dependency_with_property;

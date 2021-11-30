@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
-use Container\Core\Config\Config;
-use Container\Core\Config\ConfigType;
-use Container\Core\Dependency\Dependency;
-use Container\Core\Dependency\DependencyRegistry;
-
 final class Container {
 
     private static ?self $instance = null;
