@@ -35,7 +35,7 @@ final class XmlConfigParser implements ConfigParser {
     private function loadConfigFile(): \SimpleXMLElement {
         libxml_use_internal_errors(true);
 
-        $config = simplexml_load_file($this->file_name);
+        $config = simplexml_load_string(file_get_contents($this->file_name));
         if ($config === false) {
             throw new ConfigParserException("Cannot load file '$this->file_name'");
         }
@@ -52,7 +52,7 @@ final class XmlConfigParser implements ConfigParser {
         }
 
         $dependencies = [];
-        foreach ($config->dependencies->dependency ?? [] as $dependency) {
+        foreach ($config->dependencies->dependency as $dependency) {
             if ($dependency === null) {
                 continue; // if somehow happens
             }

@@ -34,7 +34,7 @@ final class YamlConfigParser implements ConfigParser {
 
     private function loadConfigFile(): array {
         $file_content = file_get_contents($this->file_name);
-        if ($file_content === null) {
+        if ($file_content === false) {
             throw new ConfigParserException("Cannot load file '$this->file_name'");
         }
 

@@ -66,13 +66,7 @@ final class ClassResolver implements Resolver {
                 continue;
             }
 
-            $property_value = $this->resolveProperty($property);
-
-            if (!$property->isPublic()) {
-                $property->setAccessible(true);
-            }
-
-            $property->setValue($class_instance, $property_value);
+            $property->setValue($class_instance, $this->resolveProperty($property));
         }
     }
 
@@ -86,13 +80,7 @@ final class ClassResolver implements Resolver {
                 continue;
             }
 
-            $method_parameters = $this->resolveParameters($method->getParameters());
-
-            if (!$method->isPublic()) {
-                $method->setAccessible(true);
-            }
-
-            $method->invokeArgs($class_instance, $method_parameters);
+            $method->invokeArgs($class_instance, $this->resolveParameters($method->getParameters()));
         }
     }
 }

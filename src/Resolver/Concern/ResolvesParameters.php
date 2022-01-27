@@ -20,11 +20,7 @@ trait ResolvesParameters {
     private function resolveParameters(array $parameters, array $defaults = []): array {
         return array_map(
             function (\ReflectionParameter $parameter) use ($defaults) {
-                if (isset($defaults[$parameter->getName()])) {
-                    return $defaults[$parameter->getName()];
-                }
-
-                return $this->resolveParameter($parameter);
+                return $defaults[$parameter->getName()] ?? $this->resolveParameter($parameter);
             },
             $parameters
         );

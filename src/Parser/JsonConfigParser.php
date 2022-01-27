@@ -38,8 +38,9 @@ final class JsonConfigParser implements ConfigParser {
             throw new ConfigParserException("Cannot load file '$this->file_name'");
         }
 
-        $config = json_decode($file_content, true);
-        if ($config === null) {
+        try {
+            $config = json_decode($file_content, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
             throw new ConfigParserException("Cannot decode file '$this->file_name'");
         }
 

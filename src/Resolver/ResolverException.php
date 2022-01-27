@@ -15,7 +15,7 @@ final class ResolverException extends ContainerException {
         parent::__construct($message, $code, $previous);
     }
 
-    public static final function fromReflectionException(\ReflectionException $e): self {
+    public static function fromReflectionException(\ReflectionException $e): self {
         return new self($e->getMessage(), $e->getCode(), $e);
     }
 }

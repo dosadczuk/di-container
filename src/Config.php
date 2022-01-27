@@ -17,7 +17,8 @@ final class Config {
     ];
 
     public static function fromFileName(string $file_name, ?ConfigType $type = null): self {
-        if (($type ??= ConfigType::fromFileName($file_name)) === null) {
+        $type ??= ConfigType::fromFileName($file_name);
+        if ($type === null) {
             throw new \InvalidArgumentException("Cannot determine config type for file '$file_name'");
         }
 
