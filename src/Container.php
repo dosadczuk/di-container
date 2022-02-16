@@ -11,7 +11,7 @@ final class Container implements ContainerInterface
     /**
      * Container instance (singleton).
      */
-    private static self $instance;
+    private static ?self $instance = null;
 
     /**
      * Registry with dependencies.

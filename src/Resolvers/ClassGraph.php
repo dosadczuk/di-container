@@ -10,7 +10,7 @@ use Container\Core\ContainerException;
  */
 final class ClassGraph
 {
-    private static array $class_adjacency_lists = [];
+    public static array $class_adjacency_lists = [];
 
     public function __construct(private string $class_name)
     {
@@ -59,6 +59,8 @@ final class ClassGraph
             return; // already created, no need to recreate
         }
 
+        self::$class_adjacency_lists[$class_name] = [];
+
         try {
             $class = new \ReflectionClass($class_name);
 
@@ -88,10 +90,6 @@ final class ClassGraph
                 continue; // not resolvable
             }
 
-            if ($this->isScanned($class, $property_type)) {
-                continue; // already scanned
-            }
-
             $class_adjacency_list[] = $property_type->getName();
         }
     }
@@ -111,17 +109,8 @@ final class ClassGraph
                     continue; // not resolvable
                 }
 
-                if ($this->isScanned($class, $parameter_type)) {
-                    continue; // already scanned
-                }
-
                 $class_adjacency_list[] = $parameter_type->getName();
             }
         }
-    }
-
-    private function isScanned(\ReflectionClass $class, \ReflectionNamedType $type): bool
-    {
-        return in_array($type->getName(), self::$class_adjacency_lists[$class->getName()], true);
     }
 }

@@ -38,6 +38,10 @@ final class Dependency
             throw new ContainerException("'{$definition}' not exists.");
         }
 
+        if (interface_exists($abstract) && $definition === null) {
+            throw new ContainerException("'{$abstract}' cannot be instantiated, \$definition is required.");
+        }
+
         $this->is_shared = $is_shared;
         $this->abstract = $abstract;
         $this->definition = $definition ?? $abstract;

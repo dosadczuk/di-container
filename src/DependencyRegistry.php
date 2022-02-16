@@ -19,6 +19,20 @@ final class DependencyRegistry extends \ArrayObject
         $this->resolver_factory = new ResolverFactory();
     }
 
+    public function resolve(string|\Closure $definition): object
+    {
+        return $this->resolver_factory->createResolver($definition)->resolve();
+    }
+
+    public function add(Dependency $dependency): void
+    {
+        if ($this->has($dependency->abstract)) {
+            throw new ContainerException("Dependency '{$dependency->abstract}' is already bound.");
+        }
+
+        $this[$dependency->abstract] = $dependency;
+    }
+
     /**
      * @template T
      *
@@ -29,7 +43,7 @@ final class DependencyRegistry extends \ArrayObject
     public function get(string $abstract): object
     {
         if (!$this->has($abstract)) {
-            throw ContainerException::notFound($abstract);
+            throw new DependencyNotFoundException($abstract);
         }
 
         /** @var Dependency $dependency */
@@ -47,23 +61,9 @@ final class DependencyRegistry extends \ArrayObject
         return $instance;
     }
 
-    public function resolve(string|\Closure $definition): object
-    {
-        return $this->resolver_factory->createResolver($definition)->resolve();
-    }
-
     public function has(string $abstract): bool
     {
         return isset($this[$abstract]);
-    }
-
-    public function add(Dependency $dependency): void
-    {
-        if ($this->has($dependency->abstract)) {
-            throw new ContainerException("Dependency '{$dependency->abstract}' is already bound.");
-        }
-
-        $this[$dependency->abstract] = $dependency;
     }
 
     public function remove(string $abstract): void
