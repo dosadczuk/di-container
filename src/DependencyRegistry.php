@@ -24,6 +24,9 @@ final class DependencyRegistry extends \ArrayObject
         $this->resolver_factory = new ResolverFactory();
     }
 
+    /**
+     * Add dependency to registry.
+     */
     public function add(Dependency $dependency): void
     {
         if ($this->has($dependency->abstract)) {
@@ -34,6 +37,8 @@ final class DependencyRegistry extends \ArrayObject
     }
 
     /**
+     * Get instance of given abstract.
+     *
      * @template T
      *
      * @param class-string<T> $abstract
@@ -51,6 +56,8 @@ final class DependencyRegistry extends \ArrayObject
     }
 
     /**
+     * Make instance of given abstract.
+     *
      * @template T
      *
      * @param class-string<T> $abstract
@@ -87,11 +94,25 @@ final class DependencyRegistry extends \ArrayObject
         return $this->resolver_factory->createResolver($definition)->resolve();
     }
 
+    /**
+     * Check if registry has given abstract.
+     *
+     * @template T
+     *
+     * @param class-string<T> $abstract Abstract/Interface.
+     */
     public function has(string $abstract): bool
     {
         return isset($this[$abstract]);
     }
 
+    /**
+     * Remove given abstract from registry.
+     *
+     * @template T
+     *
+     * @param class-string<T> $abstract Abstract/Interface.
+     */
     public function remove(string $abstract): void
     {
         if (!$this->has($abstract)) {
@@ -99,15 +120,5 @@ final class DependencyRegistry extends \ArrayObject
         }
 
         unset($this[$abstract]);
-    }
-
-    /**
-     * @param Dependency[] $dependencies
-     */
-    public function merge(array $dependencies): void
-    {
-        foreach ($dependencies as $dependency) {
-            $this->add($dependency);
-        }
     }
 }

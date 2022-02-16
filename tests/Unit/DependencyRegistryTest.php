@@ -8,8 +8,6 @@ use Container\Core\Exceptions\DependencyNotBoundException;
 use Container\Core\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
-use Container\Test\Stub\ClassWithPropertyDependency;
-use Container\Test\Stub\ClassWithSetterDependency;
 
 beforeEach(function () {
     $this->registry = new DependencyRegistry();
@@ -100,16 +98,3 @@ it('should throw exception when removing not added dependency', function () {
     $this->registry->remove($dependency->abstract);
 })
     ->throws(DependencyNotBoundException::class);
-
-it('should merge dependencies', function () {
-    $dependencies = [
-        Dependency::transient(ClassWithoutDependency::class),
-        Dependency::transient(ClassWithPropertyDependency::class),
-        Dependency::transient(ClassWithSetterDependency::class),
-    ];
-
-    $this->assertEmpty($this->registry);
-    $this->registry->merge($dependencies);
-
-    expect($this->registry)->toHaveCount(3);
-});

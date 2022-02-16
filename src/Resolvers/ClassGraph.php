@@ -17,6 +17,9 @@ final class ClassGraph
         $this->createClassAdjacencyList($class_name);
     }
 
+    /**
+     * Check if class has cyclic dependencies.
+     */
     public function isCyclic(): bool
     {
         $classes_in_path = [];

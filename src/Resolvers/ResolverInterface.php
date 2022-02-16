@@ -11,6 +11,8 @@ use Psr\Container\ContainerExceptionInterface;
 interface ResolverInterface
 {
     /**
+     * Resolve dependency.
+     *
      * @return object
      * @throws ContainerExceptionInterface
      */

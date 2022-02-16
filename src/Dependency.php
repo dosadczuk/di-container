@@ -67,6 +67,9 @@ final class Dependency
         return new self(true, $abstract, $definition);
     }
 
+    /**
+     * Check if dependency is instantiated.
+     */
     public function isInstantiated(): bool
     {
         return $this->instance !== null;
