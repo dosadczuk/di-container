@@ -10,7 +10,7 @@ use Container\Core\ContainerException;
  */
 final class ClassGraph
 {
-    public static array $class_adjacency_lists = [];
+    private static array $class_adjacency_lists = [];
 
     public function __construct(private string $class_name)
     {
@@ -99,7 +99,7 @@ final class ClassGraph
         $class_adjacency_list = &self::$class_adjacency_lists[$class->getName()];
 
         foreach ($class->getMethods() as $method) {
-            if (!ResolverHelper::isInjectable($method)) {
+            if (!ResolverHelper::isInjectable($method) && !$method->isConstructor()) {
                 continue; // not injectable
             }
 

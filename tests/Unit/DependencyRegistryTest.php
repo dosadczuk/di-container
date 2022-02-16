@@ -41,7 +41,7 @@ it('should throw exception when dependency is already added', function () {
 })
     ->throws(ContainerException::class);
 
-it('should throw exception when getting not added dependency', function () {
+it('should throw exception when dependency is not added', function () {
     expect($this->registry->get(ClassWithoutDependency::class));
 })
     ->throws(DependencyNotFoundException::class);
