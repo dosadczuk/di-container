@@ -47,7 +47,7 @@ final class Container implements ContainerInterface
      *
      * @api
      */
-    public function get(string $id): mixed
+    public function get(string $id): object
     {
         return $this->registry->get($id);
     }
