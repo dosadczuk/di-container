@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit
         bootstrap="vendor/autoload.php"
         colors="true"
@@ -7,26 +7,13 @@
         verbose="true"
 >
     <testsuites>
-        <testsuite name="Unit-Tests">
-            <directory>tests/Unit</directory>
+        <testsuite name="Test Suite">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
-
-    <coverage
-            includeUncoveredFiles="true"
-            processUncoveredFiles="true"
-            ignoreDeprecatedCodeUnits="true"
-            disableCodeCoverageIgnore="true"
-    >
+    <coverage processUncoveredFiles="true">
         <include>
-            <directory>src</directory>
+            <directory suffix=".php">./src</directory>
         </include>
-        <exclude>
-            <directory>src/Attribute</directory>
-            <file>src/functions.php</file>
-        </exclude>
-        <report>
-            <html outputDirectory=".phpunit/coverage" lowUpperBound="50" highLowerBound="90" />
-        </report>
     </coverage>
 </phpunit>
