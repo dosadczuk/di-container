@@ -91,7 +91,7 @@ function bind(string $abstract, string|\Closure $definition): void
  *
  * @api
  */
-function bindShared(string $abstract, string|\Closure $definition = null): void
+function bind_shared(string $abstract, string|\Closure $definition = null): void
 {
     container()->bindShared($abstract, $definition);
 }
