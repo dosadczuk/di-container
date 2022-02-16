@@ -3,86 +3,78 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
-use Container\Core\Resolver\ResolverFactory;
+use Container\Core\Resolvers\ResolverFactory;
 
 /**
  * @internal
  */
-final class DependencyRegistry extends \ArrayObject {
+final class DependencyRegistry extends \ArrayObject
+{
+	private ResolverFactory $resolver_factory;
 
-    private ResolverFactory $resolver_factory;
+	public function __construct() {
+		parent::__construct([], 0, \ArrayIterator::class);
 
-    public function __construct() {
-        parent::__construct();
+		$this->resolver_factory = new ResolverFactory();
+	}
 
-        $this->resolver_factory = new ResolverFactory();
-    }
+	/**
+	 * @template T
+	 *
+	 * @param class-string<T> $abstract
+	 *
+	 * return T
+	 */
+	public function get(string $abstract): object {
+		if (!$this->has($abstract)) {
+			throw ContainerException::notFound($abstract);
+		}
 
-    /**
-     * @template T
-     *
-     * @param class-string<T> $abstract
-     * @param array $parameters
-     *
-     * @return T
-     */
-    public function make(string $abstract, array $parameters = []): object {
-        if (!$this->has($abstract)) {
-            return $this->resolve($abstract, $parameters);
-        }
+		/** @var Dependency $dependency */
+		$dependency = $this[$abstract];
+		if ($dependency->isInstantiated()) {
+			return $dependency->instance;
+		}
 
-        $dependency = $this->get($abstract);
-        if ($dependency->isInstantiated()) {
-            return $dependency->getInstance();
-        }
+		$instance = $this->resolve($dependency->definition);
 
-        $instance = $this->resolve($dependency->getDefinition(), $parameters);
+		if ($dependency->is_shared) {
+			$dependency->instance = $instance;
+		}
 
-        if ($dependency->isShared()) {
-            $dependency->setInstance($instance);
-        }
+		return $instance;
+	}
 
-        return $instance;
-    }
+	public function resolve(string|\Closure $definition): object {
+		return $this->resolver_factory->createResolver($definition)->resolve();
+	}
 
-    private function resolve(string|\Closure $definition, array $parameters): object {
-        return $this->resolver_factory->createResolver($definition)->resolve($parameters);
-    }
+	public function has(string $abstract): bool {
+		return isset($this[$abstract]);
+	}
 
-    public function get(string $abstract): Dependency {
-        if (!$this->has($abstract)) {
-            throw new \InvalidArgumentException("Dependency '$abstract' is not registered");
-        }
+	public function add(Dependency $dependency): void {
+		if ($this->has($dependency->abstract)) {
+			throw new ContainerException("Dependency '{$dependency->abstract}' is already bound.");
+		}
 
-        return $this[$abstract];
-    }
+		$this[$dependency->abstract] = $dependency;
+	}
 
-    public function has(string $abstract): bool {
-        return isset($this[$abstract]);
-    }
+	public function remove(string $abstract): void {
+		if (!$this->has($abstract)) {
+			throw new ContainerException("Dependency '{$abstract}' is not bound.");
+		}
 
-    public function add(Dependency $dependency): void {
-        if ($this->has($dependency->getAbstract())) {
-            throw new \InvalidArgumentException("Dependency '{$dependency->getAbstract()}' is already registered");
-        }
+		unset($this[$abstract]);
+	}
 
-        $this[$dependency->getAbstract()] = $dependency;
-    }
-
-    public function remove(string $abstract): void {
-        if (!$this->has($abstract)) {
-            throw new \InvalidArgumentException("Dependency '$abstract' is not registered");
-        }
-
-        unset($this[$abstract]);
-    }
-
-    /**
-     * @param Dependency[] $dependencies
-     */
-    public function merge(array $dependencies): void {
-        foreach ($dependencies as $dependency) {
-            $this[$dependency->getAbstract()] = $dependency;
-        }
-    }
+	/**
+	 * @param Dependency[] $dependencies
+	 */
+	public function merge(array $dependencies): void {
+		foreach ($dependencies as $dependency) {
+			$this->add($dependency);
+		}
+	}
 }

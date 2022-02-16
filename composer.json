@@ -1,6 +1,6 @@
 {
   "name": "dosadczuk/container",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "library",
   "authors": [
     {
@@ -15,27 +15,17 @@
     "post-update-cmd": "cghooks update"
   },
   "require": {
-    "php": "^8.1"
+    "php": "^8.1",
+    "psr/container": "^2.0"
   },
   "require-dev": {
     "pestphp/pest": "^1.21",
     "brainmaestro/composer-git-hooks": "^2.8"
   },
-  "suggest": {
-    "ext-fileinfo": "Required to load config.",
-    "ext-yaml": "Required to load YAML config.",
-    "ext-json": "Required to load JSON config.",
-    "ext-xml": "Required to load XML config.",
-    "ext-libxml": "Required to load XML config.",
-    "ext-simplexml": "Required to load XML config."
-  },
   "autoload": {
     "psr-4": {
       "Container\\Core\\": "src/"
-    },
-    "files": [
-      "src/functions.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
