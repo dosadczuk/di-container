@@ -92,6 +92,14 @@ it('should remove dependency', function () {
     expect($this->registry->has($dependency->abstract))->toBeFalse();
 });
 
+it('should throw exception when removing not added dependency', function () {
+    $dependency = Dependency::transient(ClassWithoutDependency::class);
+
+    $this->assertFalse($this->registry->has($dependency->abstract));
+    $this->registry->remove($dependency->abstract);
+})
+    ->throws(ContainerException::class);
+
 it('should merge dependencies', function () {
     $dependencies = [
         Dependency::transient(ClassWithoutDependency::class),

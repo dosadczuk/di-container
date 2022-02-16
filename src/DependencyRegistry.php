@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Container\Core;
 
 use Container\Core\Resolvers\ResolverFactory;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * @internal
@@ -34,7 +36,7 @@ final class DependencyRegistry extends \ArrayObject
      * @param class-string<T> $abstract
      *
      * @return T
-     * @throws DependencyNotFoundException
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
      */
     public function get(string $abstract): object
     {
@@ -51,6 +53,7 @@ final class DependencyRegistry extends \ArrayObject
      * @param class-string<T> $abstract
      *
      * @return T
+     * @throws ContainerExceptionInterface
      */
     public function make(string $abstract): object
     {
@@ -73,6 +76,9 @@ final class DependencyRegistry extends \ArrayObject
         return $instance;
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     private function resolve(string|\Closure $definition): object
     {
         return $this->resolver_factory->createResolver($definition)->resolve();

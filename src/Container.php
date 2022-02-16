@@ -44,6 +44,9 @@ final class Container implements ContainerInterface
         return $this->registry->has($id);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public function make(string|\Closure $abstract): object
     {
         return $this->registry->make($abstract);
@@ -71,9 +74,5 @@ final class Container implements ContainerInterface
     public function unbind(string $abstract): void
     {
         $this->registry->remove($abstract);
-    }
-
-    private function __clone(): void
-    {
     }
 }

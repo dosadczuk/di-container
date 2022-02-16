@@ -13,16 +13,6 @@ use Psr\Container\ContainerExceptionInterface;
 trait ResolvesProperties
 {
     /**
-     * @param \ReflectionProperty[] $properties
-     *
-     * @return object[]
-     */
-    private function resolveProperties(array $properties): array
-    {
-        return array_map($this->resolveProperty(...), $properties);
-    }
-
-    /**
      * @throws ContainerExceptionInterface
      */
     private function resolveProperty(\ReflectionProperty $property): object

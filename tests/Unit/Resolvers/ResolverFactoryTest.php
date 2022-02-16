@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Container\Core\ContainerException;
 use Container\Core\Resolvers\ClassResolver;
 use Container\Core\Resolvers\ClosureResolver;
 use Container\Core\Resolvers\ResolverFactory;
@@ -27,3 +28,8 @@ it('should create ClosureResolver (from Closure)', function () {
 
     expect($resolver)->toBeInstanceOf(ClosureResolver::class);
 });
+
+it('should throw exception when creating resolver for not resolvable thing', function () {
+    $this->factory->createResolver('thing');
+})
+    ->throws(ContainerException::class);
