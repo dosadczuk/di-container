@@ -2,7 +2,8 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
-use Container\Core\ContainerException;
+use Container\Core\Exceptions\ContainerException;
+use Container\Core\Exceptions\DependencyCycleException;
 use Container\Core\Resolvers\ClassResolver;
 use Container\Test\Stub\ClassOneWithClassTwoConstructorDependency;
 use Container\Test\Stub\ClassWithBuiltinTypedConstructorDependency;
@@ -111,10 +112,10 @@ it('should throw exception when resolving class with self as constructor depende
     $resolver = new ClassResolver(ClassWithSelfConstructorDependency::class);
     $resolver->resolve();
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyCycleException::class);
 
 it('should throw exception when resolving class with cyclic dependency', function () {
     $resolver = new ClassResolver(ClassOneWithClassTwoConstructorDependency::class);
     $resolver->resolve();
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyCycleException::class);

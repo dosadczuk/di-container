@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Container\Core\ContainerException;
 use Container\Core\Dependency;
+use Container\Core\Exceptions\DependencyDefinitionRequiredException;
+use Container\Core\Exceptions\DependencyNotExistsException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 
@@ -41,7 +42,7 @@ it('should create with no instance', function () {
 
 it('should assign instance', function () {
     $dependency = Dependency::transient(ClassWithoutDependency::class);
-    $dependency->instance = new \stdClass();
+    $dependency->instance = new stdClass();
 
     expect($dependency->instance)->not->toBeNull();
     expect($dependency->isInstantiated())->toBeTrue();
@@ -50,14 +51,14 @@ it('should assign instance', function () {
 it('should throw exception when creating dependency with not existing class or interface as abstract', function () {
     Dependency::transient('NotExistingClass');
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyNotExistsException::class);
 
 it('should throw exception when creating dependency with not existing class as definition', function () {
     Dependency::transient(ClassDependencyInterface::class, 'NotExistingClass');
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyNotExistsException::class);
 
 it('should throw exception when creating dependency with interface as abstract and without definition', function () {
     Dependency::transient(ClassDependencyInterface::class);
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyDefinitionRequiredException::class);

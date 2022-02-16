@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
+use Container\Core\Exceptions\DependencyDefinitionRequiredException;
+use Container\Core\Exceptions\DependencyNotExistsException;
+
 /**
  * @internal
  */
@@ -31,15 +34,15 @@ final class Dependency
     public function __construct(bool $is_shared, string $abstract, null|string|\Closure $definition = null)
     {
         if (!interface_exists($abstract) && !class_exists($abstract)) {
-            throw new ContainerException("'{$abstract}' not exists.");
+            throw new DependencyNotExistsException($abstract);
         }
 
         if (is_string($definition) && !class_exists($definition)) {
-            throw new ContainerException("'{$definition}' not exists.");
+            throw new DependencyNotExistsException($definition);
         }
 
         if (interface_exists($abstract) && $definition === null) {
-            throw new ContainerException("'{$abstract}' cannot be instantiated, \$definition is required.");
+            throw new DependencyDefinitionRequiredException($abstract);
         }
 
         $this->is_shared = $is_shared;

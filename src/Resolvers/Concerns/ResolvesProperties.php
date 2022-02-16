@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Container\Core\Resolvers\Concerns;
 
 use Container\Core\Container;
-use Container\Core\ContainerException;
+use Container\Core\Exceptions\ContainerException;
 use Psr\Container\ContainerExceptionInterface;
 
 /**

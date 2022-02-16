@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Core\Resolvers;
 
-use Container\Core\ContainerException;
+use Container\Core\Exceptions\ContainerException;
 use Container\Core\Resolvers\Concerns\ResolvesParameters;
 
 /**

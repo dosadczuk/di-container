@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use Container\Core\ContainerException;
 use Container\Core\Dependency;
-use Container\Core\DependencyNotFoundException;
 use Container\Core\DependencyRegistry;
+use Container\Core\Exceptions\DependencyAlreadyBoundException;
+use Container\Core\Exceptions\DependencyNotBoundException;
+use Container\Core\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 use Container\Test\Stub\ClassWithPropertyDependency;
@@ -33,7 +34,7 @@ it('should throw exception when dependency is already added', function () {
     $this->registry->add($dependency);
     $this->registry->add($dependency);
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyAlreadyBoundException::class);
 
 it('should throw exception when dependency is not added', function () {
     expect($this->registry->get(ClassWithoutDependency::class));
@@ -98,7 +99,7 @@ it('should throw exception when removing not added dependency', function () {
     $this->assertFalse($this->registry->has($dependency->abstract));
     $this->registry->remove($dependency->abstract);
 })
-    ->throws(ContainerException::class);
+    ->throws(DependencyNotBoundException::class);
 
 it('should merge dependencies', function () {
     $dependencies = [

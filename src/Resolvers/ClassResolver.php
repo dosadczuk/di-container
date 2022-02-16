@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Container\Core\Resolvers;
 
-use Container\Core\ContainerException;
+use Container\Core\Exceptions\ContainerException;
+use Container\Core\Exceptions\DependencyCycleException;
 use Container\Core\Resolvers\Concerns\ResolvesParameters;
 use Container\Core\Resolvers\Concerns\ResolvesProperties;
 use Psr\Container\ContainerExceptionInterface;
@@ -26,7 +27,7 @@ final class ClassResolver implements ResolverInterface
     public function resolve(): object
     {
         if ($this->graph->isCyclic()) {
-            throw new ContainerException("'{$this->class_name}' contains cyclic dependencies.");
+            throw new DependencyCycleException($this->class_name);
         }
 
         try {

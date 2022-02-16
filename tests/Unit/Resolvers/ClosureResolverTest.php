@@ -2,7 +2,7 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
-use Container\Core\ContainerException;
+use Container\Core\Exceptions\ContainerException;
 use Container\Core\Resolvers\ClosureResolver;
 use Container\Test\Stub\ClassWithConstructorDependency;
 use Container\Test\Stub\ClassWithNestedDependencies;
