@@ -24,7 +24,7 @@ final class ClosureResolver implements ResolverInterface
 
             $closure_parameters = $this->resolveParameters($closure->getParameters());
 
-            return $this->closure->call($closure, $closure_parameters);
+            return call_user_func($this->closure, ...$closure_parameters);
         } catch (\ReflectionException $e) {
             throw ContainerException::fromThrowable($e);
         }

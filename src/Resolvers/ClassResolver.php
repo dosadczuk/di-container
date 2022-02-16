@@ -23,9 +23,6 @@ final class ClassResolver implements ResolverInterface
         $this->graph = new ClassGraph($class_name);
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     */
     public function resolve(): object
     {
         if ($this->graph->isCyclic()) {

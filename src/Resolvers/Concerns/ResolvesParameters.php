@@ -40,6 +40,6 @@ trait ResolvesParameters
             throw new ContainerException("Cannot resolve builtin type parameter '\${$parameter->getName()}'.");
         }
 
-        return Container::getInstance()->get($parameter->getName());
+        return Container::getInstance()->make($parameter_type->getName());
     }
 }

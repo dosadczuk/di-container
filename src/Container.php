@@ -46,7 +46,7 @@ final class Container implements ContainerInterface
 
     public function make(string|\Closure $abstract): object
     {
-        return $this->registry->resolve($abstract);
+        return $this->registry->make($abstract);
     }
 
     /**

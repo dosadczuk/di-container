@@ -18,12 +18,6 @@ test('created registry is empty', function () {
     expect($this->registry)->toBeEmpty();
 });
 
-it('should resolve dependency', function () {
-    $instance = $this->registry->resolve(ClassWithoutDependency::class);
-
-    expect($instance)->toBeInstanceOf(ClassWithoutDependency::class);
-});
-
 it('should add dependency', function () {
     $dependency = Dependency::transient(ClassWithoutDependency::class);
 
@@ -70,6 +64,12 @@ it('should get shared dependency', function () {
     expect($instance1)->toBeInstanceOf(ClassWithoutDependency::class);
     expect($instance2)->toBeInstanceOf(ClassWithoutDependency::class);
     expect($instance1)->toBe($instance2);
+});
+
+it('should make dependency', function () {
+    $instance = $this->registry->make(ClassWithoutDependency::class);
+
+    expect($instance)->toBeInstanceOf(ClassWithoutDependency::class);
 });
 
 it('should check if has dependency', function () {

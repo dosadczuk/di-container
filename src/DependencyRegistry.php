@@ -19,11 +19,6 @@ final class DependencyRegistry extends \ArrayObject
         $this->resolver_factory = new ResolverFactory();
     }
 
-    public function resolve(string|\Closure $definition): object
-    {
-        return $this->resolver_factory->createResolver($definition)->resolve();
-    }
-
     public function add(Dependency $dependency): void
     {
         if ($this->has($dependency->abstract)) {
@@ -38,12 +33,29 @@ final class DependencyRegistry extends \ArrayObject
      *
      * @param class-string<T> $abstract
      *
-     * return T
+     * @return T
+     * @throws DependencyNotFoundException
      */
     public function get(string $abstract): object
     {
         if (!$this->has($abstract)) {
             throw new DependencyNotFoundException($abstract);
+        }
+
+        return $this->make($abstract);
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $abstract
+     *
+     * @return T
+     */
+    public function make(string $abstract): object
+    {
+        if (!$this->has($abstract)) {
+            return $this->resolve($abstract);
         }
 
         /** @var Dependency $dependency */
@@ -59,6 +71,11 @@ final class DependencyRegistry extends \ArrayObject
         }
 
         return $instance;
+    }
+
+    private function resolve(string|\Closure $definition): object
+    {
+        return $this->resolver_factory->createResolver($definition)->resolve();
     }
 
     public function has(string $abstract): bool

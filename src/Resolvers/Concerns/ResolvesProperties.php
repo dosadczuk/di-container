@@ -40,6 +40,6 @@ trait ResolvesProperties
             throw new ContainerException("Cannot resolve builtin type property '\${$property->getName()}'.");
         }
 
-        return Container::getInstance()->get($property->getName());
+        return Container::getInstance()->make($property_type->getName());
     }
 }
