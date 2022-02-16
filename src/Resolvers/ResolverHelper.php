@@ -10,11 +10,13 @@ use Container\Core\Attributes\Inject;
  */
 final class ResolverHelper
 {
-	public static function isInjectable(\ReflectionProperty|\ReflectionMethod $reflection): bool {
-		return count($reflection->getAttributes(Inject::class)) > 0;
-	}
+    public static function isInjectable(\ReflectionProperty|\ReflectionMethod $reflection): bool
+    {
+        return count($reflection->getAttributes(Inject::class)) > 0;
+    }
 
-	public static function isResolvable(\ReflectionType $type): bool {
-		return $type instanceof \ReflectionNamedType && !$type->isBuiltin();
-	}
+    public static function isResolvable(\ReflectionType $type): bool
+    {
+        return $type instanceof \ReflectionNamedType && !$type->isBuiltin();
+    }
 }

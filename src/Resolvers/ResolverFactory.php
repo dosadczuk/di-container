@@ -10,15 +10,16 @@ use Container\Core\ContainerException;
  */
 final class ResolverFactory
 {
-	public function createResolver(mixed $definition): ResolverInterface {
-		if (is_string($definition) && class_exists($definition)) {
-			return new ClassResolver($definition);
-		}
+    public function createResolver(mixed $definition): ResolverInterface
+    {
+        if (is_string($definition) && class_exists($definition)) {
+            return new ClassResolver($definition);
+        }
 
-		if ($definition instanceof \Closure) {
-			return new ClosureResolver($definition);
-		}
+        if ($definition instanceof \Closure) {
+            return new ClosureResolver($definition);
+        }
 
-		throw new ContainerException("Cannot create resolver for '{$definition}'.");
-	}
+        throw new ContainerException("Cannot create resolver for '{$definition}'.");
+    }
 }

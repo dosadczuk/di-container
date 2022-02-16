@@ -11,20 +11,22 @@ use Container\Core\Resolvers\Concerns\ResolvesParameters;
  */
 final class ClosureResolver implements ResolverInterface
 {
-	use ResolvesParameters;
+    use ResolvesParameters;
 
-	public function __construct(private \Closure $closure) {
-	}
+    public function __construct(private \Closure $closure)
+    {
+    }
 
-	public function resolve(): object {
-		try {
-			$closure = new \ReflectionFunction($this->closure);
+    public function resolve(): object
+    {
+        try {
+            $closure = new \ReflectionFunction($this->closure);
 
-			$closure_parameters = $this->resolveParameters($closure->getParameters());
+            $closure_parameters = $this->resolveParameters($closure->getParameters());
 
-			return $this->closure->call($closure, $closure_parameters);
-		} catch (\ReflectionException $e) {
-			throw ContainerException::fromThrowable($e);
-		}
-	}
+            return $this->closure->call($closure, $closure_parameters);
+        } catch (\ReflectionException $e) {
+            throw ContainerException::fromThrowable($e);
+        }
+    }
 }

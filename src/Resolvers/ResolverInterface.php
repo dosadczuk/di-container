@@ -8,5 +8,5 @@ namespace Container\Core\Resolvers;
  */
 interface ResolverInterface
 {
-	public function resolve(): object;
+    public function resolve(): object;
 }
