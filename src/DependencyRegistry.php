@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Core;
 
-use Container\Core\Exceptions\DependencyAlreadyBoundException;
-use Container\Core\Exceptions\DependencyNotBoundException;
+use Container\Core\Exceptions\DependencyAlreadyAddedException;
 use Container\Core\Exceptions\DependencyNotFoundException;
 use Container\Core\Resolvers\ResolverFactory;
 use Psr\Container\ContainerExceptionInterface;
@@ -30,7 +29,7 @@ final class DependencyRegistry extends \ArrayObject
     public function add(Dependency $dependency): void
     {
         if ($this->has($dependency->abstract)) {
-            throw new DependencyAlreadyBoundException($dependency->abstract);
+            throw new DependencyAlreadyAddedException($dependency->abstract);
         }
 
         $this[$dependency->abstract] = $dependency;
@@ -116,7 +115,7 @@ final class DependencyRegistry extends \ArrayObject
     public function remove(string $abstract): void
     {
         if (!$this->has($abstract)) {
-            throw new DependencyNotBoundException($abstract);
+            throw new DependencyNotFoundException($abstract);
         }
 
         unset($this[$abstract]);

@@ -12,6 +12,6 @@ class DependencyNotFoundException extends ContainerException implements NotFound
 {
     public function __construct(public readonly string $dependency)
     {
-        parent::__construct("Dependency '{$dependency}' not bound.");
+        parent::__construct("Dependency '{$dependency}' not found.");
     }
 }

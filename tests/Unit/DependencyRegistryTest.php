@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 use Container\Core\Dependency;
 use Container\Core\DependencyRegistry;
-use Container\Core\Exceptions\DependencyAlreadyBoundException;
-use Container\Core\Exceptions\DependencyNotBoundException;
+use Container\Core\Exceptions\DependencyAlreadyAddedException;
 use Container\Core\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
@@ -32,7 +31,7 @@ it('should throw exception when dependency is already added', function () {
     $this->registry->add($dependency);
     $this->registry->add($dependency);
 })
-    ->throws(DependencyAlreadyBoundException::class);
+    ->throws(DependencyAlreadyAddedException::class);
 
 it('should throw exception when dependency is not added', function () {
     expect($this->registry->get(ClassWithoutDependency::class));
@@ -97,4 +96,4 @@ it('should throw exception when removing not added dependency', function () {
     $this->assertFalse($this->registry->has($dependency->abstract));
     $this->registry->remove($dependency->abstract);
 })
-    ->throws(DependencyNotBoundException::class);
+    ->throws(DependencyNotFoundException::class);
