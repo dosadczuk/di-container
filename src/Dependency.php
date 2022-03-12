@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core;
+namespace Container;
 
-use Container\Core\Exceptions\DependencyDefinitionRequiredException;
-use Container\Core\Exceptions\DependencyNotExistsException;
+use Container\Exceptions\DependencyDefinitionRequiredException;
+use Container\Exceptions\DependencyNotExistsException;
 
 /**
  * @internal

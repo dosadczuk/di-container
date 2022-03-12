@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use Container\Core\Dependency;
-use Container\Core\Exceptions\DependencyDefinitionRequiredException;
-use Container\Core\Exceptions\DependencyNotExistsException;
+namespace Container\Test\Unit;
+
+use Container\Dependency;
+use Container\Exceptions\DependencyDefinitionRequiredException;
+use Container\Exceptions\DependencyNotExistsException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 
@@ -42,7 +44,7 @@ it('should create with no instance', function () {
 
 it('should assign instance', function () {
     $dependency = Dependency::transient(ClassWithoutDependency::class);
-    $dependency->instance = new stdClass();
+    $dependency->instance = new \stdClass();
 
     expect($dependency->instance)->not->toBeNull();
     expect($dependency->isInstantiated())->toBeTrue();

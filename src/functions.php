@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core;
+namespace Container;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

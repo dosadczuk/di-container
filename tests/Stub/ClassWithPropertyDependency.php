@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Container\Test\Stub;
 
-use Container\Core\Attributes\Inject;
+use Container\Attributes\Inject;
 
 class ClassWithPropertyDependency implements ClassDependencyInterface
 {

@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-use Container\Core\Dependency;
-use Container\Core\DependencyRegistry;
-use Container\Core\Exceptions\DependencyAlreadyAddedException;
-use Container\Core\Exceptions\DependencyNotFoundException;
+namespace Container\Test\Unit;
+
+use Container\Dependency;
+use Container\DependencyRegistry;
+use Container\Exceptions\DependencyAlreadyAddedException;
+use Container\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 

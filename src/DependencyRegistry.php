@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core;
+namespace Container;
 
-use Container\Core\Exceptions\DependencyAlreadyAddedException;
-use Container\Core\Exceptions\DependencyNotFoundException;
-use Container\Core\Resolvers\ResolverFactory;
+use Container\Exceptions\DependencyAlreadyAddedException;
+use Container\Exceptions\DependencyNotFoundException;
+use Container\Resolvers\ResolverFactory;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 

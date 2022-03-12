@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Resolvers;
+namespace Container\Resolvers;
 
-use Container\Core\Attributes\Inject;
+use Container\Attributes\Inject;
 
 /**
  * @internal

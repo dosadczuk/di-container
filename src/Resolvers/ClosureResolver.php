@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Resolvers;
+namespace Container\Resolvers;
 
-use Container\Core\Exceptions\ContainerException;
-use Container\Core\Resolvers\Concerns\ResolvesParameters;
+use Container\Exceptions\ContainerException;
+use Container\Resolvers\Concerns\ResolvesParametersTrait;
 
 /**
  * @internal
  */
 final class ClosureResolver implements ResolverInterface
 {
-    use ResolvesParameters;
+    use ResolvesParametersTrait;
 
     public function __construct(private \Closure $closure)
     {

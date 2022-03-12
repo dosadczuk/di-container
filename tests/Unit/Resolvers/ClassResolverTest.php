@@ -2,9 +2,11 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
-use Container\Core\Exceptions\ContainerException;
-use Container\Core\Exceptions\DependencyCycleException;
-use Container\Core\Resolvers\ClassResolver;
+namespace Container\Test\Unit\Resolvers;
+
+use Container\Exceptions\ContainerException;
+use Container\Exceptions\DependencyCycleException;
+use Container\Resolvers\ClassResolver;
 use Container\Test\Stub\ClassOneWithClassTwoConstructorDependency;
 use Container\Test\Stub\ClassWithBuiltinTypedConstructorDependency;
 use Container\Test\Stub\ClassWithBuiltinTypedPropertyDependency;

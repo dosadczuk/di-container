@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-use Container\Core\Resolvers\ClassGraph;
+namespace Container\Test\Unit\Resolvers;
+
+use Container\Resolvers\ClassGraph;
 use Container\Test\Stub\ClassOneWithClassTwoConstructorDependency;
 use Container\Test\Stub\ClassWithoutDependency;
 use Container\Test\Stub\ClassWithPropertyDependency;
 use Container\Test\Stub\ClassWithSelfConstructorDependency;
 
 beforeEach(function () {
-    $graph = new ReflectionClass(ClassGraph::class);
+    $graph = new \ReflectionClass(ClassGraph::class);
     // clear "cache"
     $property = $graph->getProperty('class_adjacency_lists');
     $property->setValue([]);

@@ -21,7 +21,7 @@ class UserService
 ### Class property injection
 
 ```php
-use Container\Core\Attributes\Inject;
+use Container\Attributes\Inject;
 
 class UserService 
 {
@@ -33,7 +33,7 @@ class UserService
 ### Class method injection
 
 ```php
-use Container\Core\Attributes\Inject;
+use Container\Attributes\Inject;
 
 class UserService 
 {
@@ -54,7 +54,7 @@ class UserService
 Get instance of Container.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 $container = Container::getInstance();
 ```
@@ -64,7 +64,7 @@ $container = Container::getInstance();
 Get instance of given abstract.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 $instance = Container::getInstance()->get(UserService::class);
 ```
@@ -74,7 +74,7 @@ $instance = Container::getInstance()->get(UserService::class);
 Check if it has dependency.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 $has_instance = Container::getInstance()->has(UserService::class);
 ```
@@ -84,7 +84,7 @@ $has_instance = Container::getInstance()->has(UserService::class);
 Make instance of given abstract.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 $instance = Container::getInstance()->make(UserService::class);
 ```
@@ -94,7 +94,7 @@ $instance = Container::getInstance()->make(UserService::class);
 Bind abstract with definition to container.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 // only abstract
 Container::getInstance()->bind(UserRepository::class);
@@ -113,7 +113,7 @@ Container::getInstance()->bind(UserRepositoryInterface::class, function(InMemory
 Bind abstract with definition to container, as singleton.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 // only abstract
 Container::getInstance()->bindShared(UserRepository::class);
@@ -132,7 +132,7 @@ Container::getInstance()->bindShared(UserRepositoryInterface::class, function(In
 Unbind abstract from container.
 
 ```php
-use Container\Core\Container;
+use Container\Container;
 
 Container::getInstance()->unbind(UserService::class);
 ```

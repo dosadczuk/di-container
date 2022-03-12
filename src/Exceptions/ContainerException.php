@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Exceptions;
+namespace Container\Exceptions;
 
 use Psr\Container\ContainerExceptionInterface;
 

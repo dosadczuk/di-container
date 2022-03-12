@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Resolvers;
+namespace Container\Resolvers;
 
-use Container\Core\Exceptions\ContainerException;
-use Container\Core\Exceptions\DependencyCycleException;
-use Container\Core\Resolvers\Concerns\ResolvesParameters;
-use Container\Core\Resolvers\Concerns\ResolvesProperties;
+use Container\Exceptions\ContainerException;
+use Container\Exceptions\DependencyCycleException;
+use Container\Resolvers\Concerns\ResolvesParametersTrait;
+use Container\Resolvers\Concerns\ResolvesPropertiesTrait;
 use Psr\Container\ContainerExceptionInterface;
 
 /**
@@ -14,8 +14,8 @@ use Psr\Container\ContainerExceptionInterface;
  */
 final class ClassResolver implements ResolverInterface
 {
-    use ResolvesProperties,
-        ResolvesParameters;
+    use ResolvesPropertiesTrait,
+        ResolvesParametersTrait;
 
     private ClassGraph $graph;
 

@@ -1,10 +1,13 @@
 <?php
+/** @noinspection PhpClosureCanBeConvertedToFirstClassCallableInspection */
 declare(strict_types=1);
 
-use Container\Core\Exceptions\ContainerException;
-use Container\Core\Resolvers\ClassResolver;
-use Container\Core\Resolvers\ClosureResolver;
-use Container\Core\Resolvers\ResolverFactory;
+namespace Container\Test\Unit\Resolvers;
+
+use Container\Exceptions\ContainerException;
+use Container\Resolvers\ClassResolver;
+use Container\Resolvers\ClosureResolver;
+use Container\Resolvers\ResolverFactory;
 use Container\Test\Stub\ClassWithoutDependency;
 
 beforeEach(function () {
@@ -24,7 +27,7 @@ it('should create ClosureResolver (from function)', function () {
 });
 
 it('should create ClosureResolver (from Closure)', function () {
-    $resolver = $this->factory->createResolver(Closure::fromCallable(fn() => true));
+    $resolver = $this->factory->createResolver(\Closure::fromCallable(fn() => true));
 
     expect($resolver)->toBeInstanceOf(ClosureResolver::class);
 });

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Container\Core\Resolvers\Concerns;
+namespace Container\Resolvers\Concerns;
 
-use Container\Core\Container;
-use Container\Core\Exceptions\ContainerException;
+use Container\Container;
+use Container\Exceptions\ContainerException;
 use Psr\Container\ContainerExceptionInterface;
 
 /**
  * @internal
  */
-trait ResolvesProperties
+trait ResolvesPropertiesTrait
 {
     /**
      * @throws ContainerExceptionInterface
