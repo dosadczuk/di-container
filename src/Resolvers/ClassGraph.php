@@ -102,7 +102,7 @@ final class ClassGraph
         $class_adjacency_list = &self::$class_adjacency_lists[$class->getName()];
 
         foreach ($class->getMethods() as $method) {
-            if (!ResolverHelper::isInjectable($method) && !$method->isConstructor()) {
+            if (!ResolverHelper::isInjectable($method)) {
                 continue; // not injectable
             }
 

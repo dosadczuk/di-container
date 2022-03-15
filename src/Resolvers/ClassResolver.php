@@ -52,9 +52,9 @@ final class ClassResolver implements ResolverInterface
             return $class->newInstanceWithoutConstructor();
         }
 
-        $constructor_parameters = $this->resolveParameters($constructor->getParameters());
+        $parameters = $this->resolveParameters($constructor->getParameters());
 
-        return $class->newInstanceArgs($constructor_parameters);
+        return $class->newInstanceArgs($parameters);
     }
 
     /**
@@ -81,9 +81,9 @@ final class ClassResolver implements ResolverInterface
                 continue; // not injectable
             }
 
-            $method_parameters = $this->resolveParameters($method->getParameters());
+            $parameters = $this->resolveParameters($method->getParameters());
 
-            $method->invokeArgs($class_instance, $method_parameters);
+            $method->invokeArgs($class_instance, $parameters);
         }
     }
 }
