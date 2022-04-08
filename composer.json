@@ -1,6 +1,8 @@
 {
   "name": "dosadczuk/container",
+  "description": "Simple inversion of control container",
   "version": "0.2.0",
+  "license": "MIT",
   "type": "library",
   "authors": [
     {
@@ -9,6 +11,11 @@
     }
   ],
   "homepage": "https://github.com/dosadczuk/di-container",
+  "keywords": [
+    "dependency-injection",
+    "container",
+    "php"
+  ],
   "scripts": {
     "test": "pest --config=phpunit.xml",
     "test:cov": "XDEBUG_MODE=coverage pest --coverage",
