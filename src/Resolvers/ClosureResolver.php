@@ -22,9 +22,9 @@ final class ClosureResolver implements ResolverInterface
         try {
             $closure = new \ReflectionFunction($this->closure);
 
-            $closure_parameters = $this->resolveParameters($closure->getParameters());
+            $arguments = $this->resolveParameters($closure->getParameters());
 
-            return call_user_func($this->closure, ...$closure_parameters);
+            return call_user_func($this->closure, ...$arguments);
         } catch (\ReflectionException $e) {
             throw ContainerException::fromThrowable($e);
         }
