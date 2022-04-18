@@ -51,15 +51,16 @@ function has(string $id): bool
  * @template T
  *
  * @param class-string<T> $abstract Class/Interface.
+ * @param array<string, mixed> $arguments Values for dependencies.
  *
  * @return T Instance of abstract.
  * @throws ContainerExceptionInterface
  *
  * @api
  */
-function make(string $abstract): object
+function make(string $abstract, array $arguments = []): object
 {
-    return container()->make($abstract);
+    return container()->make($abstract, $arguments);
 }
 
 /**
@@ -69,14 +70,15 @@ function make(string $abstract): object
  *
  * @param class-string<T> $abstract Abstract/Interface.
  * @param string|\Closure $definition Implementation or factory function.
+ * @param array<string, mixed> $arguments Values for dependencies.
  *
  * @throws ContainerExceptionInterface
  *
  * @api
  */
-function bind(string $abstract, string|\Closure $definition): void
+function bind(string $abstract, string|\Closure $definition, array $arguments = []): void
 {
-    container()->bind($abstract, $definition);
+    container()->bind($abstract, $definition, $arguments);
 }
 
 /**
@@ -86,14 +88,15 @@ function bind(string $abstract, string|\Closure $definition): void
  *
  * @param class-string<T> $abstract Abstract/Interface.
  * @param null|string|\Closure $definition Optional implementation or factory function.
+ * @param array<string, mixed> $arguments Values for dependencies.
  *
  * @throws ContainerExceptionInterface
  *
  * @api
  */
-function bind_shared(string $abstract, string|\Closure $definition = null): void
+function bind_shared(string $abstract, string|\Closure $definition = null, array $arguments = []): void
 {
-    container()->bindShared($abstract, $definition);
+    container()->bindShared($abstract, $definition, $arguments);
 }
 
 /**

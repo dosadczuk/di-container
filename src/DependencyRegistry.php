@@ -60,23 +60,29 @@ final class DependencyRegistry extends \ArrayObject
      * @template T
      *
      * @param class-string<T> $abstract
+     * @param array<string, mixed> $arguments
      *
      * @return T
      * @throws ContainerExceptionInterface
      */
-    public function make(string $abstract): object
+    public function make(string $abstract, array $arguments = []): object
     {
         if (!$this->has($abstract)) {
-            return $this->resolve($abstract);
+            return $this->resolve($abstract, $arguments);
         }
 
         /** @var Dependency $dependency */
         $dependency = $this[$abstract];
         if ($dependency->isInstantiated()) {
+            if (count($arguments) > 0) {
+                trigger_error("[Container]: Providing arguments to already instantiated shared dependency has no effect.", E_USER_WARNING);
+            }
+
             return $dependency->instance;
         }
 
-        $instance = $this->resolve($dependency->definition);
+        // provided $arguments can override some of $dependency->arguments, and it is intended behavior
+        $instance = $this->resolve($dependency->definition, [...$dependency->arguments, ...$arguments]);
 
         if ($dependency->is_shared) {
             $dependency->instance = $instance;
@@ -88,9 +94,9 @@ final class DependencyRegistry extends \ArrayObject
     /**
      * @throws ContainerExceptionInterface
      */
-    private function resolve(string|\Closure $definition): object
+    private function resolve(string|\Closure $definition, array $arguments = []): object
     {
-        return $this->resolver_factory->createResolver($definition)->resolve();
+        return $this->resolver_factory->createResolver($definition)->resolve($arguments);
     }
 
     /**

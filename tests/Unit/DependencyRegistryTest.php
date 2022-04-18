@@ -8,6 +8,7 @@ use Container\DependencyRegistry;
 use Container\Exceptions\DependencyAlreadyAddedException;
 use Container\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
+use Container\Test\Stub\ClassWithConstructorDependency;
 use Container\Test\Stub\ClassWithoutDependency;
 
 beforeEach(function () {
@@ -70,6 +71,14 @@ it('should make dependency', function () {
     $instance = $this->registry->make(ClassWithoutDependency::class);
 
     expect($instance)->toBeInstanceOf(ClassWithoutDependency::class);
+});
+
+it('should make dependency with arguments', function () {
+    $argument = new ClassWithoutDependency();
+    $instance = $this->registry->make(ClassWithConstructorDependency::class, ['dependency' => $argument]);
+
+    expect($instance)->toBeInstanceOf(ClassWithConstructorDependency::class);
+    expect($instance->getDependency())->toBe($argument);
 });
 
 it('should check if has dependency', function () {

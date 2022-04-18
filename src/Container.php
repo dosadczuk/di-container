@@ -70,15 +70,16 @@ final class Container implements ContainerInterface
      * @template T
      *
      * @param class-string<T> $abstract Class/Interface.
+     * @param array<string, mixed> $arguments Values for dependencies.
      *
      * @return T Instance of abstract.
      * @throws ContainerExceptionInterface
      *
      * @api
      */
-    public function make(string $abstract): object
+    public function make(string $abstract, array $arguments = []): object
     {
-        return $this->registry->make($abstract);
+        return $this->registry->make($abstract, $arguments);
     }
 
     /**
@@ -88,14 +89,15 @@ final class Container implements ContainerInterface
      *
      * @param class-string<T> $abstract Abstract/Interface.
      * @param string|\Closure $definition Implementation or factory function.
+     * @param array<string, mixed> $arguments Values for dependencies.
      *
      * @throws ContainerExceptionInterface
      *
      * @api
      */
-    public function bind(string $abstract, string|\Closure $definition): void
+    public function bind(string $abstract, string|\Closure $definition, array $arguments = []): void
     {
-        $this->registry->add(Dependency::transient($abstract, $definition));
+        $this->registry->add(Dependency::transient($abstract, $definition, $arguments));
     }
 
     /**
@@ -105,14 +107,15 @@ final class Container implements ContainerInterface
      *
      * @param class-string<T> $abstract Abstract/Interface.
      * @param null|string|\Closure $definition Optional implementation or factory function.
+     * @param array<string, mixed> $arguments Values for dependencies.
      *
      * @throws ContainerExceptionInterface
      *
      * @api
      */
-    public function bindShared(string $abstract, string|\Closure $definition = null): void
+    public function bindShared(string $abstract, string|\Closure $definition = null, array $arguments = []): void
     {
-        $this->registry->add(Dependency::shared($abstract, $definition));
+        $this->registry->add(Dependency::shared($abstract, $definition, $arguments));
     }
 
     /**
