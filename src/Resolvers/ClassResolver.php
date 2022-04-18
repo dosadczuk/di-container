@@ -60,21 +60,23 @@ final class ClassResolver implements ResolverInterface
     /**
      * @throws ContainerExceptionInterface
      */
-    private function instantiateClassProperties(\ReflectionClass $class, $class_instance): void
+    private function instantiateClassProperties(\ReflectionClass $class, object $class_instance): void
     {
         foreach ($class->getProperties() as $property) {
             if (!ResolverHelper::isInjectable($property)) {
                 continue; // not injectable
             }
 
-            $property->setValue($class_instance, $this->resolveProperty($property));
+            $argument = $this->resolveProperty($property);
+
+            $property->setValue($class_instance, $argument);
         }
     }
 
     /**
      * @throws \ReflectionException
      */
-    private function instantiateClassMethods(\ReflectionClass $class, $class_instance): void
+    private function instantiateClassMethods(\ReflectionClass $class, object $class_instance): void
     {
         foreach ($class->getMethods() as $method) {
             if (!ResolverHelper::isInjectable($method)) {
