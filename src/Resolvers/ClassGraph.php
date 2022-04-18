@@ -12,6 +12,11 @@ final class ClassGraph
 {
     private static array $class_adjacency_lists = [];
 
+    /**
+     * @template T
+     *
+     * @param class-string<T> $class_name
+     */
     public function __construct(private string $class_name)
     {
         $this->createClassAdjacencyList($class_name);

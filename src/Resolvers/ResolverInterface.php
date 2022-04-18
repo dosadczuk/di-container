@@ -13,8 +13,10 @@ interface ResolverInterface
     /**
      * Resolve dependency.
      *
-     * @return object
+     * @param array $arguments
+     *
+     * @return mixed
      * @throws ContainerExceptionInterface
      */
-    public function resolve(): object;
+    public function resolve(array $arguments = []): mixed;
 }

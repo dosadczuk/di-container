@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Test\Stub;
 
-class ClassWithNonTypedConstructorDependency implements ClassDependencyInterface
+class ClassWithNonTypedMethodDependency implements ClassDependencyInterface
 {
     private $dependency;
 

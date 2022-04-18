@@ -17,12 +17,12 @@ final class ClosureResolver implements ResolverInterface
     {
     }
 
-    public function resolve(): object
+    public function resolve(array $arguments = []): mixed
     {
         try {
             $closure = new \ReflectionFunction($this->closure);
 
-            $arguments = $this->resolveParameters($closure->getParameters());
+            $arguments = $this->resolveParameters($closure->getParameters(), $arguments);
 
             return call_user_func($this->closure, ...$arguments);
         } catch (\ReflectionException $e) {

@@ -7,9 +7,9 @@ class ClassWithConstructorDependency implements ClassDependencyInterface
 {
     private ClassWithoutDependency $dependency;
 
-    public function __construct(ClassWithoutDependency $class_without_dependencies)
+    public function __construct(ClassWithoutDependency $dependency)
     {
-        $this->dependency = $class_without_dependencies;
+        $this->dependency = $dependency;
     }
 
     public function getDependency(): ClassWithoutDependency

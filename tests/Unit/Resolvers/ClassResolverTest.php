@@ -8,11 +8,13 @@ use Container\Exceptions\ContainerException;
 use Container\Exceptions\DependencyCycleException;
 use Container\Resolvers\ClassResolver;
 use Container\Test\Stub\ClassOneWithClassTwoConstructorDependency;
-use Container\Test\Stub\ClassWithBuiltinTypedConstructorDependency;
+use Container\Test\Stub\ClassWithBuiltinTypedMethodDependency;
 use Container\Test\Stub\ClassWithBuiltinTypedPropertyDependency;
 use Container\Test\Stub\ClassWithConstructorDependency;
+use Container\Test\Stub\ClassWithIntersectionTypedMethodDependency;
+use Container\Test\Stub\ClassWithIntersectionTypedPropertyDependency;
 use Container\Test\Stub\ClassWithNestedDependencies;
-use Container\Test\Stub\ClassWithNonTypedConstructorDependency;
+use Container\Test\Stub\ClassWithNonTypedMethodDependency;
 use Container\Test\Stub\ClassWithNonTypedPropertyDependency;
 use Container\Test\Stub\ClassWithoutDependency;
 use Container\Test\Stub\ClassWithPropertyDependency;
@@ -74,37 +76,69 @@ it('should resolve class with nested dependencies', function () {
     expect($instance->getDependencyWithSetter()->getDependency())->not->toBeNull();
 });
 
+it('should resolve class with builtin typed dependency provided via arguments', function () {
+    $resolver = new ClassResolver(ClassWithBuiltinTypedMethodDependency::class);
+
+    /** @var ClassWithBuiltinTypedMethodDependency $instance */
+    $instance = $resolver->resolve(['dependency' => 'sample']);
+
+    expect($instance)->toBeInstanceOf(ClassWithBuiltinTypedMethodDependency::class);
+    expect($instance->getDependency())->toEqual('sample');
+});
+
+it('should resolve class with union typed dependency provided via arguments', function () {
+    $resolver = new ClassResolver(ClassWithUnionTypedConstructorDependency::class);
+
+    /** @var ClassWithUnionTypedConstructorDependency $instance */
+    $instance = $resolver->resolve(['dependency' => $argument = new ClassWithoutDependency()]);
+
+    expect($instance)->toBeInstanceOf(ClassWithUnionTypedConstructorDependency::class);
+    expect($instance->getDependency())->toBe($argument);
+});
+
 it('should throw exception when resolving property without type', function () {
     $resolver = new ClassResolver(ClassWithNonTypedPropertyDependency::class);
     $resolver->resolve();
 })
     ->throws(ContainerException::class);
 
-it('should throw exception when resolving property with builtin type', function () {
+it('should throw exception when resolving property with intersection type', function () {
+    $resolver = new ClassResolver(ClassWithIntersectionTypedPropertyDependency::class);
+    $resolver->resolve();
+})
+    ->throws(ContainerException::class);
+
+it('should throw exception when resolving property with builtin type and no argument for it', function () {
     $resolver = new ClassResolver(ClassWithBuiltinTypedPropertyDependency::class);
     $resolver->resolve();
 })
     ->throws(ContainerException::class);
 
-it('should throw exception when resolving property with union type', function () {
+it('should throw exception when resolving property with union type and no argument for it', function () {
     $resolver = new ClassResolver(ClassWithUnionTypedPropertyDependency::class);
     $resolver->resolve();
 })
     ->throws(ContainerException::class);
 
 it('should throw exception when resolving parameter without type', function () {
-    $resolver = new ClassResolver(ClassWithNonTypedConstructorDependency::class);
+    $resolver = new ClassResolver(ClassWithNonTypedMethodDependency::class);
     $resolver->resolve();
 })
     ->throws(ContainerException::class);
 
-it('should throw exception when resolving parameter with builtin type', function () {
-    $resolver = new ClassResolver(ClassWithBuiltinTypedConstructorDependency::class);
+it('should throw exception when resolving parameter with intersection type', function () {
+    $resolver = new ClassResolver(ClassWithIntersectionTypedMethodDependency::class);
     $resolver->resolve();
 })
     ->throws(ContainerException::class);
 
-it('should throw exception when resolving parameter with union type', function () {
+it('should throw exception when resolving parameter with builtin type and no argument for it', function () {
+    $resolver = new ClassResolver(ClassWithBuiltinTypedMethodDependency::class);
+    $resolver->resolve();
+})
+    ->throws(ContainerException::class);
+
+it('should throw exception when resolving parameter with union type and no argument for it', function () {
     $resolver = new ClassResolver(ClassWithUnionTypedConstructorDependency::class);
     $resolver->resolve();
 })

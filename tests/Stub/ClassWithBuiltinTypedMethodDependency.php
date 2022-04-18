@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Test\Stub;
 
-class ClassWithBuiltinTypedConstructorDependency implements ClassDependencyInterface
+class ClassWithBuiltinTypedMethodDependency implements ClassDependencyInterface
 {
     private string $dependency;
 
