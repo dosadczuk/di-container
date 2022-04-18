@@ -7,6 +7,8 @@ use Container\Dependency;
 use Container\Exceptions\DependencyDefinitionRequiredException;
 use Container\Exceptions\DependencyNotExistsException;
 use Container\Test\Stub\ClassDependencyInterface;
+use Container\Test\Stub\ClassWithBuiltinTypedConstructorDependency;
+use Container\Test\Stub\ClassWithConstructorDependency;
 use Container\Test\Stub\ClassWithoutDependency;
 
 it('should create with abstract', function () {
@@ -40,6 +42,17 @@ it('should create with no instance', function () {
 
     expect($dependency->instance)->toBeNull();
     expect($dependency->isInstantiated())->toBeFalse();
+});
+
+it('should create with arguments', function () {
+    $arguments = ['dependency' => 'sample'];
+    $dependency = Dependency::transient(ClassWithBuiltinTypedConstructorDependency::class, null, $arguments);
+
+    expect($dependency->arguments)->toEqual($arguments);
+    expect($dependency->hasArgument('dependency'))->toBeTruthy();
+    expect($dependency->getArgument('dependency'))->toBe('sample');
+    expect($dependency->hasArgument('not_existing'))->toBeFalsy();
+    expect($dependency->getArgument('not_existing'))->toBeNull();
 });
 
 it('should assign instance', function () {
