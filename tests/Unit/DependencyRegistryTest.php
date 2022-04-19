@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Container\Test\Unit;
 
+use Container\Config;
 use Container\Dependency;
 use Container\DependencyRegistry;
 use Container\Exceptions\DependencyAlreadyAddedException;
@@ -11,7 +12,7 @@ use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 
 beforeEach(function () {
-    $this->registry = new DependencyRegistry();
+    $this->registry = new DependencyRegistry(Config::find());
 });
 
 test('created registry is empty', function () {

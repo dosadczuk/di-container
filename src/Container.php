@@ -21,7 +21,7 @@ final class Container implements ContainerInterface
 
     private function __construct()
     {
-        $this->registry = new DependencyRegistry();
+        $this->registry = new DependencyRegistry(Config::find());
     }
 
     /**

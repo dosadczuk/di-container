@@ -16,9 +16,13 @@ final class DependencyRegistry extends \ArrayObject
 {
     private ResolverFactory $resolver_factory;
 
-    public function __construct()
+    public function __construct(Config $config)
     {
         parent::__construct([], 0, \ArrayIterator::class);
+
+        foreach ($config->getDependencies() as $dependency) {
+            $this->add($dependency);
+        }
 
         $this->resolver_factory = new ResolverFactory();
     }
