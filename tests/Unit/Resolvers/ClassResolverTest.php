@@ -76,26 +76,6 @@ it('should resolve class with nested dependencies', function () {
     expect($instance->getDependencyWithSetter()->getDependency())->not->toBeNull();
 });
 
-it('should resolve class with builtin typed dependency provided via arguments', function () {
-    $resolver = new ClassResolver(ClassWithBuiltinTypedMethodDependency::class);
-
-    /** @var ClassWithBuiltinTypedMethodDependency $instance */
-    $instance = $resolver->resolve(['dependency' => 'sample']);
-
-    expect($instance)->toBeInstanceOf(ClassWithBuiltinTypedMethodDependency::class);
-    expect($instance->getDependency())->toEqual('sample');
-});
-
-it('should resolve class with union typed dependency provided via arguments', function () {
-    $resolver = new ClassResolver(ClassWithUnionTypedConstructorDependency::class);
-
-    /** @var ClassWithUnionTypedConstructorDependency $instance */
-    $instance = $resolver->resolve(['dependency' => $argument = new ClassWithoutDependency()]);
-
-    expect($instance)->toBeInstanceOf(ClassWithUnionTypedConstructorDependency::class);
-    expect($instance->getDependency())->toBe($argument);
-});
-
 it('should throw exception when resolving property without type', function () {
     $resolver = new ClassResolver(ClassWithNonTypedPropertyDependency::class);
     $resolver->resolve();

@@ -29,7 +29,7 @@ final class ClassResolver implements ResolverInterface
         $this->graph = new ClassGraph($class_name);
     }
 
-    public function resolve(array $arguments = []): mixed
+    public function resolve(array $arguments = []): object
     {
         if ($this->graph->isCyclic()) {
             throw new DependencyCycleException($this->class_name);

@@ -17,7 +17,7 @@ final class ClosureResolver implements ResolverInterface
     {
     }
 
-    public function resolve(array $arguments = []): mixed
+    public function resolve(array $arguments = []): object
     {
         try {
             $closure = new \ReflectionFunction($this->closure);

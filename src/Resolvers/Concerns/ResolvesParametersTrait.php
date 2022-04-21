@@ -38,22 +38,14 @@ trait ResolvesParametersTrait
             throw new ContainerException("Cannot resolve not typed parameter '\${$parameter->getName()}'.");
         }
 
+        $parameter_type = $parameter->getType();
+        if (!($parameter_type instanceof \ReflectionNamedType) || $parameter_type->isBuiltin()) {
+            throw new ContainerException("Cannot resolve parameter '\${$parameter->getName()}'");
+        }
+
         // no need to resolve parameter if it's provided by user
         if (array_key_exists($parameter->getName(), $arguments)) {
             return $arguments[$parameter->getName()];
-        }
-
-        $parameter_type = $parameter->getType();
-        if ($parameter_type instanceof \ReflectionIntersectionType) {
-            throw new ContainerException("Cannot resolve intersection typed parameter '\${$parameter->getName()}' without provided value.");
-        }
-
-        if ($parameter_type instanceof \ReflectionUnionType) {
-            throw new ContainerException("Cannot resolve union typed parameter '\${$parameter->getName()}' without provided value.");
-        }
-
-        if ($parameter_type instanceof \ReflectionNamedType && $parameter_type->isBuiltin()) {
-            throw new ContainerException("Cannot resolve builtin type parameter '\${$parameter->getName()}' without provided value.");
         }
 
         // no need to pass $arguments to make() - we handle only one level of arguments providing

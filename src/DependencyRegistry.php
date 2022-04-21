@@ -74,10 +74,6 @@ final class DependencyRegistry extends \ArrayObject
         /** @var Dependency $dependency */
         $dependency = $this[$abstract];
         if ($dependency->isInstantiated()) {
-            if (count($arguments) > 0) {
-                trigger_error("[Container]: Providing arguments to already instantiated shared dependency has no effect.", E_USER_WARNING);
-            }
-
             return $dependency->instance;
         }
 

@@ -18,5 +18,5 @@ interface ResolverInterface
      * @return mixed
      * @throws ContainerExceptionInterface
      */
-    public function resolve(array $arguments = []): mixed;
+    public function resolve(array $arguments = []): object;
 }
