@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Container\Test\Unit\Resolvers;
 
 use Container\Exceptions\ContainerException;
-use Container\Exceptions\DependencyCycleException;
 use Container\Resolvers\ClassResolver;
 use Container\Test\Stub\ClassOneWithClassTwoConstructorDependency;
 use Container\Test\Stub\ClassWithBuiltinTypedMethodDependency;
@@ -128,10 +127,10 @@ it('should throw exception when resolving class with self as constructor depende
     $resolver = new ClassResolver(ClassWithSelfConstructorDependency::class);
     $resolver->resolve();
 })
-    ->throws(DependencyCycleException::class);
+    ->throws(ContainerException::class);
 
 it('should throw exception when resolving class with cyclic dependency', function () {
     $resolver = new ClassResolver(ClassOneWithClassTwoConstructorDependency::class);
     $resolver->resolve();
 })
-    ->throws(DependencyCycleException::class);
+    ->throws(ContainerException::class);

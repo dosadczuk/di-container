@@ -5,7 +5,7 @@ namespace Container\Test\Unit;
 
 use Container\Dependency;
 use Container\DependencyRegistry;
-use Container\Exceptions\DependencyAlreadyAddedException;
+use Container\Exceptions\ContainerException;
 use Container\Exceptions\DependencyNotFoundException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithConstructorDependency;
@@ -34,7 +34,7 @@ it('should throw exception when dependency is already added', function () {
     $this->registry->add($dependency);
     $this->registry->add($dependency);
 })
-    ->throws(DependencyAlreadyAddedException::class);
+    ->throws(ContainerException::class);
 
 it('should throw exception when dependency is not added', function () {
     expect($this->registry->get(ClassWithoutDependency::class));

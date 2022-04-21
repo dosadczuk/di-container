@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Container;
 
-use Container\Exceptions\DependencyAlreadyAddedException;
+use Container\Exceptions\ContainerException;
 use Container\Exceptions\DependencyNotFoundException;
 use Container\Resolvers\ResolverFactory;
 use Psr\Container\ContainerExceptionInterface;
@@ -29,7 +29,7 @@ final class DependencyRegistry extends \ArrayObject
     public function add(Dependency $dependency): void
     {
         if ($this->has($dependency->abstract)) {
-            throw new DependencyAlreadyAddedException($dependency->abstract);
+            throw new ContainerException("'{$dependency->abstract}' already added.");
         }
 
         $this[$dependency->abstract] = $dependency;

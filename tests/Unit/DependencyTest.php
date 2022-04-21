@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace Container\Test\Unit;
 
 use Container\Dependency;
-use Container\Exceptions\DependencyDefinitionRequiredException;
-use Container\Exceptions\DependencyNotExistsException;
+use Container\Exceptions\ContainerException;
 use Container\Test\Stub\ClassDependencyInterface;
 use Container\Test\Stub\ClassWithoutDependency;
 
@@ -53,14 +52,14 @@ it('should assign instance', function () {
 it('should throw exception when creating dependency with not existing class or interface as abstract', function () {
     Dependency::transient('NotExistingClass');
 })
-    ->throws(DependencyNotExistsException::class);
+    ->throws(ContainerException::class);
 
 it('should throw exception when creating dependency with not existing class as definition', function () {
     Dependency::transient(ClassDependencyInterface::class, 'NotExistingClass');
 })
-    ->throws(DependencyNotExistsException::class);
+    ->throws(ContainerException::class);
 
 it('should throw exception when creating dependency with interface as abstract and without definition', function () {
     Dependency::transient(ClassDependencyInterface::class);
 })
-    ->throws(DependencyDefinitionRequiredException::class);
+    ->throws(ContainerException::class);
