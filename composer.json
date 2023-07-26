@@ -1,58 +1,55 @@
 {
-    "name": "dosadczuk/container",
-    "description": "Simple inversion of control container",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Damian Osadczuk",
-            "homepage": "https://github.com/dosadczuk"
-        }
-    ],
-    "homepage": "https://github.com/dosadczuk/di-container",
-    "keywords": [
-        "dependency-injection",
-        "container",
-        "php"
-    ],
-    "scripts": {
-        "test": "pest --config=phpunit.xml",
-        "test:cov": "XDEBUG_MODE=coverage pest --coverage",
-        "post-install-cmd": "cghooks add --ignore-lock",
-        "post-update-cmd": "cghooks update"
-    },
-    "require": {
-        "php": "^8.1",
-        "psr/container": "^2.0"
-    },
-    "require-dev": {
-        "pestphp/pest": "^1.21",
-        "brainmaestro/composer-git-hooks": "^2.8"
-    },
-    "autoload": {
-        "psr-4": {
-            "Container\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Container\\Test\\": "tests/"
-        },
-        "files": [
-            "src/functions.php"
-        ]
-    },
-    "extra": {
-        "hooks": {
-            "config": {
-                "stop-on-failure": "pre-push"
-            },
-            "pre-push": "composer run test"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+  "name": "dosadczuk/container",
+  "description": "Simple inversion of control container",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Damian Osadczuk",
+      "homepage": "https://github.com/dosadczuk"
     }
+  ],
+  "homepage": "https://github.com/dosadczuk/di-container",
+  "keywords": [
+    "dependency-injection",
+    "container",
+    "php"
+  ],
+  "scripts": {
+    "test": "pest --config=phpunit.xml",
+    "test:cov": "XDEBUG_MODE=coverage pest --coverage"
+  },
+  "require": {
+    "php": "^8.1",
+    "psr/container": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Container\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Container\\Test\\": "tests/"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "extra": {
+    "hooks": {
+      "config": {
+        "stop-on-failure": "pre-push"
+      },
+      "pre-push": "composer run test"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "*"
+  }
 }
